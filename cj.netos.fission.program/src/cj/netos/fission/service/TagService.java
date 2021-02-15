@@ -22,8 +22,8 @@ import java.util.Map;
 public class TagService extends AbstractService implements ITagService {
     final static String _COL = "fission.mf.tags";
     final static String _COL_TAG_PROP = "fission.mf.tags.properties";
-    final static String _COL_TAG_LIMIT = "fission.mf.tags.limits";
-    final static String _COL_AREA_LIMIT = "fission.mf.tags.areas";
+    final static String _COL_TAG_LIMIT = "fission.mf.limit.tags";
+    final static String _COL_AREA_LIMIT = "fission.mf.limit.areas";
     final static String _COL_ATTACH = "fission.mf.attachments";
 
     @Override
