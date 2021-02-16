@@ -1,5 +1,6 @@
 package cj.netos.fission;
 
+import cj.netos.fission.model.LatLng;
 import cj.netos.fission.model.Person;
 
 import java.util.List;
@@ -14,5 +15,7 @@ public interface IPersonService {
     List<Person> listPersonIn(List<String> persons);
 
     Map<String, Person> mapPersonIn(List<String> ids);
+
+    void updateLocation(String principal, String province, String city, String district, String town, LatLng location);
 
 }

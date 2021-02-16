@@ -171,4 +171,14 @@ public interface ICashierPorts extends IOpenportService {
             ISecuritySession securitySession,
             @CjOpenportParameter(usage = "广告词", name = "note") String note
     ) throws CircuitException;
+
+    @CjOpenport(usage = "更新位置", command = "post")
+    void updateLocation(
+            ISecuritySession securitySession,
+            @CjOpenportParameter(usage = "省编码，国测码", name = "province") String province,
+            @CjOpenportParameter(usage = "市编码，国测码", name = "city") String city,
+            @CjOpenportParameter(usage = "区县编码，国测码", name = "district") String district,
+            @CjOpenportParameter(usage = "乡镇编码，国测码", name = "town") String town,
+            @CjOpenportParameter(usage = "位置编码，国测码", name = "location", in = PKeyInRequest.content) LatLng location
+    ) throws CircuitException;
 }

@@ -4,9 +4,12 @@ import cj.lns.chip.sos.cube.framework.IDocument;
 import cj.lns.chip.sos.cube.framework.IQuery;
 import cj.netos.fission.AbstractService;
 import cj.netos.fission.IPersonService;
+import cj.netos.fission.model.LatLng;
 import cj.netos.fission.model.Person;
 import cj.studio.ecm.annotation.CjService;
 import cj.ultimate.gson2.com.google.gson.Gson;
+import com.mongodb.client.model.UpdateOptions;
+import org.bson.Document;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,7 +33,7 @@ public class PersonService extends AbstractService implements IPersonService {
     public List<Person> listPersonIn(List<String> persons) {
         String cjql = String.format("select {'tuple':'*'} from tuple %s %s where {'tuple.id':{'$in':%s}}", _KEY_COL, Person.class.getName(), new Gson().toJson(persons));
         IQuery<Person> query = getHome().createQuery(cjql);
-        List<IDocument<Person>> documents=query.getResultList();
+        List<IDocument<Person>> documents = query.getResultList();
         List<Person> personList = new ArrayList<>();
         for (IDocument<Person> document : documents) {
             personList.add(document.tuple());
@@ -42,12 +45,21 @@ public class PersonService extends AbstractService implements IPersonService {
     public Map<String, Person> mapPersonIn(List<String> persons) {
         String cjql = String.format("select {'tuple':'*'} from tuple %s %s where {'tuple.id':{'$in':%s}}", _KEY_COL, Person.class.getName(), new Gson().toJson(persons));
         IQuery<Person> query = getHome().createQuery(cjql);
-        List<IDocument<Person>> documents=query.getResultList();
+        List<IDocument<Person>> documents = query.getResultList();
         Map<String, Person> map = new HashMap<>();
         for (IDocument<Person> document : documents) {
-            Person person=document.tuple();
-            map.put(person.getId(),person);
+            Person person = document.tuple();
+            map.put(person.getId(), person);
         }
         return map;
+    }
+
+    @Override
+    public void updateLocation(String principal, String province, String city, String district, String town, LatLng location) {
+        String filter = String.format("{'tuple.id':'%s'}", principal);
+        String update = String.format("{'$set':{'tuple.province':'%s','tuple.city':'%s','tuple.district':'%s','tuple.town':'%s','tuple.location':%s}}",
+                province, city, district, town, new Gson().toJson(location));
+        getHome().updateDocOne(_KEY_COL, Document.parse(filter), Document.parse(update));
+
     }
 }

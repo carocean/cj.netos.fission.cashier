@@ -1,16 +1,12 @@
 package cj.netos.fission.ports;
 
-import cj.netos.fission.ICashierBalanceService;
-import cj.netos.fission.ICashierService;
-import cj.netos.fission.ISnatchEnvelopeAlgorithm;
-import cj.netos.fission.ITagService;
+import cj.netos.fission.*;
 import cj.netos.fission.model.*;
 import cj.netos.fission.util.CashierUtils;
 import cj.studio.ecm.annotation.CjService;
 import cj.studio.ecm.annotation.CjServiceRef;
 import cj.studio.ecm.net.CircuitException;
 import cj.studio.openport.ISecuritySession;
-import org.checkerframework.checker.units.qual.A;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -25,6 +21,8 @@ public class CashierPorts implements ICashierPorts {
     ISnatchEnvelopeAlgorithm snatchEnvelopeAlgorithm;
     @CjServiceRef
     ITagService tagService;
+    @CjServiceRef
+    IPersonService personService;
 
     @Override
     public CashierBalance getCashierBalance(ISecuritySession securitySession) throws CircuitException {
@@ -96,8 +94,8 @@ public class CashierPorts implements ICashierPorts {
 
     @Override
     public void addPropertyTag(ISecuritySession securitySession, String tagId) throws CircuitException {
-        if(!tagService.exists(tagId)){
-            throw new CircuitException("404",String.format("不存在标签:%s",tagId));
+        if (!tagService.exists(tagId)) {
+            throw new CircuitException("404", String.format("不存在标签:%s", tagId));
         }
         tagService.addPropertyTag(securitySession.principal(), tagId);
     }
@@ -133,12 +131,12 @@ public class CashierPorts implements ICashierPorts {
 
     @Override
     public void removeLimitTag(ISecuritySession securitySession, String direct, String tagId) throws CircuitException {
-        tagService.removeLimitTag(securitySession.principal(),direct,tagId);
+        tagService.removeLimitTag(securitySession.principal(), direct, tagId);
     }
 
     @Override
     public List<Tag> listLimitTag(ISecuritySession securitySession, String direct) throws CircuitException {
-        return tagService.listLimitTag(securitySession.principal(),direct);
+        return tagService.listLimitTag(securitySession.principal(), direct);
     }
 
     @Override
@@ -154,12 +152,12 @@ public class CashierPorts implements ICashierPorts {
 
     @Override
     public void emptyLimitArea(ISecuritySession securitySession, String direct) throws CircuitException {
-        tagService.removeLimitArea(securitySession.principal(),direct);
+        tagService.removeLimitArea(securitySession.principal(), direct);
     }
 
     @Override
     public LimitArea getLimitArea(ISecuritySession securitySession, String direct) throws CircuitException {
-        return tagService.getLimitArea(securitySession.principal(),direct);
+        return tagService.getLimitArea(securitySession.principal(), direct);
     }
 
     @Override
@@ -179,11 +177,16 @@ public class CashierPorts implements ICashierPorts {
 
     @Override
     public Attachment getAttachment(ISecuritySession securitySession) throws CircuitException {
-        return  tagService.getAttachment(securitySession.principal());
+        return tagService.getAttachment(securitySession.principal());
     }
 
     @Override
     public void setAdvert(ISecuritySession securitySession, String note) throws CircuitException {
         tagService.setAdvert(securitySession.principal(), note);
+    }
+
+    @Override
+    public void updateLocation(ISecuritySession securitySession, String province, String city, String district, String town, LatLng location) throws CircuitException {
+        personService.updateLocation(securitySession.principal(), province, city, district, town, location);
     }
 }
