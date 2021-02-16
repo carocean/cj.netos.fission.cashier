@@ -186,7 +186,7 @@ public class CashierPorts implements ICashierPorts {
     }
 
     @Override
-    public void updateLocation(ISecuritySession securitySession, String province, String city, String district, String town, LatLng location) throws CircuitException {
-        personService.updateLocation(securitySession.principal(), province, city, district, town, location);
+    public void updateLocation(ISecuritySession securitySession,LatLng location, String province, String city, String district, String town, String provinceName, String cityName, String districtName, String townName ) throws CircuitException {
+        personService.updateLocation(securitySession.principal(), location,province, city, district, town,provinceName, cityName, districtName, townName );
     }
 }

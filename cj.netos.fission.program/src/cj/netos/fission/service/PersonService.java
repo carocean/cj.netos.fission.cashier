@@ -55,10 +55,10 @@ public class PersonService extends AbstractService implements IPersonService {
     }
 
     @Override
-    public void updateLocation(String principal, String province, String city, String district, String town, LatLng location) {
+    public void updateLocation(String principal,LatLng location, String province, String city, String district, String town, String provinceName, String cityName, String districtName, String townName) {
         String filter = String.format("{'tuple.id':'%s'}", principal);
-        String update = String.format("{'$set':{'tuple.province':'%s','tuple.city':'%s','tuple.district':'%s','tuple.town':'%s','tuple.location':%s}}",
-                province, city, district, town, new Gson().toJson(location));
+        String update = String.format("{'$set':{'tuple.province':'%s','tuple.provinceName':'%s','tuple.city':'%s','tuple.cityName':'%s','tuple.district':'%s','tuple.districtName':'%s','tuple.town':'%s','tuple.townName':'%s','tuple.location':%s}}",
+                province,provinceName, city,cityName, district,districtName, town,townName, new Gson().toJson(location));
         getHome().updateDocOne(_KEY_COL, Document.parse(filter), Document.parse(update));
 
     }

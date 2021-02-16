@@ -38,22 +38,22 @@ public class Person {
      * Column: province
      */
     private String province;
-
+    private String provinceName;
     /**
      * Column: city
      */
     private String city;
-
+    private String cityName;
     /**
      * Column: district
      */
     private String district;
-
+    private String districtName;
     /**
      * Column: town
      */
     private String town;
-
+    private String townName;
     /**
      * Column: location
      */
@@ -165,6 +165,38 @@ public class Person {
 
     public void setLanguage(String language) {
         this.language = language == null ? null : language.trim();
+    }
+
+    public String getProvinceName() {
+        return provinceName;
+    }
+
+    public void setProvinceName(String provinceName) {
+        this.provinceName = provinceName;
+    }
+
+    public String getCityName() {
+        return cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
+    }
+
+    public String getDistrictName() {
+        return districtName;
+    }
+
+    public void setDistrictName(String districtName) {
+        this.districtName = districtName;
+    }
+
+    public String getTownName() {
+        return townName;
+    }
+
+    public void setTownName(String townName) {
+        this.townName = townName;
     }
 
     public String getCtime() {

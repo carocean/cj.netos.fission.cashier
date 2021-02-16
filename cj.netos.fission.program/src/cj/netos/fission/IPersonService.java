@@ -16,6 +16,6 @@ public interface IPersonService {
 
     Map<String, Person> mapPersonIn(List<String> ids);
 
-    void updateLocation(String principal, String province, String city, String district, String town, LatLng location);
+    void updateLocation(String principal,LatLng location, String province, String city, String district, String town, String provinceName, String cityName, String districtName, String townNam);
 
 }
