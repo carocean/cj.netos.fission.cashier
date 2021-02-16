@@ -57,7 +57,7 @@ public class Person {
     /**
      * Column: location
      */
-    private String location;
+    private LatLng location;
 
     /**
      * Column: language
@@ -151,12 +151,12 @@ public class Person {
         this.town = town == null ? null : town.trim();
     }
 
-    public String getLocation() {
+    public LatLng getLocation() {
         return location;
     }
 
-    public void setLocation(String location) {
-        this.location = location == null ? null : location.trim();
+    public void setLocation(LatLng location) {
+        this.location = location ;
     }
 
     public String getLanguage() {
