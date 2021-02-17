@@ -38,22 +38,22 @@ public class Person {
      * Column: province
      */
     private String province;
-    private String provinceName;
+    private String provinceCode;
     /**
      * Column: city
      */
     private String city;
-    private String cityName;
+    private String cityCode;
     /**
      * Column: district
      */
     private String district;
-    private String districtName;
+    private String districtCode;
     /**
      * Column: town
      */
     private String town;
-    private String townName;
+    private String townCode;
     /**
      * Column: location
      */
@@ -167,36 +167,36 @@ public class Person {
         this.language = language == null ? null : language.trim();
     }
 
-    public String getProvinceName() {
-        return provinceName;
+    public String getProvinceCode() {
+        return provinceCode;
     }
 
-    public void setProvinceName(String provinceName) {
-        this.provinceName = provinceName;
+    public void setProvinceCode(String provinceCode) {
+        this.provinceCode = provinceCode;
     }
 
-    public String getCityName() {
-        return cityName;
+    public String getCityCode() {
+        return cityCode;
     }
 
-    public void setCityName(String cityName) {
-        this.cityName = cityName;
+    public void setCityCode(String cityCode) {
+        this.cityCode = cityCode;
     }
 
-    public String getDistrictName() {
-        return districtName;
+    public String getDistrictCode() {
+        return districtCode;
     }
 
-    public void setDistrictName(String districtName) {
-        this.districtName = districtName;
+    public void setDistrictCode(String districtCode) {
+        this.districtCode = districtCode;
     }
 
-    public String getTownName() {
-        return townName;
+    public String getTownCode() {
+        return townCode;
     }
 
-    public void setTownName(String townName) {
-        this.townName = townName;
+    public void setTownCode(String townCode) {
+        this.townCode = townCode;
     }
 
     public String getCtime() {

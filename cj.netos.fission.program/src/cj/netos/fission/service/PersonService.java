@@ -8,7 +8,6 @@ import cj.netos.fission.model.LatLng;
 import cj.netos.fission.model.Person;
 import cj.studio.ecm.annotation.CjService;
 import cj.ultimate.gson2.com.google.gson.Gson;
-import com.mongodb.client.model.UpdateOptions;
 import org.bson.Document;
 
 import java.util.ArrayList;
@@ -55,10 +54,10 @@ public class PersonService extends AbstractService implements IPersonService {
     }
 
     @Override
-    public void updateLocation(String principal,LatLng location, String province, String city, String district, String town, String provinceName, String cityName, String districtName, String townName) {
+    public void updateLocation(String principal,LatLng location, String province, String city, String district, String town, String provinceCode, String cityCode, String districtCode, String townCode) {
         String filter = String.format("{'tuple.id':'%s'}", principal);
-        String update = String.format("{'$set':{'tuple.province':'%s','tuple.provinceName':'%s','tuple.city':'%s','tuple.cityName':'%s','tuple.district':'%s','tuple.districtName':'%s','tuple.town':'%s','tuple.townName':'%s','tuple.location':%s}}",
-                province,provinceName, city,cityName, district,districtName, town,townName, new Gson().toJson(location));
+        String update = String.format("{'$set':{'tuple.province':'%s','tuple.provinceCode':'%s','tuple.city':'%s','tuple.cityCode':'%s','tuple.district':'%s','tuple.districtCode':'%s','tuple.town':'%s','tuple.townCode':'%s','tuple.location':%s}}",
+                province,provinceCode, city,cityCode, district,districtCode, town,townCode, new Gson().toJson(location));
         getHome().updateDocOne(_KEY_COL, Document.parse(filter), Document.parse(update));
 
     }

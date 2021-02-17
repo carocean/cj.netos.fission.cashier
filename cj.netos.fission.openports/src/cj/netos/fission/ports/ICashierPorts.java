@@ -180,9 +180,9 @@ public interface ICashierPorts extends IOpenportService {
             @CjOpenportParameter(usage = "市编码，国测码", name = "city") String city,
             @CjOpenportParameter(usage = "区县编码，国测码", name = "district") String district,
             @CjOpenportParameter(usage = "乡镇编码，国测码", name = "town") String town,
-            @CjOpenportParameter(usage = "省编码，国测码", name = "provinceName") String provinceName,
-            @CjOpenportParameter(usage = "市编码，国测码", name = "cityName") String cityName,
-            @CjOpenportParameter(usage = "区县编码，国测码", name = "districtName") String districtName,
-            @CjOpenportParameter(usage = "乡镇编码，国测码", name = "townName") String townName
+            @CjOpenportParameter(usage = "省编码，国测码", name = "provinceCode") String provinceCode,
+            @CjOpenportParameter(usage = "市编码，国测码", name = "cityCode") String cityCode,
+            @CjOpenportParameter(usage = "区县编码，国测码", name = "districtCode") String districtCode,
+            @CjOpenportParameter(usage = "乡镇编码，国测码", name = "townCode") String townCode
     ) throws CircuitException;
 }
