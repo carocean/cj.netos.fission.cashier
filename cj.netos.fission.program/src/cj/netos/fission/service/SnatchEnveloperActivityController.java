@@ -2,6 +2,8 @@ package cj.netos.fission.service;
 
 import cj.netos.fission.ICashierService;
 import cj.netos.fission.ISnatchEnveloperActivityController;
+import cj.netos.fission.ITaskService;
+import cj.studio.ecm.CJSystem;
 import cj.studio.ecm.annotation.CjService;
 import cj.studio.ecm.annotation.CjServiceRef;
 import cj.studio.ecm.net.CircuitException;
@@ -11,14 +13,21 @@ public class SnatchEnveloperActivityController implements ISnatchEnveloperActivi
 
     @CjServiceRef
     ICashierService cashierService;
+    @CjServiceRef
+    ITaskService taskService;
 
     @Override
     public void snatchEnveloper(String recordSn, String person, String payerName, String payee, String payeeName) throws CircuitException {
-        cashierService.snatchEnveloper(recordSn,person, payerName,payee,payeeName);
+        cashierService.snatchEnveloper(recordSn, person, payerName, payee, payeeName);
+        try {
+            taskService.addOpTimers(payee);
+        } catch (Exception e) {
+            CJSystem.logging().error(getClass(), String.format("增加任务计数失败:%s", e));
+        }
     }
 
     @Override
-    public void error(String recordSn, String person, String nickName, String payee,String payeeName, int status, String msg) {
-        cashierService.snatchEnveloperError(recordSn,person, nickName,payee,payeeName,0, status, msg);
+    public void error(String recordSn, String person, String nickName, String payee, String payeeName, int status, String msg) {
+        cashierService.snatchEnveloperError(recordSn, person, nickName, payee, payeeName, 0, status, msg);
     }
 }
