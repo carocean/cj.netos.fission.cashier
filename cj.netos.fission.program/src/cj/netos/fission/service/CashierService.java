@@ -243,17 +243,17 @@ public class CashierService implements ICashierService {
 
     @CjTransaction
     @Override
-    public void snatchEnveloper(String recordSn, String person, String payerName, String payee, String payeeName) throws CircuitException {
-        Cashier cashier = getAndInitCashier(person);
-        CashierBalance balance = getCashierBalance(person);
+    public void snatchEnveloper(String recordSn, String payer, String payerName, String payee, String payeeName) throws CircuitException {
+        Cashier cashier = getAndInitCashier(payer);
+        CashierBalance payerBalance = getCashierBalance(payer);
         long amount = snatchEnvelopeAlgorithm.snatchEnvelopeDynamic(cashier.getCacAverage(), cashier.getAmplitudeFactor().doubleValue());
-        if (amount > balance.getBalance()) {
-            snatchEnveloperError(recordSn, person, payerName, payee, payeeName,amount, 1002, String.format("余额不足:%s > %s",amount,balance.getBalance()));
+        if (amount > payerBalance.getBalance()) {
+            snatchEnveloperError(recordSn, payer, payerName, payee, payeeName,amount, 1002, String.format("余额不足:%s > %s",amount,payerBalance.getBalance()));
             throw new CircuitException("1002", "余额不足");
         }
         PayRecord record = new PayRecord();
         record.setSn(recordSn);
-        record.setPayer(person);
+        record.setPayer(payer);
         record.setPayerName(payerName);
         record.setPayee(payee);
         record.setPayeeName(payeeName);
@@ -266,8 +266,10 @@ public class CashierService implements ICashierService {
         record.setNote(null);
         payRecordService.add(record);
 
-        addPayerBill(record, balance);
-        addPayeeBill(record, balance);
+        addPayerBill(record, payerBalance);
+
+        CashierBalance payeeBalance = getCashierBalance(payee);
+        addPayeeBill(record, payeeBalance);
     }
 
     private void addPayerBill(PayRecord record, CashierBalance balance) {
@@ -293,6 +295,7 @@ public class CashierService implements ICashierService {
         cashierBillService.add(bill);
 
         cashierBalanceService.updateBalance(record.getPayer(), balanceAmount);
+        balance.setBalance(balanceAmount);
     }
 
     private void addPayeeBill(PayRecord record, CashierBalance balance) {
@@ -318,6 +321,7 @@ public class CashierService implements ICashierService {
         cashierBillService.add(bill);
 
         cashierBalanceService.updateBalance(record.getPayee(), balanceAmount);
+        balance.setBalance(balanceAmount);
     }
 
     @CjTransaction
