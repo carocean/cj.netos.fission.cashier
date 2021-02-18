@@ -2,11 +2,9 @@ package cj.netos.fission.mapper;
 
 import cj.netos.fission.model.Cashier;
 import cj.netos.fission.model.CashierExample;
-
+import org.apache.ibatis.annotations.Param;
 import java.math.BigDecimal;
 import java.util.List;
-
-import org.apache.ibatis.annotations.Param;
 
 public interface CashierMapper {
 
@@ -70,5 +68,4 @@ public interface CashierMapper {
     void setCacAverage(@Param(value = "person") String person, @Param(value = "cacAverage") long cacAverage);
 
     void setAmplitudeFactor(@Param(value = "person") String person, @Param(value = "amplitudeFactor") BigDecimal amplitudeFactor);
-
 }

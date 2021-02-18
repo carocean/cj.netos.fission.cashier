@@ -62,22 +62,21 @@ public interface CashierBillMapper {
      */
     int updateByPrimaryKey(CashierBill record);
 
-    List<CashierBill> pageBill(@Param(value = "person") String person, @Param(value = "limit")int limit, @Param(value = "offset")long offset);
+    List<CashierBill> pageBill(@Param(value = "person") String person, @Param(value = "limit") int limit, @Param(value = "offset") long offset);
 
-    List<CashierBill> pageBillByOrder(@Param(value = "person") String person,  @Param(value = "order")int order,@Param(value = "limit") int limit, @Param(value = "offset")long offset);
+    List<CashierBill> pageBillByOrder(@Param(value = "person") String person, @Param(value = "order") int order, @Param(value = "limit") int limit, @Param(value = "offset") long offset);
 
-    List<CashierBill> getBillOfMonth(@Param(value = "person") String person, @Param(value = "year") int year,  @Param(value = "month")int month, @Param(value = "limit") int limit, @Param(value = "offset")long offset);
+    List<CashierBill> getBillOfMonth(@Param(value = "person") String person, @Param(value = "year") int year, @Param(value = "month") int month, @Param(value = "limit") int limit, @Param(value = "offset") long offset);
 
-    List<CashierBill> pageBillOfMonth(@Param(value = "person") String person, @Param(value = "order")int order, @Param(value = "year") int year,  @Param(value = "month")int month, @Param(value = "limit") int limit, @Param(value = "offset")long offset);
+    List<CashierBill> pageBillOfMonth(@Param(value = "person") String person, @Param(value = "order") int order, @Param(value = "year") int year, @Param(value = "month") int month, @Param(value = "limit") int limit, @Param(value = "offset") long offset);
 
-    List<CashierBill> pageBillOfDay(@Param(value = "person") String person, @Param(value = "order")int order, @Param(value = "year") int year,  @Param(value = "month")int month, @Param(value = "day")int day, @Param(value = "limit") int limit, @Param(value = "offset")long offset);
+    List<CashierBill> pageBillOfDay(@Param(value = "person") String person, @Param(value = "order") int order, @Param(value = "year") int year, @Param(value = "month") int month, @Param(value = "day") int day, @Param(value = "limit") int limit, @Param(value = "offset") long offset);
 
+    long totalBillOfMonthByOrder(@Param(value = "person") String person, @Param(value = "order") int order, @Param(value = "year") int year, @Param(value = "month") int month);
 
-    long totalBillOfMonthByOrder(@Param(value = "person") String person, @Param(value = "order") int order, @Param(value = "year") int year, @Param(value = "month")int month);
+    long totalBillOfDayByOrder(@Param(value = "person") String person, @Param(value = "order") int order, @Param(value = "year") int year, @Param(value = "month") int month, @Param(value = "day") int day);
 
-    long totalBillOfDayByOrder(@Param(value = "person") String person, @Param(value = "order")int order, @Param(value = "year") int year, @Param(value = "month")int month, @Param(value = "day")int day);
+    long totalCacAverageByMonth(@Param(value = "person") String person, @Param(value = "year") int year, @Param(value = "month") int month);
 
-    long totalCacAverageByMonth(@Param(value = "person") String person, @Param(value = "year") int year,  @Param(value = "month")int month);
-
-    long totalCacAverageByDay(@Param(value = "person") String person, @Param(value = "year") int year,  @Param(value = "month")int month,@Param(value = "day")int day);
+    long totalCacAverageByDay(@Param(value = "person") String person, @Param(value = "year") int year, @Param(value = "month") int month, @Param(value = "day") int day);
 }
