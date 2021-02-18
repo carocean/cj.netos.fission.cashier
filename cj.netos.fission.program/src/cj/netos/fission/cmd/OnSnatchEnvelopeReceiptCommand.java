@@ -51,15 +51,20 @@ public class OnSnatchEnvelopeReceiptCommand implements IConsumerCommand {
             throw new RabbitMQException("500", "被抢人不存在:" + payee);
         }
         String path = String.format("/fission/mf/%s/locks", payer);
+        String path2 = String.format("/fission/mf/%s/locks", payee);
         try {
             curatorPathChecker.check(framework, path);
+            curatorPathChecker.check(framework, path2);
         } catch (Exception e) {
             throw new RabbitMQException("500", e);
         }
         InterProcessReadWriteLock lock = new InterProcessReadWriteLock(framework, path);
         InterProcessMutex mutex = lock.writeLock();
+        InterProcessReadWriteLock lock2 = new InterProcessReadWriteLock(framework, path2);
+        InterProcessMutex mutex2 = lock2.writeLock();
         try {
             mutex.acquire();
+            mutex2.acquire();
             snatchEnveloperActivityController.snatchEnveloper(recordSn, payer, personPayer.getNickName(), payee, payeeName);
         } catch (Exception e) {
             String msg = e.getMessage();
@@ -76,6 +81,7 @@ public class OnSnatchEnvelopeReceiptCommand implements IConsumerCommand {
         } finally {
             try {
                 mutex.release();
+                mutex2.release();
             } catch (Exception e) {
                 e.printStackTrace();
             }
