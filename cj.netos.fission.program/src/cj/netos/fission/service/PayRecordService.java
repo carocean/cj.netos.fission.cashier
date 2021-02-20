@@ -19,4 +19,10 @@ public class PayRecordService implements IPayRecordService {
     public void add(PayRecord record) {
         payRecordMapper.insert(record);
     }
+
+    @CjTransaction
+    @Override
+    public PayRecord getRecord(String recordSn) {
+        return payRecordMapper.selectByPrimaryKey(recordSn);
+    }
 }

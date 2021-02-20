@@ -89,6 +89,10 @@
 			extName : ".class|.json|.xml",
 			exoterical:"true"
 		},{
+			package : "cj.netos.fission.chatroom",
+			extName : ".class|.json|.xml",
+			exoterical:"true"
+		},{
 			package : "cj.netos.fission.ports",
 			extName : ".class|.json|.xml",
 			exoterical:"true"
