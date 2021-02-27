@@ -13,12 +13,13 @@ public class RecommendedService extends AbstractService implements IRecommendedS
 
     /**
      * 被抢过才算是推荐过
+     *
      * @param person
      * @param friend
      */
     @Override
     public void snatch(String person, String friend) {
-        if (getHome().tupleCount(_COL, String.format("{'tuple.person':'%s','tuple.friend':'%s'}")) > 0) {
+        if (getHome().tupleCount(_COL, String.format("{'tuple.person':'%s','tuple.friend':'%s'}", person, friend)) > 0) {
             return;
         }
         Recommended recommended = new Recommended();
