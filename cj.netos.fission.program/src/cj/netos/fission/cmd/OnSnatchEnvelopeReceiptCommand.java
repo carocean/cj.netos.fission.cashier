@@ -1,9 +1,6 @@
 package cj.netos.fission.cmd;
 
-import cj.netos.fission.ICuratorPathChecker;
-import cj.netos.fission.IPersonService;
-import cj.netos.fission.ISnatchEnveloperActivityController;
-import cj.netos.fission.IWithdrawActivityController;
+import cj.netos.fission.*;
 import cj.netos.fission.model.Person;
 import cj.netos.fission.util.CashierUtils;
 import cj.netos.rabbitmq.CjConsumer;
@@ -36,7 +33,8 @@ public class OnSnatchEnvelopeReceiptCommand implements IConsumerCommand {
     ISnatchEnveloperActivityController snatchEnveloperActivityController;
     @CjServiceRef
     IPersonService personService;
-
+    @CjServiceRef
+    IRecommendedService recommendedService;
     @Override
     public void command(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) throws RabbitMQException, RetryCommandException, IOException {
         String payer = properties.getHeaders().getOrDefault("payer", "").toString();
@@ -66,6 +64,7 @@ public class OnSnatchEnvelopeReceiptCommand implements IConsumerCommand {
             mutex.acquire();
             mutex2.acquire();
             snatchEnveloperActivityController.snatchEnveloper(recordSn, payer, personPayer.getNickName(), payee, payeeName);
+            recommendedService.snatch(payee,payer);
         } catch (Exception e) {
             String msg = e.getMessage();
             if (!StringUtil.isEmpty(msg)) {
