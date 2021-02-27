@@ -50,6 +50,11 @@ public class CashierBillPorts implements ICashierBillPorts {
     }
 
     @Override
+    public long totalBillOfAll(ISecuritySession securitySession, int order) throws CircuitException {
+        return cashierBillService.totalBillOfAll(securitySession, order);
+    }
+
+    @Override
     public long totalCacAverageByMonth(ISecuritySession securitySession, int year, int month) throws CircuitException {
         return cashierBillService.totalCacAverageByMonth(securitySession, year, month-1);
     }

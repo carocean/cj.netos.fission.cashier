@@ -65,6 +65,11 @@ public class CashierBillService implements ICashierBillService {
     public long totalBillOfDayByOrder(ISecuritySession securitySession, int order, int year, int month, int day) throws CircuitException {
         return cashierBillMapper.totalBillOfDayByOrder(securitySession.principal(),order,year,month,day);
     }
+    @CjTransaction
+    @Override
+    public long totalBillOfAll(ISecuritySession securitySession, int order) {
+        return cashierBillMapper.totalBillOfAll(securitySession.principal(),order);
+    }
 
     @CjTransaction
     @Override

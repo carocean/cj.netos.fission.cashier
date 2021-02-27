@@ -87,6 +87,15 @@ public interface ICashierBillPorts extends IOpenportService {
             @CjOpenportParameter(usage = "日", name = "day") int day
     ) throws CircuitException;
 
+    @CjOpenport(usage = "获取出入总账")
+    long totalBillOfAll(
+            ISecuritySession securitySession,
+            @CjOpenportParameter(usage = "指令：- 0从裂变余额入金\n" +
+                    "- 1退回到用户余额\n" +
+                    "- 2向点击者支付\n" +
+                    "- 3收益（点击头像挣得）\n", name = "order") int order
+    ) throws CircuitException;
+
     @CjOpenport(usage = "平均获客成本")
     long totalCacAverageByMonth(
             ISecuritySession securitySession,

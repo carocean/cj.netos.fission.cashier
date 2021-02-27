@@ -28,4 +28,6 @@ public interface ICashierBillService {
     long totalCacAverageByMonth(ISecuritySession securitySession, int year, int month) throws CircuitException;
 
     long totalCacAverageByDay(ISecuritySession securitySession, int year, int month, int day) throws CircuitException;
+
+    long totalBillOfAll(ISecuritySession securitySession, int order);
 }

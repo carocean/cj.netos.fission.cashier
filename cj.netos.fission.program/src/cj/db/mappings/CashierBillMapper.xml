@@ -409,6 +409,13 @@
     and `month` = #{month,jdbcType=INTEGER}
     and `day` = #{day,jdbcType=INTEGER}
   </select>
+  <select id="totalBillOfAll" parameterType="cj.netos.fission.model.CashierBill" resultType="java.lang.Long">
+    select
+   IFNULL(sum(amount),0)
+    from cashier_bill
+    where person = #{person,jdbcType=VARCHAR}
+    and `order` = #{order,jdbcType=INTEGER}
+  </select>
   <select id="totalBillOfMonthByOrder" parameterType="cj.netos.fission.model.CashierBill" resultType="java.lang.Long">
     select
     IFNULL(sum(amount),0)

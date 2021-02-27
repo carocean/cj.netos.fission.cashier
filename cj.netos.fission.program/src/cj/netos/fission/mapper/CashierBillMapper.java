@@ -79,4 +79,6 @@ public interface CashierBillMapper {
     long totalCacAverageByMonth(@Param(value = "person") String person, @Param(value = "year") int year, @Param(value = "month") int month);
 
     long totalCacAverageByDay(@Param(value = "person") String person, @Param(value = "year") int year, @Param(value = "month") int month, @Param(value = "day") int day);
+
+    long totalBillOfAll(@Param(value = "person") String person, @Param(value = "order") int order);
 }

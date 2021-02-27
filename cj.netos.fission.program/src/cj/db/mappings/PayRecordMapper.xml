@@ -336,19 +336,31 @@
     where sn = #{sn,jdbcType=VARCHAR}
   </update>
   <select id="totalPayee" parameterType="cj.netos.fission.model.PayRecord" resultType="java.lang.Long">
+    select  IFNULL(count(*),0)
+    from (select payee
+      from pay_record
+      where payer = #{payer,jdbcType=VARCHAR}
+        and `state` = 1
+        and `status` = 200
+      group by payee) as a
+  </select>
+  <select id="totalPayeeAmount" parameterType="cj.netos.fission.model.PayRecord" resultType="java.lang.Long">
     select
-    IFNULL(count(*),0)
+    IFNULL(sum(amount),0)
     from pay_record
     where payer = #{payer,jdbcType=VARCHAR}
+    and `state` = 1
     and `status` = 200
   </select>
   <select id="totalPayeeOfDay" parameterType="cj.netos.fission.model.PayRecord" resultType="java.lang.Long">
-    select
-    IFNULL(count(*),0)
-    from pay_record
-    where payer = #{payer,jdbcType=VARCHAR}
-    and `status` = 200
-    and ctime like #{dayTime,jdbcType=VARCHAR}
+    select  IFNULL(count(*),0)
+    from (select payee
+      from pay_record
+      where payer = #{payer,jdbcType=VARCHAR}
+        and `state` = 1
+        and `status` = 200
+        and ctime like #{dayTime,jdbcType=VARCHAR}
+      group by payee) as a
   </select>
   <select id="pagePayeeRecord" parameterType="cj.netos.fission.model.PayRecord" resultMap="BaseResultMap">
     select
@@ -362,26 +374,44 @@
   <select id="pagePayeeId" parameterType="cj.netos.fission.model.PayRecord" resultType="java.lang.String">
     select
     payee
-    from pay_record
-    where payer = #{payer,jdbcType=VARCHAR}
-    and `status` = 200
-    order by ctime desc
+    from (select payee
+      from (
+          select payee
+          from pay_record
+          where payer = #{payer,jdbcType=VARCHAR}
+            and `state` = 1
+            and `status` = 200
+          order by ctime desc
+               ) as s
+      group by payee
+     ) as g
     limit #{offset},#{limit}
   </select>
   <select id="totalPayer" parameterType="cj.netos.fission.model.PayRecord" resultType="java.lang.Long">
-    select
-     IFNULL(count(*),0)
-    from pay_record
-    where payee = #{payee,jdbcType=VARCHAR}
-    and `status` = 200
+     select  IFNULL(count(*),0)
+    from (select payer
+      from pay_record
+      where payee = #{payee,jdbcType=VARCHAR}
+        and `state` = 1
+        and `status` = 200
+      group by payer) as a
+  </select>
+  <select id="totalPayerAmount" parameterType="cj.netos.fission.model.PayRecord" resultType="java.lang.Long">
+   select IFNULL(sum(amount),0)
+   from pay_record
+   where payee = #{payee,jdbcType=VARCHAR}
+   and `state` = 1
+   and `status` = 200
   </select>
   <select id="totalPayerOnDay" parameterType="cj.netos.fission.model.PayRecord" resultType="java.lang.Long">
-    select
-     IFNULL(count(*),0)
-    from pay_record
-    where payee = #{payee,jdbcType=VARCHAR}
-    and `status` = 200
-    and ctime like #{dayTime,jdbcType=VARCHAR}
+    select  IFNULL(count(*),0)
+    from (select payer
+      from pay_record
+      where payee = #{payee,jdbcType=VARCHAR}
+        and `state` = 1
+        and `status` = 200
+        and ctime like #{dayTime,jdbcType=VARCHAR}
+      group by payer) as a
   </select>
   <select id="pagePayerRecord" parameterType="cj.netos.fission.model.PayRecord" resultMap="BaseResultMap">
     select
@@ -395,10 +425,17 @@
   <select id="pagePayerId" parameterType="cj.netos.fission.model.PayRecord" resultType="java.lang.String">
     select
     payer
-    from pay_record
-    where payee = #{payee,jdbcType=VARCHAR}
-    and `status` = 200
-    order by ctime desc
-    limit #{offset},#{limit}
+    from (select payer
+      from (
+           select payer
+           from pay_record
+           where payee = #{payee,jdbcType=VARCHAR}
+             and `state` = 1
+             and `status` = 200
+          order by ctime desc
+               ) as s
+      group by payer
+     ) as g
+   limit #{offset},#{limit}
   </select>
 </mapper>
