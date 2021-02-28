@@ -5,11 +5,14 @@ import cj.lns.chip.sos.cube.framework.IQuery;
 import cj.lns.chip.sos.cube.framework.TupleDocument;
 import cj.netos.fission.AbstractService;
 import cj.netos.fission.ITagService;
+import cj.netos.fission.IUpdateManager;
+import cj.netos.fission.UpdateEvent;
 import cj.netos.fission.model.Attachment;
 import cj.netos.fission.model.LimitArea;
 import cj.netos.fission.model.LimitTag;
 import cj.netos.fission.model.Tag;
 import cj.studio.ecm.annotation.CjService;
+import cj.studio.ecm.annotation.CjServiceRef;
 import cj.ultimate.gson2.com.google.gson.Gson;
 import org.bson.Document;
 
@@ -25,6 +28,9 @@ public class TagService extends AbstractService implements ITagService {
     final static String _COL_TAG_LIMIT = "fission.mf.limit.tags";
     final static String _COL_AREA_LIMIT = "fission.mf.limit.areas";
     final static String _COL_ATTACH = "fission.mf.attachments";
+
+    @CjServiceRef
+    IUpdateManager updateManager;
 
     @Override
     public List<Tag> listAllTag() {
@@ -69,11 +75,29 @@ public class TagService extends AbstractService implements ITagService {
         map.put("person", principal);
         map.put("tag", tagId);
         getHome().saveDoc(_COL_TAG_PROP, new TupleDocument<>(map));
+
+        UpdateEvent event = new UpdateEvent();
+        event.setPerson(principal);
+        event.setCtime(System.currentTimeMillis());
+        event.setEvent("add-prop-tag");
+        Map<String, Object> data = new HashMap<>();
+        data.put("tagId", tagId);
+        event.setData(data);
+        updateManager.addEvent(event);
     }
 
     @Override
     public void removePropertyTag(String principal, String tagId) {
         getHome().deleteDocOne(_COL_TAG_PROP, String.format("{'tuple.person':'%s','tuple.tag':'%s'}", principal, tagId));
+
+        UpdateEvent event = new UpdateEvent();
+        event.setPerson(principal);
+        event.setCtime(System.currentTimeMillis());
+        event.setEvent("remove-prop-tag");
+        Map<String, Object> data = new HashMap<>();
+        data.put("tagId", tagId);
+        event.setData(data);
+        updateManager.addEvent(event);
     }
 
     @Override
@@ -106,6 +130,16 @@ public class TagService extends AbstractService implements ITagService {
             return;
         }
         getHome().saveDoc(_COL_TAG_LIMIT, new TupleDocument<>(tag));
+
+        UpdateEvent event = new UpdateEvent();
+        event.setPerson(tag.getPerson());
+        event.setCtime(System.currentTimeMillis());
+        event.setEvent("add-limit-tag");
+        Map<String, Object> data = new HashMap<>();
+        data.put("tagId", tag.getTag());
+        data.put("direct", tag.getDirect());
+        event.setData(data);
+        updateManager.addEvent(event);
     }
 
     private boolean existsLimitTag(String direct, String person, String tag) {
@@ -115,6 +149,16 @@ public class TagService extends AbstractService implements ITagService {
     @Override
     public void removeLimitTag(String person, String direct, String tag) {
         getHome().deleteDocOne(_COL_TAG_LIMIT, String.format("{'tuple.person':'%s','tuple.direct':'%s','tuple.tag':'%s'}", person, direct, tag));
+
+        UpdateEvent event = new UpdateEvent();
+        event.setPerson(person);
+        event.setCtime(System.currentTimeMillis());
+        event.setEvent("remove-limit-tag");
+        Map<String, Object> data = new HashMap<>();
+        data.put("tagId", tag);
+        data.put("direct", direct);
+        event.setData(data);
+        updateManager.addEvent(event);
     }
 
     @Override
@@ -136,11 +180,32 @@ public class TagService extends AbstractService implements ITagService {
             removeLimitArea(area.getPerson(), area.getDirect());
         }
         getHome().saveDoc(_COL_AREA_LIMIT, new TupleDocument<>(area));
+
+        UpdateEvent event = new UpdateEvent();
+        event.setPerson(area.getPerson());
+        event.setCtime(System.currentTimeMillis());
+        event.setEvent("set-limit-area");
+        Map<String, Object> data = new HashMap<>();
+        data.put("direct", area.getDirect());
+        data.put("type", area.getAreaType());
+        data.put("title", area.getAreaTitle());
+        data.put("value", area.getAreaCode());
+        event.setData(data);
+        updateManager.addEvent(event);
     }
 
     @Override
     public void removeLimitArea(String principal, String direct) {
         getHome().deleteDocOne(_COL_AREA_LIMIT, String.format("{'tuple.person':'%s','tuple.direct':'%s'}", principal, direct));
+
+        UpdateEvent event = new UpdateEvent();
+        event.setPerson(principal);
+        event.setCtime(System.currentTimeMillis());
+        event.setEvent("empty-limit-area");
+        Map<String, Object> data = new HashMap<>();
+        data.put("direct", direct);
+        event.setData(data);
+        updateManager.addEvent(event);
     }
 
     @Override

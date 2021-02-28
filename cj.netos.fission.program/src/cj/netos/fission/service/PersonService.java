@@ -4,9 +4,12 @@ import cj.lns.chip.sos.cube.framework.IDocument;
 import cj.lns.chip.sos.cube.framework.IQuery;
 import cj.netos.fission.AbstractService;
 import cj.netos.fission.IPersonService;
+import cj.netos.fission.IUpdateManager;
+import cj.netos.fission.UpdateEvent;
 import cj.netos.fission.model.LatLng;
 import cj.netos.fission.model.Person;
 import cj.studio.ecm.annotation.CjService;
+import cj.studio.ecm.annotation.CjServiceRef;
 import cj.ultimate.gson2.com.google.gson.Gson;
 import org.bson.Document;
 
@@ -17,6 +20,9 @@ import java.util.Map;
 
 @CjService(name = "personService")
 public class PersonService extends AbstractService implements IPersonService {
+    @CjServiceRef
+    IUpdateManager updateManager;
+
     @Override
     public Person get(String unionid) {
         String cjql = String.format("select {'tuple':'*'} from tuple %s %s where {'tuple.id':'%s'}", _KEY_COL, Person.class.getName(), unionid);
@@ -60,5 +66,14 @@ public class PersonService extends AbstractService implements IPersonService {
                 province,provinceCode, city,cityCode, district,districtCode, town,townCode, new Gson().toJson(location));
         getHome().updateDocOne(_KEY_COL, Document.parse(filter), Document.parse(update));
 
+        UpdateEvent event = new UpdateEvent();
+        event.setPerson(principal);
+        event.setCtime(System.currentTimeMillis());
+        event.setEvent("update-location");
+        Map<String, Object> data = new HashMap<>();
+        data.put("latitude", location.latitude());
+        data.put("longitude", location.longitude());
+        event.setData(data);
+        updateManager.addEvent(event);
     }
 }
