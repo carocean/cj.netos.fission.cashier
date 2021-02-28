@@ -196,16 +196,23 @@ public class TagService extends AbstractService implements ITagService {
 
     @Override
     public void removeLimitArea(String principal, String direct) {
+        LimitArea limitArea = getLimitArea(principal, direct);
         getHome().deleteDocOne(_COL_AREA_LIMIT, String.format("{'tuple.person':'%s','tuple.direct':'%s'}", principal, direct));
 
-        UpdateEvent event = new UpdateEvent();
-        event.setPerson(principal);
-        event.setCtime(System.currentTimeMillis());
-        event.setEvent("empty-limit-area");
-        Map<String, Object> data = new HashMap<>();
-        data.put("direct", direct);
-        event.setData(data);
-        updateManager.addEvent(event);
+        if (limitArea != null) {
+            UpdateEvent event = new UpdateEvent();
+            event.setPerson(principal);
+            event.setCtime(System.currentTimeMillis());
+            event.setEvent("empty-limit-area");
+            Map<String, Object> data = new HashMap<>();
+            data.put("direct", direct);
+            data.put("type", limitArea.getAreaType());
+            data.put("title", limitArea.getAreaTitle());
+            data.put("value", limitArea.getAreaCode());
+            event.setData(data);
+            updateManager.addEvent(event);
+        }
+
     }
 
     @Override
