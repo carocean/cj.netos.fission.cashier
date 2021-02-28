@@ -18,6 +18,7 @@ import com.rabbitmq.client.AMQP;
 import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Map;
 
 @CjBridge(aspects = "@transaction")
 @CjService(name = "cashierService")
@@ -38,7 +39,8 @@ public class CashierService implements ICashierService {
     IRabbitMQProducer rabbitMQProducer;
     @CjServiceRef
     ISnatchEnvelopeAlgorithm snatchEnvelopeAlgorithm;
-
+    @CjServiceRef
+    IUpdateManager updateManager;
     @CjTransaction
     @Override
     public Cashier getAndInitCashier(String person) {
@@ -232,6 +234,15 @@ public class CashierService implements ICashierService {
     public void startCashier(String person) {
         getAndInitCashier(person);
         cashierMapper.updateState(person, 0, null);
+
+        UpdateEvent event = new UpdateEvent();
+        event.setPerson(person);
+        event.setCtime(System.currentTimeMillis());
+        event.setEvent("update-state");
+        Map<String, Object> data = new HashMap<>();
+        data.put("state", 0);
+        event.setData(data);
+        updateManager.addEvent(event);
     }
 
     @CjTransaction
@@ -239,6 +250,15 @@ public class CashierService implements ICashierService {
     public void stopCashier(String person, String closedCause) {
         getAndInitCashier(person);
         cashierMapper.updateState(person, 1, closedCause);
+
+        UpdateEvent event = new UpdateEvent();
+        event.setPerson(person);
+        event.setCtime(System.currentTimeMillis());
+        event.setEvent("update-state");
+        Map<String, Object> data = new HashMap<>();
+        data.put("state", 1);
+        event.setData(data);
+        updateManager.addEvent(event);
     }
 
     @CjTransaction
