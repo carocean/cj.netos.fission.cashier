@@ -102,7 +102,7 @@ public class TagService extends AbstractService implements ITagService {
 
     @Override
     public List<Tag> listMyPropertyTag(String principal) {
-        String cjql = String.format("select {'tuple':'*'} from tuple %s %s where {'tuple.person':'%s'}", _COL_TAG_PROP, HashMap.class.getName(), principal);
+        String cjql = String.format("select {'tuple':'*'}.sort({'tuple.sort':1}) from tuple %s %s where {'tuple.person':'%s'}", _COL_TAG_PROP, HashMap.class.getName(), principal);
         IQuery<HashMap> query = getHome().createQuery(cjql);
         List<IDocument<HashMap>> documents = query.getResultList();
         List<String> tagIds = new ArrayList<>();
@@ -114,7 +114,7 @@ public class TagService extends AbstractService implements ITagService {
     }
 
     private List<Tag> listTag(List<String> tagIds) {
-        String cjql = String.format("select {'tuple':'*'} from tuple %s %s where {'tuple.id':{'$in':%s}}", _COL, Tag.class.getName(), new Gson().toJson(tagIds));
+        String cjql = String.format("select {'tuple':'*'}.sort({'tuple.sort':1}) from tuple %s %s where {'tuple.id':{'$in':%s}}", _COL, Tag.class.getName(), new Gson().toJson(tagIds));
         IQuery<Tag> query = getHome().createQuery(cjql);
         List<IDocument<Tag>> documents = query.getResultList();
         List<Tag> tags = new ArrayList<>();
@@ -163,7 +163,7 @@ public class TagService extends AbstractService implements ITagService {
 
     @Override
     public List<Tag> listLimitTag(String principal, String direct) {
-        String cjql = String.format("select {'tuple':'*'} from tuple %s %s where {'tuple.person':'%s','tuple.direct':'%s'}", _COL_TAG_LIMIT, LimitTag.class.getName(), principal, direct);
+        String cjql = String.format("select {'tuple':'*'}.sort({'tuple.sort':1}) from tuple %s %s where {'tuple.person':'%s','tuple.direct':'%s'}", _COL_TAG_LIMIT, LimitTag.class.getName(), principal, direct);
         IQuery<LimitTag> query = getHome().createQuery(cjql);
         List<IDocument<LimitTag>> documents = query.getResultList();
         List<String> tagIds = new ArrayList<>();
