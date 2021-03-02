@@ -13,6 +13,7 @@ import cj.netos.fission.model.PayRecord;
 import cj.netos.fission.model.Person;
 import cj.netos.fission.model.RoomMember;
 import cj.netos.rabbitmq.IRabbitMQProducer;
+import cj.studio.ecm.CJSystem;
 import cj.studio.ecm.annotation.CjService;
 import cj.studio.ecm.annotation.CjServiceRef;
 import cj.studio.ecm.net.CircuitException;
@@ -47,10 +48,13 @@ public class ChatroomService extends AbstractService implements IChatroomService
             Person payerPerson = personService.get(payer);
             chatroom = createChatroom(payerFull, roomId, payerPerson);
             addMember(chatroom,payerFull,payerPerson,"creator");
+            PayRecord record = payRecordService.getRecord(recordSn);
+            pushAddMemberEvent(chatroom, payerFull, payerPerson, record);
             return;
         }
 
         if (existsMember(chatroom, payeeFull)) {
+            CJSystem.logging().info(getClass(),String.format("抢群主:%s[%s]的群成员：%s[%s] 已在其聊天室：%s ，并且又领取了钱",payerName,payer,payeeName,payee,chatroom.getRoom()));
             return;
         }
         //添加成员
