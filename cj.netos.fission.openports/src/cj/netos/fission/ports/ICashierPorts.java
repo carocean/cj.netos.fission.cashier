@@ -25,6 +25,16 @@ public interface ICashierPorts extends IOpenportService {
             ISecuritySession securitySession
     ) throws CircuitException;
 
+    @CjOpenport(usage = "获取配置")
+    MfSettings getSettings(
+            ISecuritySession securitySession
+    ) throws CircuitException;
+
+    @CjOpenport(usage = "获取配置的留存余额，如果用户没有配置的则取系统的")
+    long getStayBalance(
+            ISecuritySession securitySession
+    ) throws CircuitException;
+
     @CjOpenport(usage = "设置获客平均")
     void setCacAverage(
             ISecuritySession securitySession,

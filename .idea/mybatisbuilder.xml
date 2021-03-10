@@ -130,6 +130,16 @@
             </TableInfo>
           </value>
         </entry>
+        <entry key="fission.mf#mf_settings">
+          <value>
+            <TableInfo>
+              <option name="database" value="fission.mf" />
+              <option name="domainName" value="MfSettings" />
+              <option name="tableComment" value="交个朋友配置" />
+              <option name="tableName" value="mf_settings" />
+            </TableInfo>
+          </value>
+        </entry>
         <entry key="fission.mf#pay_cashier_record">
           <value>
             <TableInfo>

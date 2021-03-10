@@ -23,6 +23,8 @@ public class CashierPorts implements ICashierPorts {
     ITagService tagService;
     @CjServiceRef
     IPersonService personService;
+    @CjServiceRef
+    IMFSettingsService mfSettingsService;
 
     @Override
     public CashierBalance getCashierBalance(ISecuritySession securitySession) throws CircuitException {
@@ -32,6 +34,19 @@ public class CashierPorts implements ICashierPorts {
     @Override
     public Cashier getCashier(ISecuritySession securitySession) throws CircuitException {
         return cashierService.getAndInitCashier(securitySession.principal());
+    }
+
+    @Override
+    public MfSettings getSettings(ISecuritySession securitySession) throws CircuitException {
+        if (!securitySession.roleIn("platform:administrators")) {
+            throw new CircuitException("800", "拒绝访问");
+        }
+        return mfSettingsService.getSettings();
+    }
+
+    @Override
+    public long getStayBalance(ISecuritySession securitySession) throws CircuitException {
+       return mfSettingsService.getStayBalanceOfPerson(securitySession.principal());
     }
 
     @Override
@@ -186,7 +201,7 @@ public class CashierPorts implements ICashierPorts {
     }
 
     @Override
-    public void updateLocation(ISecuritySession securitySession,LatLng location, String province, String city, String district, String town, String provinceCode, String cityCode, String districtCode, String townCode) throws CircuitException {
-        personService.updateLocation(securitySession.principal(), location,province, city, district, town,provinceCode, cityCode, districtCode, townCode );
+    public void updateLocation(ISecuritySession securitySession, LatLng location, String province, String city, String district, String town, String provinceCode, String cityCode, String districtCode, String townCode) throws CircuitException {
+        personService.updateLocation(securitySession.principal(), location, province, city, district, town, provinceCode, cityCode, districtCode, townCode);
     }
 }

@@ -508,6 +508,66 @@ public class CashierExample {
             return (Criteria) this;
         }
 
+        public Criteria andCheckedWithdrawPtIsNull() {
+            addCriterion("checked_withdraw_pt is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckedWithdrawPtIsNotNull() {
+            addCriterion("checked_withdraw_pt is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckedWithdrawPtEqualTo(Integer value) {
+            addCriterion("checked_withdraw_pt =", value, "checkedWithdrawPt");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckedWithdrawPtNotEqualTo(Integer value) {
+            addCriterion("checked_withdraw_pt <>", value, "checkedWithdrawPt");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckedWithdrawPtGreaterThan(Integer value) {
+            addCriterion("checked_withdraw_pt >", value, "checkedWithdrawPt");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckedWithdrawPtGreaterThanOrEqualTo(Integer value) {
+            addCriterion("checked_withdraw_pt >=", value, "checkedWithdrawPt");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckedWithdrawPtLessThan(Integer value) {
+            addCriterion("checked_withdraw_pt <", value, "checkedWithdrawPt");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckedWithdrawPtLessThanOrEqualTo(Integer value) {
+            addCriterion("checked_withdraw_pt <=", value, "checkedWithdrawPt");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckedWithdrawPtIn(List<Integer> values) {
+            addCriterion("checked_withdraw_pt in", values, "checkedWithdrawPt");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckedWithdrawPtNotIn(List<Integer> values) {
+            addCriterion("checked_withdraw_pt not in", values, "checkedWithdrawPt");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckedWithdrawPtBetween(Integer value1, Integer value2) {
+            addCriterion("checked_withdraw_pt between", value1, value2, "checkedWithdrawPt");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckedWithdrawPtNotBetween(Integer value1, Integer value2) {
+            addCriterion("checked_withdraw_pt not between", value1, value2, "checkedWithdrawPt");
+            return (Criteria) this;
+        }
+
         public Criteria andClosedCauseIsNull() {
             addCriterion("closed_cause is null");
             return (Criteria) this;
@@ -575,6 +635,66 @@ public class CashierExample {
 
         public Criteria andClosedCauseNotBetween(String value1, String value2) {
             addCriterion("closed_cause not between", value1, value2, "closedCause");
+            return (Criteria) this;
+        }
+
+        public Criteria andStayBalanceIsNull() {
+            addCriterion("stay_balance is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStayBalanceIsNotNull() {
+            addCriterion("stay_balance is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStayBalanceEqualTo(Long value) {
+            addCriterion("stay_balance =", value, "stayBalance");
+            return (Criteria) this;
+        }
+
+        public Criteria andStayBalanceNotEqualTo(Long value) {
+            addCriterion("stay_balance <>", value, "stayBalance");
+            return (Criteria) this;
+        }
+
+        public Criteria andStayBalanceGreaterThan(Long value) {
+            addCriterion("stay_balance >", value, "stayBalance");
+            return (Criteria) this;
+        }
+
+        public Criteria andStayBalanceGreaterThanOrEqualTo(Long value) {
+            addCriterion("stay_balance >=", value, "stayBalance");
+            return (Criteria) this;
+        }
+
+        public Criteria andStayBalanceLessThan(Long value) {
+            addCriterion("stay_balance <", value, "stayBalance");
+            return (Criteria) this;
+        }
+
+        public Criteria andStayBalanceLessThanOrEqualTo(Long value) {
+            addCriterion("stay_balance <=", value, "stayBalance");
+            return (Criteria) this;
+        }
+
+        public Criteria andStayBalanceIn(List<Long> values) {
+            addCriterion("stay_balance in", values, "stayBalance");
+            return (Criteria) this;
+        }
+
+        public Criteria andStayBalanceNotIn(List<Long> values) {
+            addCriterion("stay_balance not in", values, "stayBalance");
+            return (Criteria) this;
+        }
+
+        public Criteria andStayBalanceBetween(Long value1, Long value2) {
+            addCriterion("stay_balance between", value1, value2, "stayBalance");
+            return (Criteria) this;
+        }
+
+        public Criteria andStayBalanceNotBetween(Long value1, Long value2) {
+            addCriterion("stay_balance not between", value1, value2, "stayBalance");
             return (Criteria) this;
         }
     }

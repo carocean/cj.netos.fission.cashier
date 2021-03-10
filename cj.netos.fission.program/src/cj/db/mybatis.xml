@@ -36,5 +36,6 @@
         <mapper resource="cj/db/mappings/PayRecordMapper.xml"/>
         <mapper resource="cj/db/mappings/RechargeRecordMapper.xml"/>
         <mapper resource="cj/db/mappings/WithdrawRecordMapper.xml"/>
+        <mapper resource="cj/db/mappings/MfSettingsMapper.xml"/>
     </mappers>
 </configuration>

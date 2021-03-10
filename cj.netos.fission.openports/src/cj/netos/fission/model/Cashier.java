@@ -42,10 +42,22 @@ public class Cashier {
     private BigDecimal amplitudeFactor;
 
     /**
+     * Column: checked_withdraw_pt
+     * Remark: 是否签过了提现协议 0为没有 1为有
+     */
+    private Integer checkedWithdrawPt;
+
+    /**
      * Column: closed_cause
      * Remark: 停业原因： 主人手停 余额不足1元自动停
      */
     private String closedCause;
+
+    /**
+     * Column: stay_balance
+     * Remark: 用户的留存余额，如果为空则启用mf_settings配置的留存余额 用于控制那些反复提现的，越高他要抢的就要越多才能提现
+     */
+    private Long stayBalance;
 
     public String getPerson() {
         return person;
@@ -95,11 +107,27 @@ public class Cashier {
         this.amplitudeFactor = amplitudeFactor;
     }
 
+    public Integer getCheckedWithdrawPt() {
+        return checkedWithdrawPt;
+    }
+
+    public void setCheckedWithdrawPt(Integer checkedWithdrawPt) {
+        this.checkedWithdrawPt = checkedWithdrawPt;
+    }
+
     public String getClosedCause() {
         return closedCause;
     }
 
     public void setClosedCause(String closedCause) {
         this.closedCause = closedCause == null ? null : closedCause.trim();
+    }
+
+    public Long getStayBalance() {
+        return stayBalance;
+    }
+
+    public void setStayBalance(Long stayBalance) {
+        this.stayBalance = stayBalance;
     }
 }

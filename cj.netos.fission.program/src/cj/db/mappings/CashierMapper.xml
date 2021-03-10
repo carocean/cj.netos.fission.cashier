@@ -9,7 +9,9 @@
     <result column="day_amount" jdbcType="BIGINT" property="dayAmount" />
     <result column="cac_average" jdbcType="BIGINT" property="cacAverage" />
     <result column="amplitude_factor" jdbcType="DECIMAL" property="amplitudeFactor" />
+    <result column="checked_withdraw_pt" jdbcType="INTEGER" property="checkedWithdrawPt" />
     <result column="closed_cause" jdbcType="VARCHAR" property="closedCause" />
+    <result column="stay_balance" jdbcType="BIGINT" property="stayBalance" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <!-- @mbg.generated: generated automatically, do not modify! -->
@@ -73,7 +75,8 @@
   </sql>
   <sql id="Base_Column_List">
     <!-- @mbg.generated: generated automatically, do not modify! -->
-    person, `state`, `type`, day_amount, cac_average, amplitude_factor, closed_cause
+    person, `state`, `type`, day_amount, cac_average, amplitude_factor, checked_withdraw_pt, 
+    closed_cause, stay_balance
   </sql>
   <select id="selectByExample" parameterType="cj.netos.fission.model.CashierExample" resultMap="BaseResultMap">
     <!-- @mbg.generated: generated automatically, do not modify! -->
@@ -113,10 +116,12 @@
     <!-- @mbg.generated: generated automatically, do not modify! -->
     insert into cashier (person, `state`, `type`, 
       day_amount, cac_average, amplitude_factor, 
-      closed_cause)
+      checked_withdraw_pt, closed_cause, stay_balance
+      )
     values (#{person,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, 
       #{dayAmount,jdbcType=BIGINT}, #{cacAverage,jdbcType=BIGINT}, #{amplitudeFactor,jdbcType=DECIMAL}, 
-      #{closedCause,jdbcType=VARCHAR})
+      #{checkedWithdrawPt,jdbcType=INTEGER}, #{closedCause,jdbcType=VARCHAR}, #{stayBalance,jdbcType=BIGINT}
+      )
   </insert>
   <insert id="insertSelective" parameterType="cj.netos.fission.model.Cashier">
     <!-- @mbg.generated: generated automatically, do not modify! -->
@@ -140,8 +145,14 @@
       <if test="amplitudeFactor != null">
         amplitude_factor,
       </if>
+      <if test="checkedWithdrawPt != null">
+        checked_withdraw_pt,
+      </if>
       <if test="closedCause != null">
         closed_cause,
+      </if>
+      <if test="stayBalance != null">
+        stay_balance,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -163,8 +174,14 @@
       <if test="amplitudeFactor != null">
         #{amplitudeFactor,jdbcType=DECIMAL},
       </if>
+      <if test="checkedWithdrawPt != null">
+        #{checkedWithdrawPt,jdbcType=INTEGER},
+      </if>
       <if test="closedCause != null">
         #{closedCause,jdbcType=VARCHAR},
+      </if>
+      <if test="stayBalance != null">
+        #{stayBalance,jdbcType=BIGINT},
       </if>
     </trim>
   </insert>
@@ -197,8 +214,14 @@
       <if test="record.amplitudeFactor != null">
         amplitude_factor = #{record.amplitudeFactor,jdbcType=DECIMAL},
       </if>
+      <if test="record.checkedWithdrawPt != null">
+        checked_withdraw_pt = #{record.checkedWithdrawPt,jdbcType=INTEGER},
+      </if>
       <if test="record.closedCause != null">
         closed_cause = #{record.closedCause,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stayBalance != null">
+        stay_balance = #{record.stayBalance,jdbcType=BIGINT},
       </if>
     </set>
     <if test="_parameter != null">
@@ -214,7 +237,9 @@
       day_amount = #{record.dayAmount,jdbcType=BIGINT},
       cac_average = #{record.cacAverage,jdbcType=BIGINT},
       amplitude_factor = #{record.amplitudeFactor,jdbcType=DECIMAL},
-      closed_cause = #{record.closedCause,jdbcType=VARCHAR}
+      checked_withdraw_pt = #{record.checkedWithdrawPt,jdbcType=INTEGER},
+      closed_cause = #{record.closedCause,jdbcType=VARCHAR},
+      stay_balance = #{record.stayBalance,jdbcType=BIGINT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -238,8 +263,14 @@
       <if test="amplitudeFactor != null">
         amplitude_factor = #{amplitudeFactor,jdbcType=DECIMAL},
       </if>
+      <if test="checkedWithdrawPt != null">
+        checked_withdraw_pt = #{checkedWithdrawPt,jdbcType=INTEGER},
+      </if>
       <if test="closedCause != null">
         closed_cause = #{closedCause,jdbcType=VARCHAR},
+      </if>
+      <if test="stayBalance != null">
+        stay_balance = #{stayBalance,jdbcType=BIGINT},
       </if>
     </set>
     where person = #{person,jdbcType=VARCHAR}
@@ -252,7 +283,9 @@
       day_amount = #{dayAmount,jdbcType=BIGINT},
       cac_average = #{cacAverage,jdbcType=BIGINT},
       amplitude_factor = #{amplitudeFactor,jdbcType=DECIMAL},
-      closed_cause = #{closedCause,jdbcType=VARCHAR}
+      checked_withdraw_pt = #{checkedWithdrawPt,jdbcType=INTEGER},
+      closed_cause = #{closedCause,jdbcType=VARCHAR},
+      stay_balance = #{stayBalance,jdbcType=BIGINT}
     where person = #{person,jdbcType=VARCHAR}
   </update>
   <update id="updateState" parameterType="cj.netos.fission.model.Cashier">
