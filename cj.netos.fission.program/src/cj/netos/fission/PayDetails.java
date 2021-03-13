@@ -50,7 +50,7 @@ public class PayDetails {
      * Remark: 服务名
      */
     private String serviceName;
-
+    private String salesman;
     /**
      * Column: note
      */
@@ -140,5 +140,13 @@ public class PayDetails {
 
     public void setPaySn(String paySn) {
         this.paySn = paySn == null ? null : paySn.trim();
+    }
+
+    public String getSalesman() {
+        return salesman;
+    }
+
+    public void setSalesman(String salesman) {
+        this.salesman = salesman;
     }
 }

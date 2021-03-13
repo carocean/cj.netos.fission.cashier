@@ -5,6 +5,7 @@ import cj.netos.fission.IRechargeActivityController;
 import cj.netos.fission.PaymentResult;
 import cj.studio.ecm.annotation.CjService;
 import cj.studio.ecm.annotation.CjServiceRef;
+import cj.studio.ecm.net.CircuitException;
 
 @CjService(name = "rechargeActivityController")
 public class RechargeActivityController implements IRechargeActivityController {
@@ -12,7 +13,7 @@ public class RechargeActivityController implements IRechargeActivityController {
     @CjServiceRef
     ICashierService cashierService;
     @Override
-    public void recharge(PaymentResult result) {
+    public void recharge(PaymentResult result) throws CircuitException {
         cashierService.recharge(result);
     }
 

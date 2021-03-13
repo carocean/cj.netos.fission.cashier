@@ -7,8 +7,15 @@
     <result column="stay_balance" jdbcType="BIGINT" property="stayBalance" />
     <result column="withdraw_income_ratio" jdbcType="DECIMAL" property="withdrawIncomeRatio" />
     <result column="withdraw_absorb_ratio" jdbcType="DECIMAL" property="withdrawAbsorbRatio" />
+    <result column="withdraw_comm_ratio" jdbcType="DECIMAL" property="withdrawCommRatio" />
     <result column="withdraw_shunt_ratio" jdbcType="DECIMAL" property="withdrawShuntRatio" />
-    <result column="recharge_shunt_ratio" jdbcType="DECIMAL" property="rechargeShuntRatio" />
+    <result column="refund_limit_day" jdbcType="INTEGER" property="refundLimitDay" />
+    <result column="commission_stage1" jdbcType="DECIMAL" property="commissionStage1" />
+    <result column="commission_stage2" jdbcType="DECIMAL" property="commissionStage2" />
+    <result column="commission_stage3" jdbcType="DECIMAL" property="commissionStage3" />
+    <result column="platform_return_level2" jdbcType="DECIMAL" property="platformReturnLevel2" />
+    <result column="platform_return_city_ratio" jdbcType="DECIMAL" property="platformReturnCityRatio" />
+    <result column="platform_return_province_ratio" jdbcType="DECIMAL" property="platformReturnProvinceRatio" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <!-- @mbg.generated: generated automatically, do not modify! -->
@@ -72,8 +79,9 @@
   </sql>
   <sql id="Base_Column_List">
     <!-- @mbg.generated: generated automatically, do not modify! -->
-    id, stay_balance, withdraw_income_ratio, withdraw_absorb_ratio, withdraw_shunt_ratio, 
-    recharge_shunt_ratio
+    id, stay_balance, withdraw_income_ratio, withdraw_absorb_ratio, withdraw_comm_ratio, 
+    withdraw_shunt_ratio, refund_limit_day, commission_stage1, commission_stage2, commission_stage3, 
+    platform_return_level2, platform_return_city_ratio, platform_return_province_ratio
   </sql>
   <select id="selectByExample" parameterType="cj.netos.fission.model.MfSettingsExample" resultMap="BaseResultMap">
     <!-- @mbg.generated: generated automatically, do not modify! -->
@@ -112,11 +120,17 @@
   <insert id="insert" parameterType="cj.netos.fission.model.MfSettings">
     <!-- @mbg.generated: generated automatically, do not modify! -->
     insert into mf_settings (id, stay_balance, withdraw_income_ratio, 
-      withdraw_absorb_ratio, withdraw_shunt_ratio, 
-      recharge_shunt_ratio)
+      withdraw_absorb_ratio, withdraw_comm_ratio, 
+      withdraw_shunt_ratio, refund_limit_day, commission_stage1, 
+      commission_stage2, commission_stage3, platform_return_level2, 
+      platform_return_city_ratio, platform_return_province_ratio
+      )
     values (#{id,jdbcType=VARCHAR}, #{stayBalance,jdbcType=BIGINT}, #{withdrawIncomeRatio,jdbcType=DECIMAL}, 
-      #{withdrawAbsorbRatio,jdbcType=DECIMAL}, #{withdrawShuntRatio,jdbcType=DECIMAL}, 
-      #{rechargeShuntRatio,jdbcType=DECIMAL})
+      #{withdrawAbsorbRatio,jdbcType=DECIMAL}, #{withdrawCommRatio,jdbcType=DECIMAL}, 
+      #{withdrawShuntRatio,jdbcType=DECIMAL}, #{refundLimitDay,jdbcType=INTEGER}, #{commissionStage1,jdbcType=DECIMAL}, 
+      #{commissionStage2,jdbcType=DECIMAL}, #{commissionStage3,jdbcType=DECIMAL}, #{platformReturnLevel2,jdbcType=DECIMAL}, 
+      #{platformReturnCityRatio,jdbcType=DECIMAL}, #{platformReturnProvinceRatio,jdbcType=DECIMAL}
+      )
   </insert>
   <insert id="insertSelective" parameterType="cj.netos.fission.model.MfSettings">
     <!-- @mbg.generated: generated automatically, do not modify! -->
@@ -134,11 +148,32 @@
       <if test="withdrawAbsorbRatio != null">
         withdraw_absorb_ratio,
       </if>
+      <if test="withdrawCommRatio != null">
+        withdraw_comm_ratio,
+      </if>
       <if test="withdrawShuntRatio != null">
         withdraw_shunt_ratio,
       </if>
-      <if test="rechargeShuntRatio != null">
-        recharge_shunt_ratio,
+      <if test="refundLimitDay != null">
+        refund_limit_day,
+      </if>
+      <if test="commissionStage1 != null">
+        commission_stage1,
+      </if>
+      <if test="commissionStage2 != null">
+        commission_stage2,
+      </if>
+      <if test="commissionStage3 != null">
+        commission_stage3,
+      </if>
+      <if test="platformReturnLevel2 != null">
+        platform_return_level2,
+      </if>
+      <if test="platformReturnCityRatio != null">
+        platform_return_city_ratio,
+      </if>
+      <if test="platformReturnProvinceRatio != null">
+        platform_return_province_ratio,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -154,11 +189,32 @@
       <if test="withdrawAbsorbRatio != null">
         #{withdrawAbsorbRatio,jdbcType=DECIMAL},
       </if>
+      <if test="withdrawCommRatio != null">
+        #{withdrawCommRatio,jdbcType=DECIMAL},
+      </if>
       <if test="withdrawShuntRatio != null">
         #{withdrawShuntRatio,jdbcType=DECIMAL},
       </if>
-      <if test="rechargeShuntRatio != null">
-        #{rechargeShuntRatio,jdbcType=DECIMAL},
+      <if test="refundLimitDay != null">
+        #{refundLimitDay,jdbcType=INTEGER},
+      </if>
+      <if test="commissionStage1 != null">
+        #{commissionStage1,jdbcType=DECIMAL},
+      </if>
+      <if test="commissionStage2 != null">
+        #{commissionStage2,jdbcType=DECIMAL},
+      </if>
+      <if test="commissionStage3 != null">
+        #{commissionStage3,jdbcType=DECIMAL},
+      </if>
+      <if test="platformReturnLevel2 != null">
+        #{platformReturnLevel2,jdbcType=DECIMAL},
+      </if>
+      <if test="platformReturnCityRatio != null">
+        #{platformReturnCityRatio,jdbcType=DECIMAL},
+      </if>
+      <if test="platformReturnProvinceRatio != null">
+        #{platformReturnProvinceRatio,jdbcType=DECIMAL},
       </if>
     </trim>
   </insert>
@@ -185,11 +241,32 @@
       <if test="record.withdrawAbsorbRatio != null">
         withdraw_absorb_ratio = #{record.withdrawAbsorbRatio,jdbcType=DECIMAL},
       </if>
+      <if test="record.withdrawCommRatio != null">
+        withdraw_comm_ratio = #{record.withdrawCommRatio,jdbcType=DECIMAL},
+      </if>
       <if test="record.withdrawShuntRatio != null">
         withdraw_shunt_ratio = #{record.withdrawShuntRatio,jdbcType=DECIMAL},
       </if>
-      <if test="record.rechargeShuntRatio != null">
-        recharge_shunt_ratio = #{record.rechargeShuntRatio,jdbcType=DECIMAL},
+      <if test="record.refundLimitDay != null">
+        refund_limit_day = #{record.refundLimitDay,jdbcType=INTEGER},
+      </if>
+      <if test="record.commissionStage1 != null">
+        commission_stage1 = #{record.commissionStage1,jdbcType=DECIMAL},
+      </if>
+      <if test="record.commissionStage2 != null">
+        commission_stage2 = #{record.commissionStage2,jdbcType=DECIMAL},
+      </if>
+      <if test="record.commissionStage3 != null">
+        commission_stage3 = #{record.commissionStage3,jdbcType=DECIMAL},
+      </if>
+      <if test="record.platformReturnLevel2 != null">
+        platform_return_level2 = #{record.platformReturnLevel2,jdbcType=DECIMAL},
+      </if>
+      <if test="record.platformReturnCityRatio != null">
+        platform_return_city_ratio = #{record.platformReturnCityRatio,jdbcType=DECIMAL},
+      </if>
+      <if test="record.platformReturnProvinceRatio != null">
+        platform_return_province_ratio = #{record.platformReturnProvinceRatio,jdbcType=DECIMAL},
       </if>
     </set>
     <if test="_parameter != null">
@@ -203,8 +280,15 @@
       stay_balance = #{record.stayBalance,jdbcType=BIGINT},
       withdraw_income_ratio = #{record.withdrawIncomeRatio,jdbcType=DECIMAL},
       withdraw_absorb_ratio = #{record.withdrawAbsorbRatio,jdbcType=DECIMAL},
+      withdraw_comm_ratio = #{record.withdrawCommRatio,jdbcType=DECIMAL},
       withdraw_shunt_ratio = #{record.withdrawShuntRatio,jdbcType=DECIMAL},
-      recharge_shunt_ratio = #{record.rechargeShuntRatio,jdbcType=DECIMAL}
+      refund_limit_day = #{record.refundLimitDay,jdbcType=INTEGER},
+      commission_stage1 = #{record.commissionStage1,jdbcType=DECIMAL},
+      commission_stage2 = #{record.commissionStage2,jdbcType=DECIMAL},
+      commission_stage3 = #{record.commissionStage3,jdbcType=DECIMAL},
+      platform_return_level2 = #{record.platformReturnLevel2,jdbcType=DECIMAL},
+      platform_return_city_ratio = #{record.platformReturnCityRatio,jdbcType=DECIMAL},
+      platform_return_province_ratio = #{record.platformReturnProvinceRatio,jdbcType=DECIMAL}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -222,11 +306,32 @@
       <if test="withdrawAbsorbRatio != null">
         withdraw_absorb_ratio = #{withdrawAbsorbRatio,jdbcType=DECIMAL},
       </if>
+      <if test="withdrawCommRatio != null">
+        withdraw_comm_ratio = #{withdrawCommRatio,jdbcType=DECIMAL},
+      </if>
       <if test="withdrawShuntRatio != null">
         withdraw_shunt_ratio = #{withdrawShuntRatio,jdbcType=DECIMAL},
       </if>
-      <if test="rechargeShuntRatio != null">
-        recharge_shunt_ratio = #{rechargeShuntRatio,jdbcType=DECIMAL},
+      <if test="refundLimitDay != null">
+        refund_limit_day = #{refundLimitDay,jdbcType=INTEGER},
+      </if>
+      <if test="commissionStage1 != null">
+        commission_stage1 = #{commissionStage1,jdbcType=DECIMAL},
+      </if>
+      <if test="commissionStage2 != null">
+        commission_stage2 = #{commissionStage2,jdbcType=DECIMAL},
+      </if>
+      <if test="commissionStage3 != null">
+        commission_stage3 = #{commissionStage3,jdbcType=DECIMAL},
+      </if>
+      <if test="platformReturnLevel2 != null">
+        platform_return_level2 = #{platformReturnLevel2,jdbcType=DECIMAL},
+      </if>
+      <if test="platformReturnCityRatio != null">
+        platform_return_city_ratio = #{platformReturnCityRatio,jdbcType=DECIMAL},
+      </if>
+      <if test="platformReturnProvinceRatio != null">
+        platform_return_province_ratio = #{platformReturnProvinceRatio,jdbcType=DECIMAL},
       </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
@@ -237,8 +342,15 @@
     set stay_balance = #{stayBalance,jdbcType=BIGINT},
       withdraw_income_ratio = #{withdrawIncomeRatio,jdbcType=DECIMAL},
       withdraw_absorb_ratio = #{withdrawAbsorbRatio,jdbcType=DECIMAL},
+      withdraw_comm_ratio = #{withdrawCommRatio,jdbcType=DECIMAL},
       withdraw_shunt_ratio = #{withdrawShuntRatio,jdbcType=DECIMAL},
-      recharge_shunt_ratio = #{rechargeShuntRatio,jdbcType=DECIMAL}
+      refund_limit_day = #{refundLimitDay,jdbcType=INTEGER},
+      commission_stage1 = #{commissionStage1,jdbcType=DECIMAL},
+      commission_stage2 = #{commissionStage2,jdbcType=DECIMAL},
+      commission_stage3 = #{commissionStage3,jdbcType=DECIMAL},
+      platform_return_level2 = #{platformReturnLevel2,jdbcType=DECIMAL},
+      platform_return_city_ratio = #{platformReturnCityRatio,jdbcType=DECIMAL},
+      platform_return_province_ratio = #{platformReturnProvinceRatio,jdbcType=DECIMAL}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>

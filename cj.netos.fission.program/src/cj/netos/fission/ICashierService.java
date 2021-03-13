@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 public interface ICashierService {
     Cashier getAndInitCashier(String person);
 
-    void recharge(PaymentResult result);
+    void recharge(PaymentResult result) throws CircuitException;
 
     void rechargeError(PaymentResult result, int status, String message);
 

@@ -1,5 +1,6 @@
 package cj.netos.fission.model;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -474,6 +475,486 @@ public class WithdrawRecordExample {
 
         public Criteria andAmountNotBetween(Long value1, Long value2) {
             addCriterion("amount not between", value1, value2, "amount");
+            return (Criteria) this;
+        }
+
+        public Criteria andIncomeRatioIsNull() {
+            addCriterion("income_ratio is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIncomeRatioIsNotNull() {
+            addCriterion("income_ratio is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIncomeRatioEqualTo(BigDecimal value) {
+            addCriterion("income_ratio =", value, "incomeRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andIncomeRatioNotEqualTo(BigDecimal value) {
+            addCriterion("income_ratio <>", value, "incomeRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andIncomeRatioGreaterThan(BigDecimal value) {
+            addCriterion("income_ratio >", value, "incomeRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andIncomeRatioGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("income_ratio >=", value, "incomeRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andIncomeRatioLessThan(BigDecimal value) {
+            addCriterion("income_ratio <", value, "incomeRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andIncomeRatioLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("income_ratio <=", value, "incomeRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andIncomeRatioIn(List<BigDecimal> values) {
+            addCriterion("income_ratio in", values, "incomeRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andIncomeRatioNotIn(List<BigDecimal> values) {
+            addCriterion("income_ratio not in", values, "incomeRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andIncomeRatioBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("income_ratio between", value1, value2, "incomeRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andIncomeRatioNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("income_ratio not between", value1, value2, "incomeRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommissionRatioIsNull() {
+            addCriterion("commission_ratio is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommissionRatioIsNotNull() {
+            addCriterion("commission_ratio is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommissionRatioEqualTo(BigDecimal value) {
+            addCriterion("commission_ratio =", value, "commissionRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommissionRatioNotEqualTo(BigDecimal value) {
+            addCriterion("commission_ratio <>", value, "commissionRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommissionRatioGreaterThan(BigDecimal value) {
+            addCriterion("commission_ratio >", value, "commissionRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommissionRatioGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("commission_ratio >=", value, "commissionRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommissionRatioLessThan(BigDecimal value) {
+            addCriterion("commission_ratio <", value, "commissionRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommissionRatioLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("commission_ratio <=", value, "commissionRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommissionRatioIn(List<BigDecimal> values) {
+            addCriterion("commission_ratio in", values, "commissionRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommissionRatioNotIn(List<BigDecimal> values) {
+            addCriterion("commission_ratio not in", values, "commissionRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommissionRatioBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("commission_ratio between", value1, value2, "commissionRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommissionRatioNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("commission_ratio not between", value1, value2, "commissionRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andAbsorbRatioIsNull() {
+            addCriterion("absorb_ratio is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAbsorbRatioIsNotNull() {
+            addCriterion("absorb_ratio is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAbsorbRatioEqualTo(BigDecimal value) {
+            addCriterion("absorb_ratio =", value, "absorbRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andAbsorbRatioNotEqualTo(BigDecimal value) {
+            addCriterion("absorb_ratio <>", value, "absorbRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andAbsorbRatioGreaterThan(BigDecimal value) {
+            addCriterion("absorb_ratio >", value, "absorbRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andAbsorbRatioGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("absorb_ratio >=", value, "absorbRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andAbsorbRatioLessThan(BigDecimal value) {
+            addCriterion("absorb_ratio <", value, "absorbRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andAbsorbRatioLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("absorb_ratio <=", value, "absorbRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andAbsorbRatioIn(List<BigDecimal> values) {
+            addCriterion("absorb_ratio in", values, "absorbRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andAbsorbRatioNotIn(List<BigDecimal> values) {
+            addCriterion("absorb_ratio not in", values, "absorbRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andAbsorbRatioBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("absorb_ratio between", value1, value2, "absorbRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andAbsorbRatioNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("absorb_ratio not between", value1, value2, "absorbRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andShuntRatioIsNull() {
+            addCriterion("shunt_ratio is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andShuntRatioIsNotNull() {
+            addCriterion("shunt_ratio is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andShuntRatioEqualTo(BigDecimal value) {
+            addCriterion("shunt_ratio =", value, "shuntRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andShuntRatioNotEqualTo(BigDecimal value) {
+            addCriterion("shunt_ratio <>", value, "shuntRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andShuntRatioGreaterThan(BigDecimal value) {
+            addCriterion("shunt_ratio >", value, "shuntRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andShuntRatioGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("shunt_ratio >=", value, "shuntRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andShuntRatioLessThan(BigDecimal value) {
+            addCriterion("shunt_ratio <", value, "shuntRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andShuntRatioLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("shunt_ratio <=", value, "shuntRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andShuntRatioIn(List<BigDecimal> values) {
+            addCriterion("shunt_ratio in", values, "shuntRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andShuntRatioNotIn(List<BigDecimal> values) {
+            addCriterion("shunt_ratio not in", values, "shuntRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andShuntRatioBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("shunt_ratio between", value1, value2, "shuntRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andShuntRatioNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("shunt_ratio not between", value1, value2, "shuntRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andIncomeAmountIsNull() {
+            addCriterion("income_amount is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIncomeAmountIsNotNull() {
+            addCriterion("income_amount is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIncomeAmountEqualTo(Long value) {
+            addCriterion("income_amount =", value, "incomeAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andIncomeAmountNotEqualTo(Long value) {
+            addCriterion("income_amount <>", value, "incomeAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andIncomeAmountGreaterThan(Long value) {
+            addCriterion("income_amount >", value, "incomeAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andIncomeAmountGreaterThanOrEqualTo(Long value) {
+            addCriterion("income_amount >=", value, "incomeAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andIncomeAmountLessThan(Long value) {
+            addCriterion("income_amount <", value, "incomeAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andIncomeAmountLessThanOrEqualTo(Long value) {
+            addCriterion("income_amount <=", value, "incomeAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andIncomeAmountIn(List<Long> values) {
+            addCriterion("income_amount in", values, "incomeAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andIncomeAmountNotIn(List<Long> values) {
+            addCriterion("income_amount not in", values, "incomeAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andIncomeAmountBetween(Long value1, Long value2) {
+            addCriterion("income_amount between", value1, value2, "incomeAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andIncomeAmountNotBetween(Long value1, Long value2) {
+            addCriterion("income_amount not between", value1, value2, "incomeAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andAbsorbAmountIsNull() {
+            addCriterion("absorb_amount is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAbsorbAmountIsNotNull() {
+            addCriterion("absorb_amount is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAbsorbAmountEqualTo(Long value) {
+            addCriterion("absorb_amount =", value, "absorbAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andAbsorbAmountNotEqualTo(Long value) {
+            addCriterion("absorb_amount <>", value, "absorbAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andAbsorbAmountGreaterThan(Long value) {
+            addCriterion("absorb_amount >", value, "absorbAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andAbsorbAmountGreaterThanOrEqualTo(Long value) {
+            addCriterion("absorb_amount >=", value, "absorbAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andAbsorbAmountLessThan(Long value) {
+            addCriterion("absorb_amount <", value, "absorbAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andAbsorbAmountLessThanOrEqualTo(Long value) {
+            addCriterion("absorb_amount <=", value, "absorbAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andAbsorbAmountIn(List<Long> values) {
+            addCriterion("absorb_amount in", values, "absorbAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andAbsorbAmountNotIn(List<Long> values) {
+            addCriterion("absorb_amount not in", values, "absorbAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andAbsorbAmountBetween(Long value1, Long value2) {
+            addCriterion("absorb_amount between", value1, value2, "absorbAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andAbsorbAmountNotBetween(Long value1, Long value2) {
+            addCriterion("absorb_amount not between", value1, value2, "absorbAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommissionAmountIsNull() {
+            addCriterion("commission_amount is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommissionAmountIsNotNull() {
+            addCriterion("commission_amount is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommissionAmountEqualTo(Long value) {
+            addCriterion("commission_amount =", value, "commissionAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommissionAmountNotEqualTo(Long value) {
+            addCriterion("commission_amount <>", value, "commissionAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommissionAmountGreaterThan(Long value) {
+            addCriterion("commission_amount >", value, "commissionAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommissionAmountGreaterThanOrEqualTo(Long value) {
+            addCriterion("commission_amount >=", value, "commissionAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommissionAmountLessThan(Long value) {
+            addCriterion("commission_amount <", value, "commissionAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommissionAmountLessThanOrEqualTo(Long value) {
+            addCriterion("commission_amount <=", value, "commissionAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommissionAmountIn(List<Long> values) {
+            addCriterion("commission_amount in", values, "commissionAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommissionAmountNotIn(List<Long> values) {
+            addCriterion("commission_amount not in", values, "commissionAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommissionAmountBetween(Long value1, Long value2) {
+            addCriterion("commission_amount between", value1, value2, "commissionAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommissionAmountNotBetween(Long value1, Long value2) {
+            addCriterion("commission_amount not between", value1, value2, "commissionAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andGainAmountIsNull() {
+            addCriterion("gain_amount is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andGainAmountIsNotNull() {
+            addCriterion("gain_amount is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andGainAmountEqualTo(Long value) {
+            addCriterion("gain_amount =", value, "gainAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andGainAmountNotEqualTo(Long value) {
+            addCriterion("gain_amount <>", value, "gainAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andGainAmountGreaterThan(Long value) {
+            addCriterion("gain_amount >", value, "gainAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andGainAmountGreaterThanOrEqualTo(Long value) {
+            addCriterion("gain_amount >=", value, "gainAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andGainAmountLessThan(Long value) {
+            addCriterion("gain_amount <", value, "gainAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andGainAmountLessThanOrEqualTo(Long value) {
+            addCriterion("gain_amount <=", value, "gainAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andGainAmountIn(List<Long> values) {
+            addCriterion("gain_amount in", values, "gainAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andGainAmountNotIn(List<Long> values) {
+            addCriterion("gain_amount not in", values, "gainAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andGainAmountBetween(Long value1, Long value2) {
+            addCriterion("gain_amount between", value1, value2, "gainAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andGainAmountNotBetween(Long value1, Long value2) {
+            addCriterion("gain_amount not between", value1, value2, "gainAmount");
             return (Criteria) this;
         }
 

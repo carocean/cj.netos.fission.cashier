@@ -100,6 +100,136 @@
     </option>
     <option name="tableInfoMap">
       <map>
+        <entry key="fission.mf#absorb_bill">
+          <value>
+            <TableInfo>
+              <option name="database" value="fission.mf" />
+              <option name="domainName" value="AbsorbBill" />
+              <option name="tableComment" value="裂变平台各账户变动账单" />
+              <option name="tableName" value="absorb_bill" />
+            </TableInfo>
+          </value>
+        </entry>
+        <entry key="fission.mf#absorb_in_record">
+          <value>
+            <TableInfo>
+              <option name="database" value="fission.mf" />
+              <option name="domainName" value="AbsorbInRecord" />
+              <option name="tableComment" value="用户提现平台的洇金分账账号" />
+              <option name="tableName" value="absorb_in_record" />
+            </TableInfo>
+          </value>
+        </entry>
+        <entry key="fission.mf#absorb_out_record">
+          <value>
+            <TableInfo>
+              <option name="database" value="fission.mf" />
+              <option name="domainName" value="AbsorbOutRecord" />
+              <option name="tableComment" value="用户提现平台的洇金分账账号的提取单" />
+              <option name="tableName" value="absorb_out_record" />
+            </TableInfo>
+          </value>
+        </entry>
+        <entry key="fission.mf#business_bill">
+          <value>
+            <TableInfo>
+              <option name="database" value="fission.mf" />
+              <option name="domainName" value="BusinessBill" />
+              <option name="tableComment" value="业务账户的账变账单" />
+              <option name="tableName" value="business_bill" />
+            </TableInfo>
+          </value>
+        </entry>
+        <entry key="fission.mf#business_in_record">
+          <value>
+            <TableInfo>
+              <option name="database" value="fission.mf" />
+              <option name="domainName" value="BusinessInRecord" />
+              <option name="tableComment" value="B端充值平台分账记录" />
+              <option name="tableName" value="business_in_record" />
+            </TableInfo>
+          </value>
+        </entry>
+        <entry key="fission.mf#business_income_ratio">
+          <value>
+            <TableInfo>
+              <option name="database" value="fission.mf" />
+              <option name="domainName" value="BusinessIncomeRatio" />
+              <option name="tableComment" value="业务应收账款提点比率，即会员充值的提成&#10;会员充值应课以的服务费" />
+              <option name="tableName" value="business_income_ratio" />
+            </TableInfo>
+          </value>
+        </entry>
+        <entry key="fission.mf#business_refund_record">
+          <value>
+            <TableInfo>
+              <option name="database" value="fission.mf" />
+              <option name="domainName" value="BusinessRefundRecord" />
+              <option name="tableComment" value="业务款退款记录&#10;充许会员在未分账前一般7天内可退款，比如mf_settings表中的退款天数限制" />
+              <option name="tableName" value="business_refund_record" />
+            </TableInfo>
+          </value>
+        </entry>
+        <entry key="fission.mf#business_return_record">
+          <value>
+            <TableInfo>
+              <option name="database" value="fission.mf" />
+              <option name="domainName" value="BusinessReturnRecord" />
+              <option name="tableComment" value="业务款返还记录。&#10;比如平台从用户分账20%，但业务员优惠给他5%，然后就返还其5%进其余额&#10;流程：用户先充值，平台收到分账，业务员看到填写返还比例，客服或账务执行返还" />
+              <option name="tableName" value="business_return_record" />
+            </TableInfo>
+          </value>
+        </entry>
+        <entry key="fission.mf#business_shunt_record">
+          <value>
+            <TableInfo>
+              <option name="database" value="fission.mf" />
+              <option name="domainName" value="BusinessShuntRecord" />
+              <option name="tableComment" value="B端充值平台转出分账记录单" />
+              <option name="tableName" value="business_shunt_record" />
+            </TableInfo>
+          </value>
+        </entry>
+        <entry key="fission.mf#bussiness_bill">
+          <value>
+            <TableInfo>
+              <option name="database" value="fission.mf" />
+              <option name="domainName" value="BussinessBill" />
+              <option name="tableComment" value="业务账户的账变账单" />
+              <option name="tableName" value="bussiness_bill" />
+            </TableInfo>
+          </value>
+        </entry>
+        <entry key="fission.mf#bussiness_in_record">
+          <value>
+            <TableInfo>
+              <option name="database" value="fission.mf" />
+              <option name="domainName" value="BussinessInRecord" />
+              <option name="tableComment" value="B端充值平台分账记录" />
+              <option name="tableName" value="bussiness_in_record" />
+            </TableInfo>
+          </value>
+        </entry>
+        <entry key="fission.mf#bussiness_return_record">
+          <value>
+            <TableInfo>
+              <option name="database" value="fission.mf" />
+              <option name="domainName" value="BussinessReturnRecord" />
+              <option name="tableComment" value="业务款返还记录。&#10;比如平台从用户分账20%，但业务员优惠给他5%，然后就返还其5%进其余额&#10;流程：用户先充值，平台收到分账，业务员看到填写返还比例，客服或账务执行返还" />
+              <option name="tableName" value="bussiness_return_record" />
+            </TableInfo>
+          </value>
+        </entry>
+        <entry key="fission.mf#bussiness_shunt_record">
+          <value>
+            <TableInfo>
+              <option name="database" value="fission.mf" />
+              <option name="domainName" value="BussinessShuntRecord" />
+              <option name="tableComment" value="B端充值平台转出分账记录单" />
+              <option name="tableName" value="bussiness_shunt_record" />
+            </TableInfo>
+          </value>
+        </entry>
         <entry key="fission.mf#cashier">
           <value>
             <TableInfo>
@@ -130,6 +260,36 @@
             </TableInfo>
           </value>
         </entry>
+        <entry key="fission.mf#fission_account">
+          <value>
+            <TableInfo>
+              <option name="database" value="fission.mf" />
+              <option name="domainName" value="FissionAccount" />
+              <option name="tableComment" value="裂变游戏账户" />
+              <option name="tableName" value="fission_account" />
+            </TableInfo>
+          </value>
+        </entry>
+        <entry key="fission.mf#income_bill">
+          <value>
+            <TableInfo>
+              <option name="database" value="fission.mf" />
+              <option name="domainName" value="IncomeBill" />
+              <option name="tableComment" value="裂变平台用户提现平台分账账单" />
+              <option name="tableName" value="income_bill" />
+            </TableInfo>
+          </value>
+        </entry>
+        <entry key="fission.mf#income_record">
+          <value>
+            <TableInfo>
+              <option name="database" value="fission.mf" />
+              <option name="domainName" value="IncomeRecord" />
+              <option name="tableComment" value="用户提现平台的分账账号" />
+              <option name="tableName" value="income_record" />
+            </TableInfo>
+          </value>
+        </entry>
         <entry key="fission.mf#mf_settings">
           <value>
             <TableInfo>
@@ -137,6 +297,16 @@
               <option name="domainName" value="MfSettings" />
               <option name="tableComment" value="交个朋友配置" />
               <option name="tableName" value="mf_settings" />
+            </TableInfo>
+          </value>
+        </entry>
+        <entry key="fission.mf#outcome_record">
+          <value>
+            <TableInfo>
+              <option name="database" value="fission.mf" />
+              <option name="domainName" value="OutcomeRecord" />
+              <option name="tableComment" value="用户提现平台的分账的提取单" />
+              <option name="tableName" value="outcome_record" />
             </TableInfo>
           </value>
         </entry>

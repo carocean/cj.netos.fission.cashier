@@ -10,12 +10,15 @@ import cj.netos.rabbitmq.IRabbitMQProducer;
 import cj.studio.ecm.CJSystem;
 import cj.studio.ecm.annotation.CjBridge;
 import cj.studio.ecm.annotation.CjService;
+import cj.studio.ecm.annotation.CjServiceInvertInjection;
 import cj.studio.ecm.annotation.CjServiceRef;
 import cj.studio.ecm.net.CircuitException;
 import cj.studio.orm.mybatis.annotation.CjTransaction;
+import cj.ultimate.util.StringUtil;
 import com.rabbitmq.client.AMQP;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
@@ -41,6 +44,12 @@ public class CashierService implements ICashierService {
     ISnatchEnvelopeAlgorithm snatchEnvelopeAlgorithm;
     @CjServiceRef
     IUpdateManager updateManager;
+    @CjServiceRef
+    IFissionRecordService fissionRecordService;
+    @CjServiceInvertInjection
+    @CjServiceRef
+    IMFSettingsService mfSettingsService;
+
     @CjTransaction
     @Override
     public Cashier getAndInitCashier(String person) {
@@ -73,11 +82,25 @@ public class CashierService implements ICashierService {
 
     @CjTransaction
     @Override
-    public void recharge(PaymentResult result) {
+    public void recharge(PaymentResult result) throws CircuitException {
         PayDetails details = result.getDetails();
         String payeeCode = details.getPayeeCode();
         CashierBalance balance = cashierBalanceService.getAndInitBalance(payeeCode);
         Cashier cashier = getAndInitCashier(payeeCode);
+
+        if (!StringUtil.isEmpty(details.getSalesman())) {
+            cashierMapper.setSalesman(payeeCode,details.getSalesman());
+        }
+        if (cashier.getSupportsChatroom() == null || cashier.getSupportsChatroom() == 0) {
+            cashierMapper.setSupportsChatroom(payeeCode,1);
+        }
+        //分账
+        long amount = result.getAmount();
+        BigDecimal rechargeShuntRatio= mfSettingsService.getBusinessIncomeRatio(amount);
+        BigDecimal amountBD = new BigDecimal(amount + "");
+        long shuntAmount = rechargeShuntRatio.multiply(amountBD).longValue();
+        long remnantAmount = amount - shuntAmount;
+        //分账完毕
 
         RechargeRecord record = new RechargeRecord();
         record.setSn(new IdWorker().nextId());
@@ -88,13 +111,17 @@ public class CashierService implements ICashierService {
         record.setDayLimitAmount(cashier.getDayAmount());
         record.setState(1);
         record.setCtime(CashierUtils.dateTimeToMicroSecond(System.currentTimeMillis()));
-        record.setAmount(result.getAmount());
+        record.setAmount(amount);
+        record.setRemnantAmount(remnantAmount);
+        record.setShuntAmount(shuntAmount);
+        record.setShuntRatio(rechargeShuntRatio);
         record.setRefOrderSn(details.getOrderNo());
         record.setRefOrderTitle(details.getOrderTitle());
         record.setRefPaySn(details.getPaySn());
         record.setStatus(200);
         record.setMessage("ok");
         record.setNote(details.getNote());
+        record.setSalesman(details.getSalesman());
         rechargeRecordService.add(record);
 
 
@@ -103,7 +130,7 @@ public class CashierService implements ICashierService {
         bill.setTitle("充钱到出纳柜台");
         bill.setPerson(payeeCode);
         bill.setNickName(details.getPayeeName());
-        bill.setAmount(record.getAmount());
+        bill.setAmount(record.getRemnantAmount());
         long balanceAmount = balance.getBalance() + bill.getAmount();
         bill.setBalance(balanceAmount);
         bill.setOrder(0);
@@ -120,6 +147,8 @@ public class CashierService implements ICashierService {
         cashierBillService.add(bill);
 
         cashierBalanceService.updateBalance(payeeCode, balanceAmount);
+
+        fissionRecordService.inBusiness(payeeCode, details.getPayeeName(), shuntAmount, record.getSn());//业务分账入账
     }
 
     @CjTransaction
@@ -149,18 +178,40 @@ public class CashierService implements ICashierService {
     @CjTransaction
     @Override
     public void withdraw(String person, String nickName, long amount) throws CircuitException {
-        getAndInitCashier(person);
+        Cashier cashier = getAndInitCashier(person);
         CashierBalance balance = cashierBalanceService.getAndInitBalance(person);
         if (balance.getBalance() < amount) {
             withdrawErrow(person, nickName, amount, 1002, String.format("金额不足:%s<%s", balance.getBalance(), amount));
             return;
         }
+        //分账
+        BigDecimal amountBD = new BigDecimal(amount);
+        MfSettings settings = mfSettingsService.getSettings();
+        long gainAmount = new BigDecimal("1.000").subtract(settings.getWithdrawShuntRatio()).multiply(amountBD).longValue();
+        long shuntAmount = amount - gainAmount;
+        BigDecimal shuntAmountBD = new BigDecimal(shuntAmount).setScale(0, RoundingMode.DOWN);//可分的账金
+        long incomeAmount = settings.getWithdrawIncomeRatio().multiply(shuntAmountBD).longValue();
+        long commissionAmount = 0;
+        if (!StringUtil.isEmpty(cashier.getReferrer())) {
+            commissionAmount = settings.getWithdrawCommRatio().multiply(shuntAmountBD).longValue();
+        }
+        long absorbAmount = shuntAmount - incomeAmount - commissionAmount;//只要是剩下的钱全发洇金
+        //分完
+
         WithdrawRecord record = new WithdrawRecord();
         record.setSn(new IdWorker().nextId());
         record.setWithdrawer(person);
         record.setNickName(nickName);
         record.setCurrency("CNY");
         record.setAmount(amount);
+        record.setShuntRatio(settings.getWithdrawShuntRatio());
+        record.setIncomeRatio(settings.getWithdrawIncomeRatio());
+        record.setIncomeAmount(incomeAmount);
+        record.setAbsorbRatio(settings.getWithdrawAbsorbRatio());
+        record.setAbsorbAmount(absorbAmount);
+        record.setCommissionRatio(settings.getWithdrawCommRatio());
+        record.setCommissionAmount(commissionAmount);
+        record.setGainAmount(gainAmount);
         record.setState(1);
         record.setCtime(CashierUtils.dateTimeToMicroSecond(System.currentTimeMillis()));
         record.setStatus(200);
@@ -190,6 +241,36 @@ public class CashierService implements ICashierService {
 
         cashierBalanceService.updateBalance(person, balanceAmount);
 
+        depositRedbag(person, nickName, gainAmount);//转入抢红包者钱包
+
+        fissionRecordService.income(person, nickName, incomeAmount, record.getSn());//平台收入
+        fissionRecordService.inAbsorb(person, nickName, absorbAmount, record.getSn());//洇金收入
+
+
+        if (!StringUtil.isEmpty(cashier.getReferrer())) {//推广提成转引荐人钱包
+            depositCommission(cashier.getReferrer(), cashier.getReferrerName(), commissionAmount);
+        }
+
+    }
+
+
+    private void depositCommission(String person, String nickName, long gainAmount) throws CircuitException {
+        AMQP.BasicProperties properties = new AMQP.BasicProperties().builder()
+                .type("/wallet/receipt.mhub")
+                .headers(new HashMap<String, Object>() {{
+                    put("command", "transIn");
+                    put("module-id", "fission/mf");
+                    put("module-title", "裂变游戏·交个朋友");
+                    put("person", person);
+                    put("nick-name", nickName);
+                    put("amount", gainAmount);
+                    put("note", "裂变游戏·交个朋友·转入推广提成");
+                }})
+                .build();
+        rabbitMQProducer.publish("fission.mf", properties, new byte[0]);
+    }
+
+    private void depositRedbag(String person, String nickName, long gainAmount) throws CircuitException {
         AMQP.BasicProperties properties = new AMQP.BasicProperties().builder()
                 .type("/wallet/receipt.mhub")
                 .headers(new HashMap<String, Object>() {{
@@ -198,8 +279,8 @@ public class CashierService implements ICashierService {
                     put("module-title", "裂变游戏·交个朋友");
                     put("person", String.format("%s@gbera.netos", person));
                     put("nick-name", nickName);
-                    put("amount", amount);
-                    put("note", "裂变游戏·交个朋友·转入账款");
+                    put("amount", gainAmount);
+                    put("note", "裂变游戏·交个朋友·转入红包收益");
                 }})
                 .build();
         rabbitMQProducer.publish("fission.mf", properties, new byte[0]);
@@ -268,7 +349,7 @@ public class CashierService implements ICashierService {
         CashierBalance payerBalance = getCashierBalance(payer);
         long amount = snatchEnvelopeAlgorithm.snatchEnvelopeDynamic(cashier.getCacAverage(), cashier.getAmplitudeFactor().doubleValue());
         if (amount > payerBalance.getBalance()) {
-            snatchEnveloperError(recordSn, payer, payerName, payee, payeeName,amount, 1002, String.format("余额不足:%s > %s",amount,payerBalance.getBalance()));
+            snatchEnveloperError(recordSn, payer, payerName, payee, payeeName, amount, 1002, String.format("余额不足:%s > %s", amount, payerBalance.getBalance()));
             throw new CircuitException("1002", "余额不足");
         }
         PayRecord record = new PayRecord();
@@ -346,7 +427,7 @@ public class CashierService implements ICashierService {
 
     @CjTransaction
     @Override
-    public void snatchEnveloperError(String recordSn, String person, String payerName, String payee, String payeeName,long amount, int status, String msg) {
+    public void snatchEnveloperError(String recordSn, String person, String payerName, String payee, String payeeName, long amount, int status, String msg) {
         PayRecord record = new PayRecord();
         record.setSn(recordSn);
         record.setPayer(person);

@@ -1,5 +1,6 @@
 package cj.netos.fission.model;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -474,6 +475,256 @@ public class RechargeRecordExample {
 
         public Criteria andAmountNotBetween(Long value1, Long value2) {
             addCriterion("amount not between", value1, value2, "amount");
+            return (Criteria) this;
+        }
+
+        public Criteria andShuntRatioIsNull() {
+            addCriterion("shunt_ratio is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andShuntRatioIsNotNull() {
+            addCriterion("shunt_ratio is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andShuntRatioEqualTo(BigDecimal value) {
+            addCriterion("shunt_ratio =", value, "shuntRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andShuntRatioNotEqualTo(BigDecimal value) {
+            addCriterion("shunt_ratio <>", value, "shuntRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andShuntRatioGreaterThan(BigDecimal value) {
+            addCriterion("shunt_ratio >", value, "shuntRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andShuntRatioGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("shunt_ratio >=", value, "shuntRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andShuntRatioLessThan(BigDecimal value) {
+            addCriterion("shunt_ratio <", value, "shuntRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andShuntRatioLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("shunt_ratio <=", value, "shuntRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andShuntRatioIn(List<BigDecimal> values) {
+            addCriterion("shunt_ratio in", values, "shuntRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andShuntRatioNotIn(List<BigDecimal> values) {
+            addCriterion("shunt_ratio not in", values, "shuntRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andShuntRatioBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("shunt_ratio between", value1, value2, "shuntRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andShuntRatioNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("shunt_ratio not between", value1, value2, "shuntRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andShuntAmountIsNull() {
+            addCriterion("shunt_amount is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andShuntAmountIsNotNull() {
+            addCriterion("shunt_amount is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andShuntAmountEqualTo(Long value) {
+            addCriterion("shunt_amount =", value, "shuntAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andShuntAmountNotEqualTo(Long value) {
+            addCriterion("shunt_amount <>", value, "shuntAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andShuntAmountGreaterThan(Long value) {
+            addCriterion("shunt_amount >", value, "shuntAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andShuntAmountGreaterThanOrEqualTo(Long value) {
+            addCriterion("shunt_amount >=", value, "shuntAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andShuntAmountLessThan(Long value) {
+            addCriterion("shunt_amount <", value, "shuntAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andShuntAmountLessThanOrEqualTo(Long value) {
+            addCriterion("shunt_amount <=", value, "shuntAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andShuntAmountIn(List<Long> values) {
+            addCriterion("shunt_amount in", values, "shuntAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andShuntAmountNotIn(List<Long> values) {
+            addCriterion("shunt_amount not in", values, "shuntAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andShuntAmountBetween(Long value1, Long value2) {
+            addCriterion("shunt_amount between", value1, value2, "shuntAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andShuntAmountNotBetween(Long value1, Long value2) {
+            addCriterion("shunt_amount not between", value1, value2, "shuntAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemnantAmountIsNull() {
+            addCriterion("remnant_amount is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemnantAmountIsNotNull() {
+            addCriterion("remnant_amount is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemnantAmountEqualTo(Long value) {
+            addCriterion("remnant_amount =", value, "remnantAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemnantAmountNotEqualTo(Long value) {
+            addCriterion("remnant_amount <>", value, "remnantAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemnantAmountGreaterThan(Long value) {
+            addCriterion("remnant_amount >", value, "remnantAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemnantAmountGreaterThanOrEqualTo(Long value) {
+            addCriterion("remnant_amount >=", value, "remnantAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemnantAmountLessThan(Long value) {
+            addCriterion("remnant_amount <", value, "remnantAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemnantAmountLessThanOrEqualTo(Long value) {
+            addCriterion("remnant_amount <=", value, "remnantAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemnantAmountIn(List<Long> values) {
+            addCriterion("remnant_amount in", values, "remnantAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemnantAmountNotIn(List<Long> values) {
+            addCriterion("remnant_amount not in", values, "remnantAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemnantAmountBetween(Long value1, Long value2) {
+            addCriterion("remnant_amount between", value1, value2, "remnantAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemnantAmountNotBetween(Long value1, Long value2) {
+            addCriterion("remnant_amount not between", value1, value2, "remnantAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andSalesmanIsNull() {
+            addCriterion("salesman is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSalesmanIsNotNull() {
+            addCriterion("salesman is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSalesmanEqualTo(String value) {
+            addCriterion("salesman =", value, "salesman");
+            return (Criteria) this;
+        }
+
+        public Criteria andSalesmanNotEqualTo(String value) {
+            addCriterion("salesman <>", value, "salesman");
+            return (Criteria) this;
+        }
+
+        public Criteria andSalesmanGreaterThan(String value) {
+            addCriterion("salesman >", value, "salesman");
+            return (Criteria) this;
+        }
+
+        public Criteria andSalesmanGreaterThanOrEqualTo(String value) {
+            addCriterion("salesman >=", value, "salesman");
+            return (Criteria) this;
+        }
+
+        public Criteria andSalesmanLessThan(String value) {
+            addCriterion("salesman <", value, "salesman");
+            return (Criteria) this;
+        }
+
+        public Criteria andSalesmanLessThanOrEqualTo(String value) {
+            addCriterion("salesman <=", value, "salesman");
+            return (Criteria) this;
+        }
+
+        public Criteria andSalesmanLike(String value) {
+            addCriterion("salesman like", value, "salesman");
+            return (Criteria) this;
+        }
+
+        public Criteria andSalesmanNotLike(String value) {
+            addCriterion("salesman not like", value, "salesman");
+            return (Criteria) this;
+        }
+
+        public Criteria andSalesmanIn(List<String> values) {
+            addCriterion("salesman in", values, "salesman");
+            return (Criteria) this;
+        }
+
+        public Criteria andSalesmanNotIn(List<String> values) {
+            addCriterion("salesman not in", values, "salesman");
+            return (Criteria) this;
+        }
+
+        public Criteria andSalesmanBetween(String value1, String value2) {
+            addCriterion("salesman between", value1, value2, "salesman");
+            return (Criteria) this;
+        }
+
+        public Criteria andSalesmanNotBetween(String value1, String value2) {
+            addCriterion("salesman not between", value1, value2, "salesman");
             return (Criteria) this;
         }
 

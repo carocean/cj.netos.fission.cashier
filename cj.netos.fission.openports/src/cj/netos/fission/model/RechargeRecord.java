@@ -1,5 +1,7 @@
 package cj.netos.fission.model;
 
+import java.math.BigDecimal;
+
 /**
  * Table: recharge_record
  */
@@ -29,9 +31,33 @@ public class RechargeRecord {
 
     /**
      * Column: amount
-     * Remark: 金额
+     * Remark: 应充值的金额
      */
     private Long amount;
+
+    /**
+     * Column: shunt_ratio
+     * Remark: 充值平台收账比率
+     */
+    private BigDecimal shuntRatio;
+
+    /**
+     * Column: shunt_amount
+     * Remark: 平台分账账金
+     */
+    private Long shuntAmount;
+
+    /**
+     * Column: remnant_amount
+     * Remark: 实际充值到用户余额的金额，即剩余余额
+     */
+    private Long remnantAmount;
+
+    /**
+     * Column: salesman
+     * Remark: 经手的业务员
+     */
+    private String salesman;
 
     /**
      * Column: recharge_strategy
@@ -129,6 +155,38 @@ public class RechargeRecord {
 
     public void setAmount(Long amount) {
         this.amount = amount;
+    }
+
+    public BigDecimal getShuntRatio() {
+        return shuntRatio;
+    }
+
+    public void setShuntRatio(BigDecimal shuntRatio) {
+        this.shuntRatio = shuntRatio;
+    }
+
+    public Long getShuntAmount() {
+        return shuntAmount;
+    }
+
+    public void setShuntAmount(Long shuntAmount) {
+        this.shuntAmount = shuntAmount;
+    }
+
+    public Long getRemnantAmount() {
+        return remnantAmount;
+    }
+
+    public void setRemnantAmount(Long remnantAmount) {
+        this.remnantAmount = remnantAmount;
+    }
+
+    public String getSalesman() {
+        return salesman;
+    }
+
+    public void setSalesman(String salesman) {
+        this.salesman = salesman == null ? null : salesman.trim();
     }
 
     public Integer getRechargeStrategy() {

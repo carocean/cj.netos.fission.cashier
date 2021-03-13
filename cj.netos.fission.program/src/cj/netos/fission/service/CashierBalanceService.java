@@ -65,5 +65,4 @@ public class CashierBalanceService implements ICashierBalanceService {
         event.setData(data);
         updateManager.addEvent(event);
     }
-
 }

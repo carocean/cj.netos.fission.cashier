@@ -8,6 +8,14 @@
     <result column="nick_name" jdbcType="VARCHAR" property="nickName" />
     <result column="currency" jdbcType="VARCHAR" property="currency" />
     <result column="amount" jdbcType="BIGINT" property="amount" />
+    <result column="income_ratio" jdbcType="DECIMAL" property="incomeRatio" />
+    <result column="commission_ratio" jdbcType="DECIMAL" property="commissionRatio" />
+    <result column="absorb_ratio" jdbcType="DECIMAL" property="absorbRatio" />
+    <result column="shunt_ratio" jdbcType="DECIMAL" property="shuntRatio" />
+    <result column="income_amount" jdbcType="BIGINT" property="incomeAmount" />
+    <result column="absorb_amount" jdbcType="BIGINT" property="absorbAmount" />
+    <result column="commission_amount" jdbcType="BIGINT" property="commissionAmount" />
+    <result column="gain_amount" jdbcType="BIGINT" property="gainAmount" />
     <result column="state" jdbcType="INTEGER" property="state" />
     <result column="ctime" jdbcType="VARCHAR" property="ctime" />
     <result column="status" jdbcType="INTEGER" property="status" />
@@ -76,7 +84,9 @@
   </sql>
   <sql id="Base_Column_List">
     <!-- @mbg.generated: generated automatically, do not modify! -->
-    sn, withdrawer, nick_name, currency, amount, `state`, ctime, `status`, message, note
+    sn, withdrawer, nick_name, currency, amount, income_ratio, commission_ratio, absorb_ratio, 
+    shunt_ratio, income_amount, absorb_amount, commission_amount, gain_amount, `state`, 
+    ctime, `status`, message, note
   </sql>
   <select id="selectByExample" parameterType="cj.netos.fission.model.WithdrawRecordExample" resultMap="BaseResultMap">
     <!-- @mbg.generated: generated automatically, do not modify! -->
@@ -115,13 +125,19 @@
   <insert id="insert" parameterType="cj.netos.fission.model.WithdrawRecord">
     <!-- @mbg.generated: generated automatically, do not modify! -->
     insert into withdraw_record (sn, withdrawer, nick_name, 
-      currency, amount, `state`, 
-      ctime, `status`, message, 
-      note)
+      currency, amount, income_ratio, 
+      commission_ratio, absorb_ratio, shunt_ratio, 
+      income_amount, absorb_amount, commission_amount, 
+      gain_amount, `state`, ctime, 
+      `status`, message, note
+      )
     values (#{sn,jdbcType=VARCHAR}, #{withdrawer,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR}, 
-      #{currency,jdbcType=VARCHAR}, #{amount,jdbcType=BIGINT}, #{state,jdbcType=INTEGER}, 
-      #{ctime,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{message,jdbcType=VARCHAR}, 
-      #{note,jdbcType=VARCHAR})
+      #{currency,jdbcType=VARCHAR}, #{amount,jdbcType=BIGINT}, #{incomeRatio,jdbcType=DECIMAL}, 
+      #{commissionRatio,jdbcType=DECIMAL}, #{absorbRatio,jdbcType=DECIMAL}, #{shuntRatio,jdbcType=DECIMAL}, 
+      #{incomeAmount,jdbcType=BIGINT}, #{absorbAmount,jdbcType=BIGINT}, #{commissionAmount,jdbcType=BIGINT}, 
+      #{gainAmount,jdbcType=BIGINT}, #{state,jdbcType=INTEGER}, #{ctime,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER}, #{message,jdbcType=VARCHAR}, #{note,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="cj.netos.fission.model.WithdrawRecord">
     <!-- @mbg.generated: generated automatically, do not modify! -->
@@ -141,6 +157,30 @@
       </if>
       <if test="amount != null">
         amount,
+      </if>
+      <if test="incomeRatio != null">
+        income_ratio,
+      </if>
+      <if test="commissionRatio != null">
+        commission_ratio,
+      </if>
+      <if test="absorbRatio != null">
+        absorb_ratio,
+      </if>
+      <if test="shuntRatio != null">
+        shunt_ratio,
+      </if>
+      <if test="incomeAmount != null">
+        income_amount,
+      </if>
+      <if test="absorbAmount != null">
+        absorb_amount,
+      </if>
+      <if test="commissionAmount != null">
+        commission_amount,
+      </if>
+      <if test="gainAmount != null">
+        gain_amount,
       </if>
       <if test="state != null">
         `state`,
@@ -173,6 +213,30 @@
       </if>
       <if test="amount != null">
         #{amount,jdbcType=BIGINT},
+      </if>
+      <if test="incomeRatio != null">
+        #{incomeRatio,jdbcType=DECIMAL},
+      </if>
+      <if test="commissionRatio != null">
+        #{commissionRatio,jdbcType=DECIMAL},
+      </if>
+      <if test="absorbRatio != null">
+        #{absorbRatio,jdbcType=DECIMAL},
+      </if>
+      <if test="shuntRatio != null">
+        #{shuntRatio,jdbcType=DECIMAL},
+      </if>
+      <if test="incomeAmount != null">
+        #{incomeAmount,jdbcType=BIGINT},
+      </if>
+      <if test="absorbAmount != null">
+        #{absorbAmount,jdbcType=BIGINT},
+      </if>
+      <if test="commissionAmount != null">
+        #{commissionAmount,jdbcType=BIGINT},
+      </if>
+      <if test="gainAmount != null">
+        #{gainAmount,jdbcType=BIGINT},
       </if>
       <if test="state != null">
         #{state,jdbcType=INTEGER},
@@ -217,6 +281,30 @@
       <if test="record.amount != null">
         amount = #{record.amount,jdbcType=BIGINT},
       </if>
+      <if test="record.incomeRatio != null">
+        income_ratio = #{record.incomeRatio,jdbcType=DECIMAL},
+      </if>
+      <if test="record.commissionRatio != null">
+        commission_ratio = #{record.commissionRatio,jdbcType=DECIMAL},
+      </if>
+      <if test="record.absorbRatio != null">
+        absorb_ratio = #{record.absorbRatio,jdbcType=DECIMAL},
+      </if>
+      <if test="record.shuntRatio != null">
+        shunt_ratio = #{record.shuntRatio,jdbcType=DECIMAL},
+      </if>
+      <if test="record.incomeAmount != null">
+        income_amount = #{record.incomeAmount,jdbcType=BIGINT},
+      </if>
+      <if test="record.absorbAmount != null">
+        absorb_amount = #{record.absorbAmount,jdbcType=BIGINT},
+      </if>
+      <if test="record.commissionAmount != null">
+        commission_amount = #{record.commissionAmount,jdbcType=BIGINT},
+      </if>
+      <if test="record.gainAmount != null">
+        gain_amount = #{record.gainAmount,jdbcType=BIGINT},
+      </if>
       <if test="record.state != null">
         `state` = #{record.state,jdbcType=INTEGER},
       </if>
@@ -245,6 +333,14 @@
       nick_name = #{record.nickName,jdbcType=VARCHAR},
       currency = #{record.currency,jdbcType=VARCHAR},
       amount = #{record.amount,jdbcType=BIGINT},
+      income_ratio = #{record.incomeRatio,jdbcType=DECIMAL},
+      commission_ratio = #{record.commissionRatio,jdbcType=DECIMAL},
+      absorb_ratio = #{record.absorbRatio,jdbcType=DECIMAL},
+      shunt_ratio = #{record.shuntRatio,jdbcType=DECIMAL},
+      income_amount = #{record.incomeAmount,jdbcType=BIGINT},
+      absorb_amount = #{record.absorbAmount,jdbcType=BIGINT},
+      commission_amount = #{record.commissionAmount,jdbcType=BIGINT},
+      gain_amount = #{record.gainAmount,jdbcType=BIGINT},
       `state` = #{record.state,jdbcType=INTEGER},
       ctime = #{record.ctime,jdbcType=VARCHAR},
       `status` = #{record.status,jdbcType=INTEGER},
@@ -269,6 +365,30 @@
       </if>
       <if test="amount != null">
         amount = #{amount,jdbcType=BIGINT},
+      </if>
+      <if test="incomeRatio != null">
+        income_ratio = #{incomeRatio,jdbcType=DECIMAL},
+      </if>
+      <if test="commissionRatio != null">
+        commission_ratio = #{commissionRatio,jdbcType=DECIMAL},
+      </if>
+      <if test="absorbRatio != null">
+        absorb_ratio = #{absorbRatio,jdbcType=DECIMAL},
+      </if>
+      <if test="shuntRatio != null">
+        shunt_ratio = #{shuntRatio,jdbcType=DECIMAL},
+      </if>
+      <if test="incomeAmount != null">
+        income_amount = #{incomeAmount,jdbcType=BIGINT},
+      </if>
+      <if test="absorbAmount != null">
+        absorb_amount = #{absorbAmount,jdbcType=BIGINT},
+      </if>
+      <if test="commissionAmount != null">
+        commission_amount = #{commissionAmount,jdbcType=BIGINT},
+      </if>
+      <if test="gainAmount != null">
+        gain_amount = #{gainAmount,jdbcType=BIGINT},
       </if>
       <if test="state != null">
         `state` = #{state,jdbcType=INTEGER},
@@ -295,6 +415,14 @@
       nick_name = #{nickName,jdbcType=VARCHAR},
       currency = #{currency,jdbcType=VARCHAR},
       amount = #{amount,jdbcType=BIGINT},
+      income_ratio = #{incomeRatio,jdbcType=DECIMAL},
+      commission_ratio = #{commissionRatio,jdbcType=DECIMAL},
+      absorb_ratio = #{absorbRatio,jdbcType=DECIMAL},
+      shunt_ratio = #{shuntRatio,jdbcType=DECIMAL},
+      income_amount = #{incomeAmount,jdbcType=BIGINT},
+      absorb_amount = #{absorbAmount,jdbcType=BIGINT},
+      commission_amount = #{commissionAmount,jdbcType=BIGINT},
+      gain_amount = #{gainAmount,jdbcType=BIGINT},
       `state` = #{state,jdbcType=INTEGER},
       ctime = #{ctime,jdbcType=VARCHAR},
       `status` = #{status,jdbcType=INTEGER},

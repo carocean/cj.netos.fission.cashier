@@ -2,9 +2,7 @@ package cj.netos.fission.mapper;
 
 import cj.netos.fission.model.PayRecord;
 import cj.netos.fission.model.PayRecordExample;
-
 import java.util.List;
-
 import org.apache.ibatis.annotations.Param;
 
 public interface PayRecordMapper {
@@ -65,7 +63,9 @@ public interface PayRecordMapper {
     int updateByPrimaryKey(PayRecord record);
 
     Long totalPayee(@Param(value = "payer") String payer);
+
     long totalPayeeAmount(@Param(value = "payer") String payer);
+
     Long totalPayeeOfDay(@Param(value = "payer") String payer, @Param(value = "dayTime") String dayTime);
 
     List<PayRecord> pagePayeeRecord(@Param(value = "payer") String payer, @Param(value = "limit") int limit, @Param(value = "offset") long offset);

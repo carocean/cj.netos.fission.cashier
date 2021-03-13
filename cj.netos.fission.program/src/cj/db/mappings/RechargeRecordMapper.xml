@@ -8,6 +8,10 @@
     <result column="nick_name" jdbcType="VARCHAR" property="nickName" />
     <result column="currency" jdbcType="VARCHAR" property="currency" />
     <result column="amount" jdbcType="BIGINT" property="amount" />
+    <result column="shunt_ratio" jdbcType="DECIMAL" property="shuntRatio" />
+    <result column="shunt_amount" jdbcType="BIGINT" property="shuntAmount" />
+    <result column="remnant_amount" jdbcType="BIGINT" property="remnantAmount" />
+    <result column="salesman" jdbcType="VARCHAR" property="salesman" />
     <result column="recharge_strategy" jdbcType="INTEGER" property="rechargeStrategy" />
     <result column="day_limit_amount" jdbcType="BIGINT" property="dayLimitAmount" />
     <result column="state" jdbcType="INTEGER" property="state" />
@@ -81,8 +85,9 @@
   </sql>
   <sql id="Base_Column_List">
     <!-- @mbg.generated: generated automatically, do not modify! -->
-    sn, recharger, nick_name, currency, amount, recharge_strategy, day_limit_amount, 
-    `state`, ctime, ref_order_sn, ref_order_title, ref_pay_sn, `status`, message, note
+    sn, recharger, nick_name, currency, amount, shunt_ratio, shunt_amount, remnant_amount, 
+    salesman, recharge_strategy, day_limit_amount, `state`, ctime, ref_order_sn, ref_order_title, 
+    ref_pay_sn, `status`, message, note
   </sql>
   <select id="selectByExample" parameterType="cj.netos.fission.model.RechargeRecordExample" resultMap="BaseResultMap">
     <!-- @mbg.generated: generated automatically, do not modify! -->
@@ -121,17 +126,19 @@
   <insert id="insert" parameterType="cj.netos.fission.model.RechargeRecord">
     <!-- @mbg.generated: generated automatically, do not modify! -->
     insert into recharge_record (sn, recharger, nick_name, 
-      currency, amount, recharge_strategy, 
-      day_limit_amount, `state`, ctime, 
-      ref_order_sn, ref_order_title, ref_pay_sn, 
-      `status`, message, note
-      )
+      currency, amount, shunt_ratio, 
+      shunt_amount, remnant_amount, salesman, 
+      recharge_strategy, day_limit_amount, `state`, 
+      ctime, ref_order_sn, ref_order_title, 
+      ref_pay_sn, `status`, message, 
+      note)
     values (#{sn,jdbcType=VARCHAR}, #{recharger,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR}, 
-      #{currency,jdbcType=VARCHAR}, #{amount,jdbcType=BIGINT}, #{rechargeStrategy,jdbcType=INTEGER}, 
-      #{dayLimitAmount,jdbcType=BIGINT}, #{state,jdbcType=INTEGER}, #{ctime,jdbcType=VARCHAR}, 
-      #{refOrderSn,jdbcType=VARCHAR}, #{refOrderTitle,jdbcType=VARCHAR}, #{refPaySn,jdbcType=VARCHAR}, 
-      #{status,jdbcType=INTEGER}, #{message,jdbcType=VARCHAR}, #{note,jdbcType=VARCHAR}
-      )
+      #{currency,jdbcType=VARCHAR}, #{amount,jdbcType=BIGINT}, #{shuntRatio,jdbcType=DECIMAL}, 
+      #{shuntAmount,jdbcType=BIGINT}, #{remnantAmount,jdbcType=BIGINT}, #{salesman,jdbcType=VARCHAR}, 
+      #{rechargeStrategy,jdbcType=INTEGER}, #{dayLimitAmount,jdbcType=BIGINT}, #{state,jdbcType=INTEGER}, 
+      #{ctime,jdbcType=VARCHAR}, #{refOrderSn,jdbcType=VARCHAR}, #{refOrderTitle,jdbcType=VARCHAR}, 
+      #{refPaySn,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{message,jdbcType=VARCHAR}, 
+      #{note,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="cj.netos.fission.model.RechargeRecord">
     <!-- @mbg.generated: generated automatically, do not modify! -->
@@ -151,6 +158,18 @@
       </if>
       <if test="amount != null">
         amount,
+      </if>
+      <if test="shuntRatio != null">
+        shunt_ratio,
+      </if>
+      <if test="shuntAmount != null">
+        shunt_amount,
+      </if>
+      <if test="remnantAmount != null">
+        remnant_amount,
+      </if>
+      <if test="salesman != null">
+        salesman,
       </if>
       <if test="rechargeStrategy != null">
         recharge_strategy,
@@ -198,6 +217,18 @@
       </if>
       <if test="amount != null">
         #{amount,jdbcType=BIGINT},
+      </if>
+      <if test="shuntRatio != null">
+        #{shuntRatio,jdbcType=DECIMAL},
+      </if>
+      <if test="shuntAmount != null">
+        #{shuntAmount,jdbcType=BIGINT},
+      </if>
+      <if test="remnantAmount != null">
+        #{remnantAmount,jdbcType=BIGINT},
+      </if>
+      <if test="salesman != null">
+        #{salesman,jdbcType=VARCHAR},
       </if>
       <if test="rechargeStrategy != null">
         #{rechargeStrategy,jdbcType=INTEGER},
@@ -257,6 +288,18 @@
       <if test="record.amount != null">
         amount = #{record.amount,jdbcType=BIGINT},
       </if>
+      <if test="record.shuntRatio != null">
+        shunt_ratio = #{record.shuntRatio,jdbcType=DECIMAL},
+      </if>
+      <if test="record.shuntAmount != null">
+        shunt_amount = #{record.shuntAmount,jdbcType=BIGINT},
+      </if>
+      <if test="record.remnantAmount != null">
+        remnant_amount = #{record.remnantAmount,jdbcType=BIGINT},
+      </if>
+      <if test="record.salesman != null">
+        salesman = #{record.salesman,jdbcType=VARCHAR},
+      </if>
       <if test="record.rechargeStrategy != null">
         recharge_strategy = #{record.rechargeStrategy,jdbcType=INTEGER},
       </if>
@@ -300,6 +343,10 @@
       nick_name = #{record.nickName,jdbcType=VARCHAR},
       currency = #{record.currency,jdbcType=VARCHAR},
       amount = #{record.amount,jdbcType=BIGINT},
+      shunt_ratio = #{record.shuntRatio,jdbcType=DECIMAL},
+      shunt_amount = #{record.shuntAmount,jdbcType=BIGINT},
+      remnant_amount = #{record.remnantAmount,jdbcType=BIGINT},
+      salesman = #{record.salesman,jdbcType=VARCHAR},
       recharge_strategy = #{record.rechargeStrategy,jdbcType=INTEGER},
       day_limit_amount = #{record.dayLimitAmount,jdbcType=BIGINT},
       `state` = #{record.state,jdbcType=INTEGER},
@@ -329,6 +376,18 @@
       </if>
       <if test="amount != null">
         amount = #{amount,jdbcType=BIGINT},
+      </if>
+      <if test="shuntRatio != null">
+        shunt_ratio = #{shuntRatio,jdbcType=DECIMAL},
+      </if>
+      <if test="shuntAmount != null">
+        shunt_amount = #{shuntAmount,jdbcType=BIGINT},
+      </if>
+      <if test="remnantAmount != null">
+        remnant_amount = #{remnantAmount,jdbcType=BIGINT},
+      </if>
+      <if test="salesman != null">
+        salesman = #{salesman,jdbcType=VARCHAR},
       </if>
       <if test="rechargeStrategy != null">
         recharge_strategy = #{rechargeStrategy,jdbcType=INTEGER},
@@ -370,6 +429,10 @@
       nick_name = #{nickName,jdbcType=VARCHAR},
       currency = #{currency,jdbcType=VARCHAR},
       amount = #{amount,jdbcType=BIGINT},
+      shunt_ratio = #{shuntRatio,jdbcType=DECIMAL},
+      shunt_amount = #{shuntAmount,jdbcType=BIGINT},
+      remnant_amount = #{remnantAmount,jdbcType=BIGINT},
+      salesman = #{salesman,jdbcType=VARCHAR},
       recharge_strategy = #{rechargeStrategy,jdbcType=INTEGER},
       day_limit_amount = #{dayLimitAmount,jdbcType=BIGINT},
       `state` = #{state,jdbcType=INTEGER},

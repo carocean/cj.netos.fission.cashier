@@ -12,6 +12,13 @@
     <result column="checked_withdraw_pt" jdbcType="INTEGER" property="checkedWithdrawPt" />
     <result column="closed_cause" jdbcType="VARCHAR" property="closedCause" />
     <result column="stay_balance" jdbcType="BIGINT" property="stayBalance" />
+    <result column="referrer" jdbcType="VARCHAR" property="referrer" />
+    <result column="referrer_name" jdbcType="VARCHAR" property="referrerName" />
+    <result column="supports_chatroom" jdbcType="INTEGER" property="supportsChatroom" />
+    <result column="salesman" jdbcType="VARCHAR" property="salesman" />
+    <result column="area_master" jdbcType="VARCHAR" property="areaMaster" />
+    <result column="stage" jdbcType="INTEGER" property="stage" />
+    <result column="level" jdbcType="INTEGER" property="level" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <!-- @mbg.generated: generated automatically, do not modify! -->
@@ -76,7 +83,8 @@
   <sql id="Base_Column_List">
     <!-- @mbg.generated: generated automatically, do not modify! -->
     person, `state`, `type`, day_amount, cac_average, amplitude_factor, checked_withdraw_pt, 
-    closed_cause, stay_balance
+    closed_cause, stay_balance, referrer, referrer_name, supports_chatroom, salesman, 
+    area_master, stage, `level`
   </sql>
   <select id="selectByExample" parameterType="cj.netos.fission.model.CashierExample" resultMap="BaseResultMap">
     <!-- @mbg.generated: generated automatically, do not modify! -->
@@ -116,12 +124,16 @@
     <!-- @mbg.generated: generated automatically, do not modify! -->
     insert into cashier (person, `state`, `type`, 
       day_amount, cac_average, amplitude_factor, 
-      checked_withdraw_pt, closed_cause, stay_balance
-      )
+      checked_withdraw_pt, closed_cause, stay_balance, 
+      referrer, referrer_name, supports_chatroom, 
+      salesman, area_master, stage, 
+      `level`)
     values (#{person,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, 
       #{dayAmount,jdbcType=BIGINT}, #{cacAverage,jdbcType=BIGINT}, #{amplitudeFactor,jdbcType=DECIMAL}, 
-      #{checkedWithdrawPt,jdbcType=INTEGER}, #{closedCause,jdbcType=VARCHAR}, #{stayBalance,jdbcType=BIGINT}
-      )
+      #{checkedWithdrawPt,jdbcType=INTEGER}, #{closedCause,jdbcType=VARCHAR}, #{stayBalance,jdbcType=BIGINT}, 
+      #{referrer,jdbcType=VARCHAR}, #{referrerName,jdbcType=VARCHAR}, #{supportsChatroom,jdbcType=INTEGER}, 
+      #{salesman,jdbcType=VARCHAR}, #{areaMaster,jdbcType=VARCHAR}, #{stage,jdbcType=INTEGER}, 
+      #{level,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="cj.netos.fission.model.Cashier">
     <!-- @mbg.generated: generated automatically, do not modify! -->
@@ -154,6 +166,27 @@
       <if test="stayBalance != null">
         stay_balance,
       </if>
+      <if test="referrer != null">
+        referrer,
+      </if>
+      <if test="referrerName != null">
+        referrer_name,
+      </if>
+      <if test="supportsChatroom != null">
+        supports_chatroom,
+      </if>
+      <if test="salesman != null">
+        salesman,
+      </if>
+      <if test="areaMaster != null">
+        area_master,
+      </if>
+      <if test="stage != null">
+        stage,
+      </if>
+      <if test="level != null">
+        `level`,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="person != null">
@@ -182,6 +215,27 @@
       </if>
       <if test="stayBalance != null">
         #{stayBalance,jdbcType=BIGINT},
+      </if>
+      <if test="referrer != null">
+        #{referrer,jdbcType=VARCHAR},
+      </if>
+      <if test="referrerName != null">
+        #{referrerName,jdbcType=VARCHAR},
+      </if>
+      <if test="supportsChatroom != null">
+        #{supportsChatroom,jdbcType=INTEGER},
+      </if>
+      <if test="salesman != null">
+        #{salesman,jdbcType=VARCHAR},
+      </if>
+      <if test="areaMaster != null">
+        #{areaMaster,jdbcType=VARCHAR},
+      </if>
+      <if test="stage != null">
+        #{stage,jdbcType=INTEGER},
+      </if>
+      <if test="level != null">
+        #{level,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -223,6 +277,27 @@
       <if test="record.stayBalance != null">
         stay_balance = #{record.stayBalance,jdbcType=BIGINT},
       </if>
+      <if test="record.referrer != null">
+        referrer = #{record.referrer,jdbcType=VARCHAR},
+      </if>
+      <if test="record.referrerName != null">
+        referrer_name = #{record.referrerName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.supportsChatroom != null">
+        supports_chatroom = #{record.supportsChatroom,jdbcType=INTEGER},
+      </if>
+      <if test="record.salesman != null">
+        salesman = #{record.salesman,jdbcType=VARCHAR},
+      </if>
+      <if test="record.areaMaster != null">
+        area_master = #{record.areaMaster,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stage != null">
+        stage = #{record.stage,jdbcType=INTEGER},
+      </if>
+      <if test="record.level != null">
+        `level` = #{record.level,jdbcType=INTEGER},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -239,7 +314,14 @@
       amplitude_factor = #{record.amplitudeFactor,jdbcType=DECIMAL},
       checked_withdraw_pt = #{record.checkedWithdrawPt,jdbcType=INTEGER},
       closed_cause = #{record.closedCause,jdbcType=VARCHAR},
-      stay_balance = #{record.stayBalance,jdbcType=BIGINT}
+      stay_balance = #{record.stayBalance,jdbcType=BIGINT},
+      referrer = #{record.referrer,jdbcType=VARCHAR},
+      referrer_name = #{record.referrerName,jdbcType=VARCHAR},
+      supports_chatroom = #{record.supportsChatroom,jdbcType=INTEGER},
+      salesman = #{record.salesman,jdbcType=VARCHAR},
+      area_master = #{record.areaMaster,jdbcType=VARCHAR},
+      stage = #{record.stage,jdbcType=INTEGER},
+      `level` = #{record.level,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -272,6 +354,27 @@
       <if test="stayBalance != null">
         stay_balance = #{stayBalance,jdbcType=BIGINT},
       </if>
+      <if test="referrer != null">
+        referrer = #{referrer,jdbcType=VARCHAR},
+      </if>
+      <if test="referrerName != null">
+        referrer_name = #{referrerName,jdbcType=VARCHAR},
+      </if>
+      <if test="supportsChatroom != null">
+        supports_chatroom = #{supportsChatroom,jdbcType=INTEGER},
+      </if>
+      <if test="salesman != null">
+        salesman = #{salesman,jdbcType=VARCHAR},
+      </if>
+      <if test="areaMaster != null">
+        area_master = #{areaMaster,jdbcType=VARCHAR},
+      </if>
+      <if test="stage != null">
+        stage = #{stage,jdbcType=INTEGER},
+      </if>
+      <if test="level != null">
+        `level` = #{level,jdbcType=INTEGER},
+      </if>
     </set>
     where person = #{person,jdbcType=VARCHAR}
   </update>
@@ -285,7 +388,14 @@
       amplitude_factor = #{amplitudeFactor,jdbcType=DECIMAL},
       checked_withdraw_pt = #{checkedWithdrawPt,jdbcType=INTEGER},
       closed_cause = #{closedCause,jdbcType=VARCHAR},
-      stay_balance = #{stayBalance,jdbcType=BIGINT}
+      stay_balance = #{stayBalance,jdbcType=BIGINT},
+      referrer = #{referrer,jdbcType=VARCHAR},
+      referrer_name = #{referrerName,jdbcType=VARCHAR},
+      supports_chatroom = #{supportsChatroom,jdbcType=INTEGER},
+      salesman = #{salesman,jdbcType=VARCHAR},
+      area_master = #{areaMaster,jdbcType=VARCHAR},
+      stage = #{stage,jdbcType=INTEGER},
+      `level` = #{level,jdbcType=INTEGER}
     where person = #{person,jdbcType=VARCHAR}
   </update>
   <update id="updateState" parameterType="cj.netos.fission.model.Cashier">
@@ -304,6 +414,18 @@
     update cashier
     set
     amplitude_factor = #{amplitudeFactor,jdbcType=DECIMAL}
+    where person = #{person,jdbcType=VARCHAR}
+  </update>
+  <update id="setSalesman" parameterType="cj.netos.fission.model.Cashier">
+    update cashier
+    set
+    salesman = #{salesman,jdbcType=VARCHAR}
+    where person = #{person,jdbcType=VARCHAR}
+  </update>
+  <update id="setSupportsChatroom" parameterType="cj.netos.fission.model.Cashier">
+    update cashier
+    set
+    supports_chatroom = #{supportsChatroom,jdbcType=INTEGER}
     where person = #{person,jdbcType=VARCHAR}
   </update>
 </mapper>

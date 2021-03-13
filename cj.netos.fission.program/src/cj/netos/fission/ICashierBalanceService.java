@@ -18,4 +18,6 @@ public interface ICashierBalanceService {
 
 
     void updateBalance(String person, long balanceAmount);
+
+
 }

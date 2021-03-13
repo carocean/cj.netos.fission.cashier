@@ -68,4 +68,10 @@ public interface CashierMapper {
     void setCacAverage(@Param(value = "person") String person, @Param(value = "cacAverage") long cacAverage);
 
     void setAmplitudeFactor(@Param(value = "person") String person, @Param(value = "amplitudeFactor") BigDecimal amplitudeFactor);
+
+    void setSalesman(@Param(value = "person") String person,@Param(value = "salesman")  String salesman);
+
+    void setSupportsChatroom(@Param(value = "person") String person,@Param(value = "supportsChatroom")  int supportsChatroom);
+
+
 }

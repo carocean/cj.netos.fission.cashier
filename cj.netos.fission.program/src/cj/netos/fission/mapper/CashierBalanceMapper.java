@@ -67,4 +67,5 @@ public interface CashierBalanceMapper {
     void updateBalance(@Param(value = "person") String person, @Param(value = "balance") long balance);
 
     void updateState(@Param(value = "person") String person, @Param(value = "state") int state);
+
 }

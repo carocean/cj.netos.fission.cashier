@@ -388,6 +388,66 @@ public class MfSettingsExample {
             return (Criteria) this;
         }
 
+        public Criteria andWithdrawCommRatioIsNull() {
+            addCriterion("withdraw_comm_ratio is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andWithdrawCommRatioIsNotNull() {
+            addCriterion("withdraw_comm_ratio is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andWithdrawCommRatioEqualTo(BigDecimal value) {
+            addCriterion("withdraw_comm_ratio =", value, "withdrawCommRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andWithdrawCommRatioNotEqualTo(BigDecimal value) {
+            addCriterion("withdraw_comm_ratio <>", value, "withdrawCommRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andWithdrawCommRatioGreaterThan(BigDecimal value) {
+            addCriterion("withdraw_comm_ratio >", value, "withdrawCommRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andWithdrawCommRatioGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("withdraw_comm_ratio >=", value, "withdrawCommRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andWithdrawCommRatioLessThan(BigDecimal value) {
+            addCriterion("withdraw_comm_ratio <", value, "withdrawCommRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andWithdrawCommRatioLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("withdraw_comm_ratio <=", value, "withdrawCommRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andWithdrawCommRatioIn(List<BigDecimal> values) {
+            addCriterion("withdraw_comm_ratio in", values, "withdrawCommRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andWithdrawCommRatioNotIn(List<BigDecimal> values) {
+            addCriterion("withdraw_comm_ratio not in", values, "withdrawCommRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andWithdrawCommRatioBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("withdraw_comm_ratio between", value1, value2, "withdrawCommRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andWithdrawCommRatioNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("withdraw_comm_ratio not between", value1, value2, "withdrawCommRatio");
+            return (Criteria) this;
+        }
+
         public Criteria andWithdrawShuntRatioIsNull() {
             addCriterion("withdraw_shunt_ratio is null");
             return (Criteria) this;
@@ -448,63 +508,423 @@ public class MfSettingsExample {
             return (Criteria) this;
         }
 
-        public Criteria andRechargeShuntRatioIsNull() {
-            addCriterion("recharge_shunt_ratio is null");
+        public Criteria andRefundLimitDayIsNull() {
+            addCriterion("refund_limit_day is null");
             return (Criteria) this;
         }
 
-        public Criteria andRechargeShuntRatioIsNotNull() {
-            addCriterion("recharge_shunt_ratio is not null");
+        public Criteria andRefundLimitDayIsNotNull() {
+            addCriterion("refund_limit_day is not null");
             return (Criteria) this;
         }
 
-        public Criteria andRechargeShuntRatioEqualTo(BigDecimal value) {
-            addCriterion("recharge_shunt_ratio =", value, "rechargeShuntRatio");
+        public Criteria andRefundLimitDayEqualTo(Integer value) {
+            addCriterion("refund_limit_day =", value, "refundLimitDay");
             return (Criteria) this;
         }
 
-        public Criteria andRechargeShuntRatioNotEqualTo(BigDecimal value) {
-            addCriterion("recharge_shunt_ratio <>", value, "rechargeShuntRatio");
+        public Criteria andRefundLimitDayNotEqualTo(Integer value) {
+            addCriterion("refund_limit_day <>", value, "refundLimitDay");
             return (Criteria) this;
         }
 
-        public Criteria andRechargeShuntRatioGreaterThan(BigDecimal value) {
-            addCriterion("recharge_shunt_ratio >", value, "rechargeShuntRatio");
+        public Criteria andRefundLimitDayGreaterThan(Integer value) {
+            addCriterion("refund_limit_day >", value, "refundLimitDay");
             return (Criteria) this;
         }
 
-        public Criteria andRechargeShuntRatioGreaterThanOrEqualTo(BigDecimal value) {
-            addCriterion("recharge_shunt_ratio >=", value, "rechargeShuntRatio");
+        public Criteria andRefundLimitDayGreaterThanOrEqualTo(Integer value) {
+            addCriterion("refund_limit_day >=", value, "refundLimitDay");
             return (Criteria) this;
         }
 
-        public Criteria andRechargeShuntRatioLessThan(BigDecimal value) {
-            addCriterion("recharge_shunt_ratio <", value, "rechargeShuntRatio");
+        public Criteria andRefundLimitDayLessThan(Integer value) {
+            addCriterion("refund_limit_day <", value, "refundLimitDay");
             return (Criteria) this;
         }
 
-        public Criteria andRechargeShuntRatioLessThanOrEqualTo(BigDecimal value) {
-            addCriterion("recharge_shunt_ratio <=", value, "rechargeShuntRatio");
+        public Criteria andRefundLimitDayLessThanOrEqualTo(Integer value) {
+            addCriterion("refund_limit_day <=", value, "refundLimitDay");
             return (Criteria) this;
         }
 
-        public Criteria andRechargeShuntRatioIn(List<BigDecimal> values) {
-            addCriterion("recharge_shunt_ratio in", values, "rechargeShuntRatio");
+        public Criteria andRefundLimitDayIn(List<Integer> values) {
+            addCriterion("refund_limit_day in", values, "refundLimitDay");
             return (Criteria) this;
         }
 
-        public Criteria andRechargeShuntRatioNotIn(List<BigDecimal> values) {
-            addCriterion("recharge_shunt_ratio not in", values, "rechargeShuntRatio");
+        public Criteria andRefundLimitDayNotIn(List<Integer> values) {
+            addCriterion("refund_limit_day not in", values, "refundLimitDay");
             return (Criteria) this;
         }
 
-        public Criteria andRechargeShuntRatioBetween(BigDecimal value1, BigDecimal value2) {
-            addCriterion("recharge_shunt_ratio between", value1, value2, "rechargeShuntRatio");
+        public Criteria andRefundLimitDayBetween(Integer value1, Integer value2) {
+            addCriterion("refund_limit_day between", value1, value2, "refundLimitDay");
             return (Criteria) this;
         }
 
-        public Criteria andRechargeShuntRatioNotBetween(BigDecimal value1, BigDecimal value2) {
-            addCriterion("recharge_shunt_ratio not between", value1, value2, "rechargeShuntRatio");
+        public Criteria andRefundLimitDayNotBetween(Integer value1, Integer value2) {
+            addCriterion("refund_limit_day not between", value1, value2, "refundLimitDay");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommissionStage1IsNull() {
+            addCriterion("commission_stage1 is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommissionStage1IsNotNull() {
+            addCriterion("commission_stage1 is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommissionStage1EqualTo(BigDecimal value) {
+            addCriterion("commission_stage1 =", value, "commissionStage1");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommissionStage1NotEqualTo(BigDecimal value) {
+            addCriterion("commission_stage1 <>", value, "commissionStage1");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommissionStage1GreaterThan(BigDecimal value) {
+            addCriterion("commission_stage1 >", value, "commissionStage1");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommissionStage1GreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("commission_stage1 >=", value, "commissionStage1");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommissionStage1LessThan(BigDecimal value) {
+            addCriterion("commission_stage1 <", value, "commissionStage1");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommissionStage1LessThanOrEqualTo(BigDecimal value) {
+            addCriterion("commission_stage1 <=", value, "commissionStage1");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommissionStage1In(List<BigDecimal> values) {
+            addCriterion("commission_stage1 in", values, "commissionStage1");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommissionStage1NotIn(List<BigDecimal> values) {
+            addCriterion("commission_stage1 not in", values, "commissionStage1");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommissionStage1Between(BigDecimal value1, BigDecimal value2) {
+            addCriterion("commission_stage1 between", value1, value2, "commissionStage1");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommissionStage1NotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("commission_stage1 not between", value1, value2, "commissionStage1");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommissionStage2IsNull() {
+            addCriterion("commission_stage2 is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommissionStage2IsNotNull() {
+            addCriterion("commission_stage2 is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommissionStage2EqualTo(BigDecimal value) {
+            addCriterion("commission_stage2 =", value, "commissionStage2");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommissionStage2NotEqualTo(BigDecimal value) {
+            addCriterion("commission_stage2 <>", value, "commissionStage2");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommissionStage2GreaterThan(BigDecimal value) {
+            addCriterion("commission_stage2 >", value, "commissionStage2");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommissionStage2GreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("commission_stage2 >=", value, "commissionStage2");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommissionStage2LessThan(BigDecimal value) {
+            addCriterion("commission_stage2 <", value, "commissionStage2");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommissionStage2LessThanOrEqualTo(BigDecimal value) {
+            addCriterion("commission_stage2 <=", value, "commissionStage2");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommissionStage2In(List<BigDecimal> values) {
+            addCriterion("commission_stage2 in", values, "commissionStage2");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommissionStage2NotIn(List<BigDecimal> values) {
+            addCriterion("commission_stage2 not in", values, "commissionStage2");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommissionStage2Between(BigDecimal value1, BigDecimal value2) {
+            addCriterion("commission_stage2 between", value1, value2, "commissionStage2");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommissionStage2NotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("commission_stage2 not between", value1, value2, "commissionStage2");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommissionStage3IsNull() {
+            addCriterion("commission_stage3 is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommissionStage3IsNotNull() {
+            addCriterion("commission_stage3 is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommissionStage3EqualTo(BigDecimal value) {
+            addCriterion("commission_stage3 =", value, "commissionStage3");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommissionStage3NotEqualTo(BigDecimal value) {
+            addCriterion("commission_stage3 <>", value, "commissionStage3");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommissionStage3GreaterThan(BigDecimal value) {
+            addCriterion("commission_stage3 >", value, "commissionStage3");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommissionStage3GreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("commission_stage3 >=", value, "commissionStage3");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommissionStage3LessThan(BigDecimal value) {
+            addCriterion("commission_stage3 <", value, "commissionStage3");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommissionStage3LessThanOrEqualTo(BigDecimal value) {
+            addCriterion("commission_stage3 <=", value, "commissionStage3");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommissionStage3In(List<BigDecimal> values) {
+            addCriterion("commission_stage3 in", values, "commissionStage3");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommissionStage3NotIn(List<BigDecimal> values) {
+            addCriterion("commission_stage3 not in", values, "commissionStage3");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommissionStage3Between(BigDecimal value1, BigDecimal value2) {
+            addCriterion("commission_stage3 between", value1, value2, "commissionStage3");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommissionStage3NotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("commission_stage3 not between", value1, value2, "commissionStage3");
+            return (Criteria) this;
+        }
+
+        public Criteria andPlatformReturnLevel2IsNull() {
+            addCriterion("platform_return_level2 is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPlatformReturnLevel2IsNotNull() {
+            addCriterion("platform_return_level2 is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPlatformReturnLevel2EqualTo(BigDecimal value) {
+            addCriterion("platform_return_level2 =", value, "platformReturnLevel2");
+            return (Criteria) this;
+        }
+
+        public Criteria andPlatformReturnLevel2NotEqualTo(BigDecimal value) {
+            addCriterion("platform_return_level2 <>", value, "platformReturnLevel2");
+            return (Criteria) this;
+        }
+
+        public Criteria andPlatformReturnLevel2GreaterThan(BigDecimal value) {
+            addCriterion("platform_return_level2 >", value, "platformReturnLevel2");
+            return (Criteria) this;
+        }
+
+        public Criteria andPlatformReturnLevel2GreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("platform_return_level2 >=", value, "platformReturnLevel2");
+            return (Criteria) this;
+        }
+
+        public Criteria andPlatformReturnLevel2LessThan(BigDecimal value) {
+            addCriterion("platform_return_level2 <", value, "platformReturnLevel2");
+            return (Criteria) this;
+        }
+
+        public Criteria andPlatformReturnLevel2LessThanOrEqualTo(BigDecimal value) {
+            addCriterion("platform_return_level2 <=", value, "platformReturnLevel2");
+            return (Criteria) this;
+        }
+
+        public Criteria andPlatformReturnLevel2In(List<BigDecimal> values) {
+            addCriterion("platform_return_level2 in", values, "platformReturnLevel2");
+            return (Criteria) this;
+        }
+
+        public Criteria andPlatformReturnLevel2NotIn(List<BigDecimal> values) {
+            addCriterion("platform_return_level2 not in", values, "platformReturnLevel2");
+            return (Criteria) this;
+        }
+
+        public Criteria andPlatformReturnLevel2Between(BigDecimal value1, BigDecimal value2) {
+            addCriterion("platform_return_level2 between", value1, value2, "platformReturnLevel2");
+            return (Criteria) this;
+        }
+
+        public Criteria andPlatformReturnLevel2NotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("platform_return_level2 not between", value1, value2, "platformReturnLevel2");
+            return (Criteria) this;
+        }
+
+        public Criteria andPlatformReturnCityRatioIsNull() {
+            addCriterion("platform_return_city_ratio is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPlatformReturnCityRatioIsNotNull() {
+            addCriterion("platform_return_city_ratio is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPlatformReturnCityRatioEqualTo(BigDecimal value) {
+            addCriterion("platform_return_city_ratio =", value, "platformReturnCityRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andPlatformReturnCityRatioNotEqualTo(BigDecimal value) {
+            addCriterion("platform_return_city_ratio <>", value, "platformReturnCityRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andPlatformReturnCityRatioGreaterThan(BigDecimal value) {
+            addCriterion("platform_return_city_ratio >", value, "platformReturnCityRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andPlatformReturnCityRatioGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("platform_return_city_ratio >=", value, "platformReturnCityRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andPlatformReturnCityRatioLessThan(BigDecimal value) {
+            addCriterion("platform_return_city_ratio <", value, "platformReturnCityRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andPlatformReturnCityRatioLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("platform_return_city_ratio <=", value, "platformReturnCityRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andPlatformReturnCityRatioIn(List<BigDecimal> values) {
+            addCriterion("platform_return_city_ratio in", values, "platformReturnCityRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andPlatformReturnCityRatioNotIn(List<BigDecimal> values) {
+            addCriterion("platform_return_city_ratio not in", values, "platformReturnCityRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andPlatformReturnCityRatioBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("platform_return_city_ratio between", value1, value2, "platformReturnCityRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andPlatformReturnCityRatioNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("platform_return_city_ratio not between", value1, value2, "platformReturnCityRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andPlatformReturnProvinceRatioIsNull() {
+            addCriterion("platform_return_province_ratio is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPlatformReturnProvinceRatioIsNotNull() {
+            addCriterion("platform_return_province_ratio is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPlatformReturnProvinceRatioEqualTo(BigDecimal value) {
+            addCriterion("platform_return_province_ratio =", value, "platformReturnProvinceRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andPlatformReturnProvinceRatioNotEqualTo(BigDecimal value) {
+            addCriterion("platform_return_province_ratio <>", value, "platformReturnProvinceRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andPlatformReturnProvinceRatioGreaterThan(BigDecimal value) {
+            addCriterion("platform_return_province_ratio >", value, "platformReturnProvinceRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andPlatformReturnProvinceRatioGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("platform_return_province_ratio >=", value, "platformReturnProvinceRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andPlatformReturnProvinceRatioLessThan(BigDecimal value) {
+            addCriterion("platform_return_province_ratio <", value, "platformReturnProvinceRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andPlatformReturnProvinceRatioLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("platform_return_province_ratio <=", value, "platformReturnProvinceRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andPlatformReturnProvinceRatioIn(List<BigDecimal> values) {
+            addCriterion("platform_return_province_ratio in", values, "platformReturnProvinceRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andPlatformReturnProvinceRatioNotIn(List<BigDecimal> values) {
+            addCriterion("platform_return_province_ratio not in", values, "platformReturnProvinceRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andPlatformReturnProvinceRatioBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("platform_return_province_ratio between", value1, value2, "platformReturnProvinceRatio");
+            return (Criteria) this;
+        }
+
+        public Criteria andPlatformReturnProvinceRatioNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("platform_return_province_ratio not between", value1, value2, "platformReturnProvinceRatio");
             return (Criteria) this;
         }
     }
