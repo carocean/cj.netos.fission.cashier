@@ -30,6 +30,35 @@ public interface ICashierPorts extends IOpenportService {
             ISecuritySession securitySession
     ) throws CircuitException;
 
+    @CjOpenport(usage = "设置代理人")
+    void setSalesman(
+            ISecuritySession securitySession,
+            @CjOpenportParameter(usage = "代理人公号", name = "person") String person
+    ) throws CircuitException;
+
+    @CjOpenport(usage = "获取老板的信息")
+    BossInfo getBossInfo(
+            ISecuritySession securitySession
+    ) throws CircuitException;
+
+    @CjOpenport(usage = "提交认购需求")
+    void setRequirement(
+            ISecuritySession securitySession,
+            @CjOpenportParameter(usage = "想成为代理", name = "becomeAgent") int becomeAgent,
+            @CjOpenportParameter(usage = "电话", name = "phone") String phone
+    ) throws CircuitException;
+
+    @CjOpenport(usage = "获取业务提成比率")
+    List<BusinessIncomeRatio> listBusinessIncomeRatio(
+            ISecuritySession securitySession
+    ) throws CircuitException;
+
+    @CjOpenport(usage = "尝试进行提现分账")
+    WithdrawShuntBO computeWithdrawShuntInfo(
+            ISecuritySession securitySession,
+            @CjOpenportParameter(usage = "待分的金额", name = "amount") long amount
+    ) throws CircuitException;
+
     @CjOpenport(usage = "获取配置的留存余额，如果用户没有配置的则取系统的")
     long getStayBalance(
             ISecuritySession securitySession

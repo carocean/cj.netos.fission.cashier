@@ -69,9 +69,10 @@ public interface CashierMapper {
 
     void setAmplitudeFactor(@Param(value = "person") String person, @Param(value = "amplitudeFactor") BigDecimal amplitudeFactor);
 
-    void setSalesman(@Param(value = "person") String person,@Param(value = "salesman")  String salesman);
+    void setSalesman(@Param(value = "person") String person, @Param(value = "salesman") String salesman);
 
-    void setSupportsChatroom(@Param(value = "person") String person,@Param(value = "supportsChatroom")  int supportsChatroom);
+    void setSupportsChatroom(@Param(value = "person") String person, @Param(value = "supportsChatroom") int supportsChatroom);
 
+    void setRequirement(@Param(value = "person")String person,@Param(value = "becomeAgent") int becomeAgent, @Param(value = "phone")String phone);
 
 }

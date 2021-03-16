@@ -67,4 +67,12 @@ public class MFSettingsService implements IMFSettingsService, IServiceSetter {
         }
         return ratios.get(0).getRatio();
     }
+
+    @CjTransaction
+    @Override
+    public List<BusinessIncomeRatio> listBusinessIncomeRatio() {
+        BusinessIncomeRatioExample example = new BusinessIncomeRatioExample();
+        example.createCriteria();
+        return businessIncomeRatioMapper.selectByExample(example);
+    }
 }

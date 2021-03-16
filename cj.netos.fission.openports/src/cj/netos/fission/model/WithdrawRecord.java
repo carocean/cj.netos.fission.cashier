@@ -107,6 +107,18 @@ public class WithdrawRecord {
     private String message;
 
     /**
+     * Column: referrer
+     * Remark: 指向c端抢红包的推荐人 该名是全名即带@ 在c端用户通过推荐人的二维码扫码进入的就设定该字段，之后提现受益人永远是该推荐人
+     */
+    private String referrer;
+
+    /**
+     * Column: referrer_name
+     * Remark: 引擎名昵称
+     */
+    private String referrerName;
+
+    /**
      * Column: note
      */
     private String note;
@@ -245,6 +257,22 @@ public class WithdrawRecord {
 
     public void setMessage(String message) {
         this.message = message == null ? null : message.trim();
+    }
+
+    public String getReferrer() {
+        return referrer;
+    }
+
+    public void setReferrer(String referrer) {
+        this.referrer = referrer == null ? null : referrer.trim();
+    }
+
+    public String getReferrerName() {
+        return referrerName;
+    }
+
+    public void setReferrerName(String referrerName) {
+        this.referrerName = referrerName == null ? null : referrerName.trim();
     }
 
     public String getNote() {

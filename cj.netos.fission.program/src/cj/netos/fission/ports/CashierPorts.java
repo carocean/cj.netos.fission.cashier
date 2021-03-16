@@ -7,14 +7,18 @@ import cj.studio.ecm.annotation.CjService;
 import cj.studio.ecm.annotation.CjServiceRef;
 import cj.studio.ecm.net.CircuitException;
 import cj.studio.openport.ISecuritySession;
+import cj.ultimate.util.StringUtil;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 
 @CjService(name = "/cashier.ports")
 public class CashierPorts implements ICashierPorts {
     @CjServiceRef
     ICashierService cashierService;
+    @CjServiceRef
+    ICashierRecordService cashierRecordService;
     @CjServiceRef
     ICashierBalanceService cashierBalanceService;
     @CjServiceRef
@@ -45,8 +49,73 @@ public class CashierPorts implements ICashierPorts {
     }
 
     @Override
+    public BossInfo getBossInfo(ISecuritySession securitySession) throws CircuitException {
+        long balance = cashierBalanceService.getAndInitBalance(securitySession.principal()).getBalance();
+        long payeeCount = cashierRecordService.totalPayee(securitySession.principal());
+        long payerCount = cashierRecordService.totalPayer(securitySession.principal());
+        long payerAmount = cashierRecordService.totalPayerAmount(securitySession.principal());
+        List<String> payeeList = cashierRecordService.pagePayeeId(securitySession.principal(), 5, 0);
+        long empCount = cashierService.totalEmployeeCount(securitySession.principal());
+        long commissionAmount = cashierRecordService.totalCommissionAmount(securitySession.principal());
+        BossInfo info = new BossInfo();
+        info.setBalance(balance);
+        info.setPayeeAmount(payerAmount);
+        info.setPayeeCount(payeeCount);
+        info.setPayerCount(payerCount);
+        info.setMembersTop5(payeeList);
+        info.setEmpCount(empCount);
+        info.setCommission(commissionAmount);
+        return info;
+    }
+
+    @Override
+    public void setSalesman(ISecuritySession securitySession, String person) throws CircuitException {
+        person = CashierUtils.getAccountCode(person);
+        cashierService.setSalesman(securitySession.principal(), person);
+    }
+
+    @Override
+    public void setRequirement(ISecuritySession securitySession, int becomeAgent, String phone) throws CircuitException {
+        cashierService.setRequirement(securitySession.principal(), becomeAgent, phone);
+    }
+
+    @Override
+    public List<BusinessIncomeRatio> listBusinessIncomeRatio(ISecuritySession securitySession) throws CircuitException {
+        return mfSettingsService.listBusinessIncomeRatio();
+    }
+
+    @Override
+    public WithdrawShuntBO computeWithdrawShuntInfo(ISecuritySession securitySession, long amount) throws CircuitException {
+        //分账
+        Cashier cashier = cashierService.getAndInitCashier(securitySession.principal());
+        BigDecimal amountBD = new BigDecimal(amount);
+        MfSettings settings = mfSettingsService.getSettings();
+        long gainAmount = new BigDecimal("1.000").subtract(settings.getWithdrawShuntRatio()).multiply(amountBD).longValue();
+        long shuntAmount = amount - gainAmount;
+        BigDecimal shuntAmountBD = new BigDecimal(shuntAmount).setScale(0, RoundingMode.DOWN);//可分的账金
+        long absorbAmount = settings.getWithdrawAbsorbRatio().multiply(shuntAmountBD).longValue();
+        long commissionAmount = 0;
+        if (!StringUtil.isEmpty(cashier.getReferrer())) {
+            commissionAmount = settings.getWithdrawCommRatio().multiply(shuntAmountBD).longValue();
+        }
+        long incomeAmount = shuntAmount - absorbAmount - commissionAmount;//只要是剩下的钱平台全收
+        //分完
+        WithdrawShuntBO bo = new WithdrawShuntBO();
+        bo.setAbsorbAmount(absorbAmount);
+        bo.setCommissionAmount(commissionAmount);
+        bo.setGainAmount(gainAmount);
+        bo.setShuntAmount(shuntAmount);
+        bo.setIncomeAmount(incomeAmount);
+        bo.setWithdrawAbsorbRatio(settings.getWithdrawAbsorbRatio());
+        bo.setWithdrawCommRatio(settings.getWithdrawCommRatio());
+        bo.setWithdrawIncomeRatio(settings.getWithdrawIncomeRatio());
+        bo.setWithdrawShuntRatio(settings.getWithdrawShuntRatio());
+        return bo;
+    }
+
+    @Override
     public long getStayBalance(ISecuritySession securitySession) throws CircuitException {
-       return mfSettingsService.getStayBalanceOfPerson(securitySession.principal());
+        return mfSettingsService.getStayBalanceOfPerson(securitySession.principal());
     }
 
     @Override

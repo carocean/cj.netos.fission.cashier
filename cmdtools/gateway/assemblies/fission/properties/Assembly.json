@@ -6,7 +6,7 @@
 				class:"cj.studio.orm.mongodb.MongoDBPlugin",
 				parameters:{
 					remotes:"[
-					'172.31.210.92:27017'
+					'120.27.15.205:27017'
 				]",
 					isTrustConnect: "false",
 					database: "admin",

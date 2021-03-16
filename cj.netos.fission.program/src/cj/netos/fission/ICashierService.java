@@ -31,4 +31,10 @@ public interface ICashierService {
     void snatchEnveloper(String recordSn, String person, String payerName, String payee, String payeeName) throws CircuitException;
 
     void snatchEnveloperError(String recordSn, String person, String nickName, String payee,String payeeName,long amount, int status, String msg);
+
+    void setSalesman(String principal, String person);
+
+    void setRequirement(String principal, int becomeAgent, String phone);
+
+    long totalEmployeeCount(String principal);
 }

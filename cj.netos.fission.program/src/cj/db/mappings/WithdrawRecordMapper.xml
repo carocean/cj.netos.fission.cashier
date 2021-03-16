@@ -20,6 +20,8 @@
     <result column="ctime" jdbcType="VARCHAR" property="ctime" />
     <result column="status" jdbcType="INTEGER" property="status" />
     <result column="message" jdbcType="VARCHAR" property="message" />
+    <result column="referrer" jdbcType="VARCHAR" property="referrer" />
+    <result column="referrer_name" jdbcType="VARCHAR" property="referrerName" />
     <result column="note" jdbcType="VARCHAR" property="note" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -86,7 +88,7 @@
     <!-- @mbg.generated: generated automatically, do not modify! -->
     sn, withdrawer, nick_name, currency, amount, income_ratio, commission_ratio, absorb_ratio, 
     shunt_ratio, income_amount, absorb_amount, commission_amount, gain_amount, `state`, 
-    ctime, `status`, message, note
+    ctime, `status`, message, referrer, referrer_name, note
   </sql>
   <select id="selectByExample" parameterType="cj.netos.fission.model.WithdrawRecordExample" resultMap="BaseResultMap">
     <!-- @mbg.generated: generated automatically, do not modify! -->
@@ -129,15 +131,15 @@
       commission_ratio, absorb_ratio, shunt_ratio, 
       income_amount, absorb_amount, commission_amount, 
       gain_amount, `state`, ctime, 
-      `status`, message, note
-      )
+      `status`, message, referrer, 
+      referrer_name, note)
     values (#{sn,jdbcType=VARCHAR}, #{withdrawer,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR}, 
       #{currency,jdbcType=VARCHAR}, #{amount,jdbcType=BIGINT}, #{incomeRatio,jdbcType=DECIMAL}, 
       #{commissionRatio,jdbcType=DECIMAL}, #{absorbRatio,jdbcType=DECIMAL}, #{shuntRatio,jdbcType=DECIMAL}, 
       #{incomeAmount,jdbcType=BIGINT}, #{absorbAmount,jdbcType=BIGINT}, #{commissionAmount,jdbcType=BIGINT}, 
       #{gainAmount,jdbcType=BIGINT}, #{state,jdbcType=INTEGER}, #{ctime,jdbcType=VARCHAR}, 
-      #{status,jdbcType=INTEGER}, #{message,jdbcType=VARCHAR}, #{note,jdbcType=VARCHAR}
-      )
+      #{status,jdbcType=INTEGER}, #{message,jdbcType=VARCHAR}, #{referrer,jdbcType=VARCHAR}, 
+      #{referrerName,jdbcType=VARCHAR}, #{note,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="cj.netos.fission.model.WithdrawRecord">
     <!-- @mbg.generated: generated automatically, do not modify! -->
@@ -194,6 +196,12 @@
       <if test="message != null">
         message,
       </if>
+      <if test="referrer != null">
+        referrer,
+      </if>
+      <if test="referrerName != null">
+        referrer_name,
+      </if>
       <if test="note != null">
         note,
       </if>
@@ -249,6 +257,12 @@
       </if>
       <if test="message != null">
         #{message,jdbcType=VARCHAR},
+      </if>
+      <if test="referrer != null">
+        #{referrer,jdbcType=VARCHAR},
+      </if>
+      <if test="referrerName != null">
+        #{referrerName,jdbcType=VARCHAR},
       </if>
       <if test="note != null">
         #{note,jdbcType=VARCHAR},
@@ -317,6 +331,12 @@
       <if test="record.message != null">
         message = #{record.message,jdbcType=VARCHAR},
       </if>
+      <if test="record.referrer != null">
+        referrer = #{record.referrer,jdbcType=VARCHAR},
+      </if>
+      <if test="record.referrerName != null">
+        referrer_name = #{record.referrerName,jdbcType=VARCHAR},
+      </if>
       <if test="record.note != null">
         note = #{record.note,jdbcType=VARCHAR},
       </if>
@@ -345,6 +365,8 @@
       ctime = #{record.ctime,jdbcType=VARCHAR},
       `status` = #{record.status,jdbcType=INTEGER},
       message = #{record.message,jdbcType=VARCHAR},
+      referrer = #{record.referrer,jdbcType=VARCHAR},
+      referrer_name = #{record.referrerName,jdbcType=VARCHAR},
       note = #{record.note,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -402,6 +424,12 @@
       <if test="message != null">
         message = #{message,jdbcType=VARCHAR},
       </if>
+      <if test="referrer != null">
+        referrer = #{referrer,jdbcType=VARCHAR},
+      </if>
+      <if test="referrerName != null">
+        referrer_name = #{referrerName,jdbcType=VARCHAR},
+      </if>
       <if test="note != null">
         note = #{note,jdbcType=VARCHAR},
       </if>
@@ -427,7 +455,15 @@
       ctime = #{ctime,jdbcType=VARCHAR},
       `status` = #{status,jdbcType=INTEGER},
       message = #{message,jdbcType=VARCHAR},
+      referrer = #{referrer,jdbcType=VARCHAR},
+      referrer_name = #{referrerName,jdbcType=VARCHAR},
       note = #{note,jdbcType=VARCHAR}
     where sn = #{sn,jdbcType=VARCHAR}
   </update>
+  <select id="totalCommissionAmount" parameterType="cj.netos.fission.model.WithdrawRecord" resultType="java.lang.Long">
+    select
+    IFNULL(sum(commission_amount),0)
+    from withdraw_record
+    where referrer = #{referrer,jdbcType=VARCHAR}
+  </select>
 </mapper>

@@ -89,4 +89,21 @@ public class CashierRecordService implements ICashierRecordService {
     public Long totalPayeeOfDay(String principal, String dayTime) {
         return payRecordMapper.totalPayeeOfDay(principal, dayTime + "%");
     }
+    @CjTransaction
+    @Override
+    public Long totalPayerAmount(String payee) {
+        return payRecordMapper.totalPayerAmount(payee);
+    }
+
+
+    @CjTransaction
+    @Override
+    public long totalPayeeAmount(String payer) {
+        return payRecordMapper.totalPayeeAmount(payer);
+    }
+    @CjTransaction
+    @Override
+    public long totalCommissionAmount(String principal) {
+        return withdrawRecordMapper.totalCommissionAmount(principal);
+    }
 }

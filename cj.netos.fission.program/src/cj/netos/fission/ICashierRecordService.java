@@ -3,6 +3,7 @@ package cj.netos.fission;
 import cj.netos.fission.model.PayRecord;
 import cj.netos.fission.model.RechargeRecord;
 import cj.netos.fission.model.WithdrawRecord;
+import cj.studio.orm.mybatis.annotation.CjTransaction;
 
 import java.util.List;
 
@@ -27,5 +28,9 @@ public interface ICashierRecordService {
     List<String> pagePayerId(String principal, int limit, long offset);
 
     List<String> pagePayeeId(String principal, int limit, long offset);
+    Long totalPayerAmount(String principal);
 
+    long totalPayeeAmount(String payer);
+
+    long totalCommissionAmount(String principal);
 }

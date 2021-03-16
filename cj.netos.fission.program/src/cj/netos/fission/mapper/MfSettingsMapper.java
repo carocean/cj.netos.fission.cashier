@@ -6,7 +6,6 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 public interface MfSettingsMapper {
-
     /**
      * @mbg.generated generated automatically, do not modify!
      */

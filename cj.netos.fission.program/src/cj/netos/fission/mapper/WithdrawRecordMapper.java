@@ -61,4 +61,6 @@ public interface WithdrawRecordMapper {
      * @mbg.generated generated automatically, do not modify!
      */
     int updateByPrimaryKey(WithdrawRecord record);
+
+    long totalCommissionAmount(@Param(value = "referrer") String referrer);
 }

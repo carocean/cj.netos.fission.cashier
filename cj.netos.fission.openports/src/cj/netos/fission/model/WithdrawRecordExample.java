@@ -1218,6 +1218,146 @@ public class WithdrawRecordExample {
             return (Criteria) this;
         }
 
+        public Criteria andReferrerIsNull() {
+            addCriterion("referrer is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andReferrerIsNotNull() {
+            addCriterion("referrer is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andReferrerEqualTo(String value) {
+            addCriterion("referrer =", value, "referrer");
+            return (Criteria) this;
+        }
+
+        public Criteria andReferrerNotEqualTo(String value) {
+            addCriterion("referrer <>", value, "referrer");
+            return (Criteria) this;
+        }
+
+        public Criteria andReferrerGreaterThan(String value) {
+            addCriterion("referrer >", value, "referrer");
+            return (Criteria) this;
+        }
+
+        public Criteria andReferrerGreaterThanOrEqualTo(String value) {
+            addCriterion("referrer >=", value, "referrer");
+            return (Criteria) this;
+        }
+
+        public Criteria andReferrerLessThan(String value) {
+            addCriterion("referrer <", value, "referrer");
+            return (Criteria) this;
+        }
+
+        public Criteria andReferrerLessThanOrEqualTo(String value) {
+            addCriterion("referrer <=", value, "referrer");
+            return (Criteria) this;
+        }
+
+        public Criteria andReferrerLike(String value) {
+            addCriterion("referrer like", value, "referrer");
+            return (Criteria) this;
+        }
+
+        public Criteria andReferrerNotLike(String value) {
+            addCriterion("referrer not like", value, "referrer");
+            return (Criteria) this;
+        }
+
+        public Criteria andReferrerIn(List<String> values) {
+            addCriterion("referrer in", values, "referrer");
+            return (Criteria) this;
+        }
+
+        public Criteria andReferrerNotIn(List<String> values) {
+            addCriterion("referrer not in", values, "referrer");
+            return (Criteria) this;
+        }
+
+        public Criteria andReferrerBetween(String value1, String value2) {
+            addCriterion("referrer between", value1, value2, "referrer");
+            return (Criteria) this;
+        }
+
+        public Criteria andReferrerNotBetween(String value1, String value2) {
+            addCriterion("referrer not between", value1, value2, "referrer");
+            return (Criteria) this;
+        }
+
+        public Criteria andReferrerNameIsNull() {
+            addCriterion("referrer_name is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andReferrerNameIsNotNull() {
+            addCriterion("referrer_name is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andReferrerNameEqualTo(String value) {
+            addCriterion("referrer_name =", value, "referrerName");
+            return (Criteria) this;
+        }
+
+        public Criteria andReferrerNameNotEqualTo(String value) {
+            addCriterion("referrer_name <>", value, "referrerName");
+            return (Criteria) this;
+        }
+
+        public Criteria andReferrerNameGreaterThan(String value) {
+            addCriterion("referrer_name >", value, "referrerName");
+            return (Criteria) this;
+        }
+
+        public Criteria andReferrerNameGreaterThanOrEqualTo(String value) {
+            addCriterion("referrer_name >=", value, "referrerName");
+            return (Criteria) this;
+        }
+
+        public Criteria andReferrerNameLessThan(String value) {
+            addCriterion("referrer_name <", value, "referrerName");
+            return (Criteria) this;
+        }
+
+        public Criteria andReferrerNameLessThanOrEqualTo(String value) {
+            addCriterion("referrer_name <=", value, "referrerName");
+            return (Criteria) this;
+        }
+
+        public Criteria andReferrerNameLike(String value) {
+            addCriterion("referrer_name like", value, "referrerName");
+            return (Criteria) this;
+        }
+
+        public Criteria andReferrerNameNotLike(String value) {
+            addCriterion("referrer_name not like", value, "referrerName");
+            return (Criteria) this;
+        }
+
+        public Criteria andReferrerNameIn(List<String> values) {
+            addCriterion("referrer_name in", values, "referrerName");
+            return (Criteria) this;
+        }
+
+        public Criteria andReferrerNameNotIn(List<String> values) {
+            addCriterion("referrer_name not in", values, "referrerName");
+            return (Criteria) this;
+        }
+
+        public Criteria andReferrerNameBetween(String value1, String value2) {
+            addCriterion("referrer_name between", value1, value2, "referrerName");
+            return (Criteria) this;
+        }
+
+        public Criteria andReferrerNameNotBetween(String value1, String value2) {
+            addCriterion("referrer_name not between", value1, value2, "referrerName");
+            return (Criteria) this;
+        }
+
         public Criteria andNoteIsNull() {
             addCriterion("note is null");
             return (Criteria) this;

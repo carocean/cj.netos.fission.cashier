@@ -89,14 +89,14 @@ public class CashierService implements ICashierService {
         Cashier cashier = getAndInitCashier(payeeCode);
 
         if (!StringUtil.isEmpty(details.getSalesman())) {
-            cashierMapper.setSalesman(payeeCode,details.getSalesman());
+            cashierMapper.setSalesman(payeeCode, details.getSalesman());
         }
         if (cashier.getSupportsChatroom() == null || cashier.getSupportsChatroom() == 0) {
-            cashierMapper.setSupportsChatroom(payeeCode,1);
+            cashierMapper.setSupportsChatroom(payeeCode, 1);
         }
         //分账
         long amount = result.getAmount();
-        BigDecimal rechargeShuntRatio= mfSettingsService.getBusinessIncomeRatio(amount);
+        BigDecimal rechargeShuntRatio = mfSettingsService.getBusinessIncomeRatio(amount);
         BigDecimal amountBD = new BigDecimal(amount + "");
         long shuntAmount = rechargeShuntRatio.multiply(amountBD).longValue();
         long remnantAmount = amount - shuntAmount;
@@ -190,12 +190,12 @@ public class CashierService implements ICashierService {
         long gainAmount = new BigDecimal("1.000").subtract(settings.getWithdrawShuntRatio()).multiply(amountBD).longValue();
         long shuntAmount = amount - gainAmount;
         BigDecimal shuntAmountBD = new BigDecimal(shuntAmount).setScale(0, RoundingMode.DOWN);//可分的账金
-        long incomeAmount = settings.getWithdrawIncomeRatio().multiply(shuntAmountBD).longValue();
+        long absorbAmount = settings.getWithdrawAbsorbRatio().multiply(shuntAmountBD).longValue();
         long commissionAmount = 0;
         if (!StringUtil.isEmpty(cashier.getReferrer())) {
             commissionAmount = settings.getWithdrawCommRatio().multiply(shuntAmountBD).longValue();
         }
-        long absorbAmount = shuntAmount - incomeAmount - commissionAmount;//只要是剩下的钱全发洇金
+        long incomeAmount = shuntAmount - absorbAmount - commissionAmount;//只要是剩下的钱平台全收
         //分完
 
         WithdrawRecord record = new WithdrawRecord();
@@ -211,6 +211,8 @@ public class CashierService implements ICashierService {
         record.setAbsorbAmount(absorbAmount);
         record.setCommissionRatio(settings.getWithdrawCommRatio());
         record.setCommissionAmount(commissionAmount);
+        record.setReferrer(cashier.getReferrer());
+        record.setReferrerName(cashier.getReferrerName());
         record.setGainAmount(gainAmount);
         record.setState(1);
         record.setCtime(CashierUtils.dateTimeToMicroSecond(System.currentTimeMillis()));
@@ -254,17 +256,17 @@ public class CashierService implements ICashierService {
     }
 
 
-    private void depositCommission(String person, String nickName, long gainAmount) throws CircuitException {
+    private void depositCommission(String person, String nickName, long commissionAmount) throws CircuitException {
         AMQP.BasicProperties properties = new AMQP.BasicProperties().builder()
                 .type("/wallet/receipt.mhub")
                 .headers(new HashMap<String, Object>() {{
                     put("command", "transIn");
                     put("module-id", "fission/mf");
                     put("module-title", "裂变游戏·交个朋友");
-                    put("person", person);
+                    put("person", String.format("%s@gbera.netos", person));
                     put("nick-name", nickName);
-                    put("amount", gainAmount);
-                    put("note", "裂变游戏·交个朋友·转入推广提成");
+                    put("amount", commissionAmount);
+                    put("note", "转入推广提成");
                 }})
                 .build();
         rabbitMQProducer.publish("fission.mf", properties, new byte[0]);
@@ -280,7 +282,7 @@ public class CashierService implements ICashierService {
                     put("person", String.format("%s@gbera.netos", person));
                     put("nick-name", nickName);
                     put("amount", gainAmount);
-                    put("note", "裂变游戏·交个朋友·转入红包收益");
+                    put("note", "转入红包收益");
                 }})
                 .build();
         rabbitMQProducer.publish("fission.mf", properties, new byte[0]);
@@ -442,5 +444,23 @@ public class CashierService implements ICashierService {
         record.setMessage(msg);
         record.setNote(null);
         payRecordService.add(record);
+    }
+
+    @CjTransaction
+    @Override
+    public void setSalesman(String principal, String person) {
+        cashierMapper.setSalesman(principal, person);
+    }
+    @CjTransaction
+    @Override
+    public void setRequirement(String principal, int becomeAgent, String phone) {
+        cashierMapper.setRequirement(principal, becomeAgent,phone);
+    }
+    @CjTransaction
+    @Override
+    public long totalEmployeeCount(String principal) {
+        CashierExample example = new CashierExample();
+        example.createCriteria().andReferrerEqualTo(principal);
+        return cashierMapper.countByExample(example);
     }
 }

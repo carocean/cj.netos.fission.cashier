@@ -101,6 +101,24 @@ public class Cashier {
      */
     private Integer level;
 
+    /**
+     * Column: is_request
+     * Remark: 是否提交了需求单 0未提交 1提交
+     */
+    private Integer isRequest;
+
+    /**
+     * Column: become_agent
+     * Remark: 是否想做代理 0 不想 1 想
+     */
+    private Integer becomeAgent;
+
+    /**
+     * Column: phone
+     * Remark: 联系电话
+     */
+    private String phone;
+
     public String getPerson() {
         return person;
     }
@@ -227,5 +245,29 @@ public class Cashier {
 
     public void setLevel(Integer level) {
         this.level = level;
+    }
+
+    public Integer getIsRequest() {
+        return isRequest;
+    }
+
+    public void setIsRequest(Integer isRequest) {
+        this.isRequest = isRequest;
+    }
+
+    public Integer getBecomeAgent() {
+        return becomeAgent;
+    }
+
+    public void setBecomeAgent(Integer becomeAgent) {
+        this.becomeAgent = becomeAgent;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone == null ? null : phone.trim();
     }
 }
