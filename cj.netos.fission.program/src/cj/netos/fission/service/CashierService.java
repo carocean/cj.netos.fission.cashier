@@ -148,7 +148,7 @@ public class CashierService implements ICashierService {
 
         cashierBalanceService.updateBalance(payeeCode, balanceAmount);
 
-        fissionRecordService.inBusiness(payeeCode, details.getPayeeName(), shuntAmount, record.getSn());//业务分账入账
+        fissionRecordService.inBusiness(payeeCode, details.getPayeeName(), shuntAmount, record.getSn(),record.getSalesman(),record.getShuntRatio());//业务分账入账
     }
 
     @CjTransaction

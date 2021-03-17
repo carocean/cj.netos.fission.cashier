@@ -5,6 +5,7 @@ import cj.netos.fission.mapper.*;
 import cj.netos.fission.model.AbsorbInRecord;
 import cj.netos.fission.model.BusinessInRecord;
 import cj.netos.fission.model.IncomeRecord;
+import cj.netos.fission.util.CashierUtils;
 import cj.netos.fission.util.IdWorker;
 import cj.netos.rabbitmq.IRabbitMQProducer;
 import cj.studio.ecm.annotation.CjBridge;
@@ -15,6 +16,7 @@ import cj.studio.orm.mybatis.annotation.CjTransaction;
 import cj.ultimate.gson2.com.google.gson.Gson;
 import com.rabbitmq.client.AMQP;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 
 @CjBridge(aspects = "@transaction")
@@ -93,14 +95,18 @@ public class FissionRecordService implements IFissionRecordService {
 
     @CjTransaction
     @Override
-    public void inBusiness(String person, String nickName, long amount, String refsn) throws CircuitException {
+    public void inBusiness(String person, String nickName, long amount, String refsn, String salesman, BigDecimal shuntRatio) throws CircuitException {
         BusinessInRecord record = new BusinessInRecord();
         record.setSn(new IdWorker().nextId());
         record.setPerson(person);
         record.setNickName(nickName);
         record.setCurrency("CNY");
         record.setAmount(amount);
+        record.setCtime(CashierUtils.dateTimeToMicroSecond(System.currentTimeMillis()));
         record.setRefsn(refsn);
+        record.setSalesman(salesman);
+        record.setShuntRatio(shuntRatio);
+        record.setShuntState(0);
         record.setState(0);
         record.setState(200);
         record.setMessage("ok");

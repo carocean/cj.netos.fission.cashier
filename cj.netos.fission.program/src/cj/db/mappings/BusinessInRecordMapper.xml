@@ -9,7 +9,10 @@
     <result column="currency" jdbcType="VARCHAR" property="currency" />
     <result column="amount" jdbcType="BIGINT" property="amount" />
     <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="shunt_state" jdbcType="INTEGER" property="shuntState" />
     <result column="refsn" jdbcType="VARCHAR" property="refsn" />
+    <result column="salesman" jdbcType="VARCHAR" property="salesman" />
+    <result column="shunt_ratio" jdbcType="DECIMAL" property="shuntRatio" />
     <result column="ctime" jdbcType="VARCHAR" property="ctime" />
     <result column="status" jdbcType="INTEGER" property="status" />
     <result column="message" jdbcType="VARCHAR" property="message" />
@@ -77,8 +80,8 @@
   </sql>
   <sql id="Base_Column_List">
     <!-- @mbg.generated: generated automatically, do not modify! -->
-    sn, person, nick_name, currency, amount, `state`, refsn, ctime, `status`, message, 
-    note
+    sn, person, nick_name, currency, amount, `state`, shunt_state, refsn, salesman, shunt_ratio, 
+    ctime, `status`, message, note
   </sql>
   <select id="selectByExample" parameterType="cj.netos.fission.model.BusinessInRecordExample" resultMap="BaseResultMap">
     <!-- @mbg.generated: generated automatically, do not modify! -->
@@ -118,11 +121,13 @@
     <!-- @mbg.generated: generated automatically, do not modify! -->
     insert into business_in_record (sn, person, nick_name, 
       currency, amount, `state`, 
-      refsn, ctime, `status`, 
+      shunt_state, refsn, salesman, 
+      shunt_ratio, ctime, `status`, 
       message, note)
     values (#{sn,jdbcType=VARCHAR}, #{person,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR}, 
       #{currency,jdbcType=VARCHAR}, #{amount,jdbcType=BIGINT}, #{state,jdbcType=INTEGER}, 
-      #{refsn,jdbcType=VARCHAR}, #{ctime,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
+      #{shuntState,jdbcType=INTEGER}, #{refsn,jdbcType=VARCHAR}, #{salesman,jdbcType=VARCHAR}, 
+      #{shuntRatio,jdbcType=DECIMAL}, #{ctime,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
       #{message,jdbcType=VARCHAR}, #{note,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="cj.netos.fission.model.BusinessInRecord">
@@ -147,8 +152,17 @@
       <if test="state != null">
         `state`,
       </if>
+      <if test="shuntState != null">
+        shunt_state,
+      </if>
       <if test="refsn != null">
         refsn,
+      </if>
+      <if test="salesman != null">
+        salesman,
+      </if>
+      <if test="shuntRatio != null">
+        shunt_ratio,
       </if>
       <if test="ctime != null">
         ctime,
@@ -182,8 +196,17 @@
       <if test="state != null">
         #{state,jdbcType=INTEGER},
       </if>
+      <if test="shuntState != null">
+        #{shuntState,jdbcType=INTEGER},
+      </if>
       <if test="refsn != null">
         #{refsn,jdbcType=VARCHAR},
+      </if>
+      <if test="salesman != null">
+        #{salesman,jdbcType=VARCHAR},
+      </if>
+      <if test="shuntRatio != null">
+        #{shuntRatio,jdbcType=DECIMAL},
       </if>
       <if test="ctime != null">
         #{ctime,jdbcType=VARCHAR},
@@ -228,8 +251,17 @@
       <if test="record.state != null">
         `state` = #{record.state,jdbcType=INTEGER},
       </if>
+      <if test="record.shuntState != null">
+        shunt_state = #{record.shuntState,jdbcType=INTEGER},
+      </if>
       <if test="record.refsn != null">
         refsn = #{record.refsn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.salesman != null">
+        salesman = #{record.salesman,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shuntRatio != null">
+        shunt_ratio = #{record.shuntRatio,jdbcType=DECIMAL},
       </if>
       <if test="record.ctime != null">
         ctime = #{record.ctime,jdbcType=VARCHAR},
@@ -257,7 +289,10 @@
       currency = #{record.currency,jdbcType=VARCHAR},
       amount = #{record.amount,jdbcType=BIGINT},
       `state` = #{record.state,jdbcType=INTEGER},
+      shunt_state = #{record.shuntState,jdbcType=INTEGER},
       refsn = #{record.refsn,jdbcType=VARCHAR},
+      salesman = #{record.salesman,jdbcType=VARCHAR},
+      shunt_ratio = #{record.shuntRatio,jdbcType=DECIMAL},
       ctime = #{record.ctime,jdbcType=VARCHAR},
       `status` = #{record.status,jdbcType=INTEGER},
       message = #{record.message,jdbcType=VARCHAR},
@@ -285,8 +320,17 @@
       <if test="state != null">
         `state` = #{state,jdbcType=INTEGER},
       </if>
+      <if test="shuntState != null">
+        shunt_state = #{shuntState,jdbcType=INTEGER},
+      </if>
       <if test="refsn != null">
         refsn = #{refsn,jdbcType=VARCHAR},
+      </if>
+      <if test="salesman != null">
+        salesman = #{salesman,jdbcType=VARCHAR},
+      </if>
+      <if test="shuntRatio != null">
+        shunt_ratio = #{shuntRatio,jdbcType=DECIMAL},
       </if>
       <if test="ctime != null">
         ctime = #{ctime,jdbcType=VARCHAR},
@@ -311,7 +355,10 @@
       currency = #{currency,jdbcType=VARCHAR},
       amount = #{amount,jdbcType=BIGINT},
       `state` = #{state,jdbcType=INTEGER},
+      shunt_state = #{shuntState,jdbcType=INTEGER},
       refsn = #{refsn,jdbcType=VARCHAR},
+      salesman = #{salesman,jdbcType=VARCHAR},
+      shunt_ratio = #{shuntRatio,jdbcType=DECIMAL},
       ctime = #{ctime,jdbcType=VARCHAR},
       `status` = #{status,jdbcType=INTEGER},
       message = #{message,jdbcType=VARCHAR},

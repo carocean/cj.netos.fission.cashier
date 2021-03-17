@@ -1,5 +1,7 @@
 package cj.netos.fission.model;
 
+import java.math.BigDecimal;
+
 /**
  * Table: business_in_record
  */
@@ -40,10 +42,28 @@ public class BusinessInRecord {
     private Integer state;
 
     /**
+     * Column: shunt_state
+     * Remark: 分账状态 0未分账 1已分账
+     */
+    private Integer shuntState;
+
+    /**
      * Column: refsn
      * Remark: 关联充值单
      */
     private String refsn;
+
+    /**
+     * Column: salesman
+     * Remark: 经手的业务员
+     */
+    private String salesman;
+
+    /**
+     * Column: shunt_ratio
+     * Remark: 充值平台收账比率
+     */
+    private BigDecimal shuntRatio;
 
     /**
      * Column: ctime
@@ -115,12 +135,36 @@ public class BusinessInRecord {
         this.state = state;
     }
 
+    public Integer getShuntState() {
+        return shuntState;
+    }
+
+    public void setShuntState(Integer shuntState) {
+        this.shuntState = shuntState;
+    }
+
     public String getRefsn() {
         return refsn;
     }
 
     public void setRefsn(String refsn) {
         this.refsn = refsn == null ? null : refsn.trim();
+    }
+
+    public String getSalesman() {
+        return salesman;
+    }
+
+    public void setSalesman(String salesman) {
+        this.salesman = salesman == null ? null : salesman.trim();
+    }
+
+    public BigDecimal getShuntRatio() {
+        return shuntRatio;
+    }
+
+    public void setShuntRatio(BigDecimal shuntRatio) {
+        this.shuntRatio = shuntRatio;
     }
 
     public String getCtime() {
