@@ -79,12 +79,14 @@ public class ChatroomService extends AbstractService implements IChatroomService
     public void commission(WithdrawRecord record, String boss, String bossNickName, long amount) throws CircuitException {
         String bossFull = String.format("%s@gbera.netos", boss);
         String withdrawerFull = String.format("%s@gbera.netos", record.getWithdrawer());
-        String roomId = Encript.md5("38aef1fb-e99b-4b58-b983-252e50937604");
+        String roomId = Encript.md5(String.format("%s/38aef1fb-e99b-4b58-b983-252e50937604",boss));
         Chatroom chatroom = getChatroom(bossFull, roomId);
         if (chatroom == null) {
             Person payerPerson = personService.get(boss);
             chatroom = createChatroom2(bossFull, roomId, payerPerson);
             addMember(chatroom, bossFull, payerPerson, "creator");
+            Person withdrawerPerson = personService.get(record.getWithdrawer());
+            addMember(chatroom, withdrawerFull, withdrawerPerson, "user");
             pushAddMemberEvent2(chatroom,withdrawerFull, record.getNickName(),amount);
             return;
         }
@@ -133,7 +135,7 @@ public class ChatroomService extends AbstractService implements IChatroomService
                     }
                 }).build();
         BigDecimal decimal = new BigDecimal(amount).divide(new BigDecimal("100.00"), 2, RoundingMode.DOWN);
-        String content = String.format("¥%s元佣金到账！%s为你挣得。",decimal.toString(), nickName );
+        String content = String.format("给你佣金：¥%s元！请到\"钱包->裂变游戏\"账户中查看余额或账单",decimal.toString() );
         byte[] body = content.getBytes();
         rabbitMQProducer.publish("jobCenter", properties, body);
     }
