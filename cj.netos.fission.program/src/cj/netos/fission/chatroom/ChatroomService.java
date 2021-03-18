@@ -117,7 +117,7 @@ public class ChatroomService extends AbstractService implements IChatroomService
                     }
                 }).build();
         BigDecimal decimal = new BigDecimal(record.getAmount()).divide(new BigDecimal("100.00"), 2, RoundingMode.DOWN);
-        String content = String.format("欢迎%s进群！%s领取了¥%s元，谢谢群主红包。", payeePerson.getNickName(), payeePerson.getNickName(), decimal.toString());
+        String content = String.format("进群奖励：¥%s元",  decimal.toString());
         byte[] body = content.getBytes();
         rabbitMQProducer.publish("jobCenter", properties, body);
     }
