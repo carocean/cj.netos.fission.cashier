@@ -28,4 +28,9 @@ public class RecommendedService extends AbstractService implements IRecommendedS
         recommended.setCtime(Utils.timeToStr(System.currentTimeMillis()));
         getHome().saveDoc(_COL, new TupleDocument<>(recommended));
     }
+
+    @Override
+    public void emptyRecommendedsOfPerson(String person) {
+        getHome().deleteDocs(_COL,String.format("{'tuple.person':'%s'}", person));
+    }
 }

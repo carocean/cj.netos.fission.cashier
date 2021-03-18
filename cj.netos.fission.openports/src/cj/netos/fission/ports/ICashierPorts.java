@@ -151,6 +151,12 @@ public interface ICashierPorts extends IOpenportService {
                     "payee即被支付者限定想要获取什么标签的用户", name = "direct") String direct
     ) throws CircuitException;
 
+    @CjOpenport(usage = "清除我推荐过的，仅管理员有权")
+    void emptyRecommendeds(
+            ISecuritySession securitySession,
+            @CjOpenportParameter(usage = "公号不带租户", name = "person") String person
+    ) throws CircuitException;
+
     @CjOpenport(usage = "获取限定区域")
     LimitArea getLimitArea(
             ISecuritySession securitySession,

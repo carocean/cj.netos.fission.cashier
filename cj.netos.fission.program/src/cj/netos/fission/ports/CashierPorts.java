@@ -29,7 +29,8 @@ public class CashierPorts implements ICashierPorts {
     IPersonService personService;
     @CjServiceRef
     IMFSettingsService mfSettingsService;
-
+    @CjServiceRef
+    IRecommendedService recommendedService;
     @Override
     public CashierBalance getCashierBalance(ISecuritySession securitySession) throws CircuitException {
         return cashierService.getCashierBalance(securitySession.principal());
@@ -237,6 +238,14 @@ public class CashierPorts implements ICashierPorts {
     @Override
     public void emptyLimitArea(ISecuritySession securitySession, String direct) throws CircuitException {
         tagService.removeLimitArea(securitySession.principal(), direct);
+    }
+
+    @Override
+    public void emptyRecommendeds(ISecuritySession securitySession, String person) throws CircuitException {
+        if(!securitySession.roleIn("platform:administrators")){
+            throw new CircuitException("800","拒绝访问");
+        }
+        recommendedService.emptyRecommendedsOfPerson(person);
     }
 
     @Override

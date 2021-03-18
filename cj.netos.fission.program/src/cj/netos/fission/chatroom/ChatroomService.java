@@ -48,6 +48,7 @@ public class ChatroomService extends AbstractService implements IChatroomService
             supportsChatroom = 0;
         }
         if (cashState == 1 || supportsChatroom == 0) {
+            CJSystem.logging().info(getClass(), String.format("%s 的裂变游戏已停止营业或不具备拉群条件。state=%s supportsChatroom=%s", payerName,cashState,supportsChatroom));
             return;
         }
         String payerFull = String.format("%s@gbera.netos", payer);
@@ -65,6 +66,9 @@ public class ChatroomService extends AbstractService implements IChatroomService
 
         if (existsMember(chatroom, payeeFull)) {
             CJSystem.logging().info(getClass(), String.format("抢群主:%s[%s]的群成员：%s[%s] 已在其聊天室：%s ，并且又领取了钱", payerName, payer, payeeName, payee, chatroom.getRoom()));
+//            Person payeePerson = personService.get(payee);
+//            PayRecord record = payRecordService.getRecord(recordSn);
+//            pushAddMemberEvent(chatroom, payeeFull, payeePerson, record);
             return;
         }
         //添加成员
@@ -79,7 +83,7 @@ public class ChatroomService extends AbstractService implements IChatroomService
     public void commission(WithdrawRecord record, String boss, String bossNickName, long amount) throws CircuitException {
         String bossFull = String.format("%s@gbera.netos", boss);
         String withdrawerFull = String.format("%s@gbera.netos", record.getWithdrawer());
-        String roomId = Encript.md5(String.format("%s/38aef1fb-e99b-4b58-b983-252e50937604",boss));
+        String roomId = Encript.md5(String.format("%s/38aef1fb-e99b-4b58-b983-252e50937604", boss));
         Chatroom chatroom = getChatroom(bossFull, roomId);
         if (chatroom == null) {
             Person payerPerson = personService.get(boss);
@@ -87,12 +91,12 @@ public class ChatroomService extends AbstractService implements IChatroomService
             addMember(chatroom, bossFull, payerPerson, "creator");
             Person withdrawerPerson = personService.get(record.getWithdrawer());
             addMember(chatroom, withdrawerFull, withdrawerPerson, "user");
-            pushAddMemberEvent2(chatroom,withdrawerFull, record.getNickName(),amount);
+            pushAddMemberEvent2(chatroom, withdrawerFull, record.getNickName(), amount);
             return;
         }
 
         if (existsMember(chatroom, withdrawerFull)) {
-            pushAddMemberEvent2(chatroom,withdrawerFull, record.getNickName(),amount);
+            pushAddMemberEvent2(chatroom, withdrawerFull, record.getNickName(), amount);
 //            CJSystem.logging().info(getClass(), String.format("抢群主:%s[%s]的群成员：%s[%s] 已在其聊天室：%s ，并且又领取了钱", bossNickName, boss, record.getNickName(), record.getNickName(), chatroom.getRoom()));
             return;
         }
@@ -100,7 +104,7 @@ public class ChatroomService extends AbstractService implements IChatroomService
 
         Person withdrawerPerson = personService.get(record.getWithdrawer());
         addMember(chatroom, withdrawerFull, withdrawerPerson, "user");
-        pushAddMemberEvent2(chatroom, withdrawerFull,withdrawerPerson.getNickName(),amount);
+        pushAddMemberEvent2(chatroom, withdrawerFull, withdrawerPerson.getNickName(), amount);
     }
 
     private void pushAddMemberEvent(Chatroom chatroom, String payeeFull, Person payeePerson, PayRecord record) throws CircuitException {
@@ -117,11 +121,12 @@ public class ChatroomService extends AbstractService implements IChatroomService
                     }
                 }).build();
         BigDecimal decimal = new BigDecimal(record.getAmount()).divide(new BigDecimal("100.00"), 2, RoundingMode.DOWN);
-        String content = String.format("进群奖励：¥%s元",  decimal.toString());
+        String content = String.format("进群奖励：¥%s元", decimal.toString());
         byte[] body = content.getBytes();
         rabbitMQProducer.publish("jobCenter", properties, body);
     }
-    private void pushAddMemberEvent2(Chatroom chatroom, String withdrawerFull, String nickName,long amount) throws CircuitException {
+
+    private void pushAddMemberEvent2(Chatroom chatroom, String withdrawerFull, String nickName, long amount) throws CircuitException {
         AMQP.BasicProperties properties = new AMQP.BasicProperties().builder()
                 .type("/chat/message.mq")
                 .headers(new HashMap() {
@@ -135,10 +140,11 @@ public class ChatroomService extends AbstractService implements IChatroomService
                     }
                 }).build();
         BigDecimal decimal = new BigDecimal(amount).divide(new BigDecimal("100.00"), 2, RoundingMode.DOWN);
-        String content = String.format("给你佣金：¥%s元！请到\"钱包->裂变游戏\"账户中查看余额或账单",decimal.toString() );
+        String content = String.format("给你佣金：¥%s元！请到\"钱包->裂变游戏\"账户中查看余额或账单", decimal.toString());
         byte[] body = content.getBytes();
         rabbitMQProducer.publish("jobCenter", properties, body);
     }
+
     private void addMember(Chatroom chatroom, String personFull, Person personInfo, String actor) {
         RoomMember member = new RoomMember();
         member.setActor(actor);
@@ -153,6 +159,7 @@ public class ChatroomService extends AbstractService implements IChatroomService
     private boolean existsMember(Chatroom chatroom, String payeeFull) {
         return cube(chatroom.getCreator()).tupleCount(_COL_MEMBER, String.format("{'tuple.room':'%s','tuple.person':'%s'}", chatroom.getRoom(), payeeFull)) > 0;
     }
+
     private Chatroom createChatroom2(String payerFull, String roomId, Person payerPerson) {
         Chatroom chatroom = new Chatroom();
         chatroom.setCreator(payerFull);
@@ -164,6 +171,7 @@ public class ChatroomService extends AbstractService implements IChatroomService
         cube(payerFull).saveDoc(_COL_ROOM, new TupleDocument<>(chatroom));
         return chatroom;
     }
+
     private Chatroom createChatroom(String payerFull, String roomId, Person payerPerson) {
         Chatroom chatroom = new Chatroom();
         chatroom.setCreator(payerFull);
