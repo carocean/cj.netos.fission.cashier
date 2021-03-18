@@ -79,7 +79,7 @@ public class ChatroomService extends AbstractService implements IChatroomService
     public void commission(WithdrawRecord record, String boss, String bossNickName, long amount) throws CircuitException {
         String bossFull = String.format("%s@gbera.netos", boss);
         String withdrawerFull = String.format("%s@gbera.netos", record.getWithdrawer());
-        String roomId = Encript.md5(bossFull);
+        String roomId = Encript.md5("38aef1fb-e99b-4b58-b983-252e50937604");
         Chatroom chatroom = getChatroom(bossFull, roomId);
         if (chatroom == null) {
             Person payerPerson = personService.get(boss);
@@ -156,9 +156,9 @@ public class ChatroomService extends AbstractService implements IChatroomService
         chatroom.setCreator(payerFull);
         chatroom.setCtime(System.currentTimeMillis());
         chatroom.setFlag(0);
-//        chatroom.setLeading(payerPerson.getAvatarUrl());
+        chatroom.setLeading("http://47.105.165.186:7100/app/fission/img/tichengguanli.png");
         chatroom.setRoom(roomId);
-        chatroom.setTitle(String.format("裂变游戏·佣金-%s", payerPerson.getNickName()));
+        chatroom.setTitle("裂变游戏·佣金");
         cube(payerFull).saveDoc(_COL_ROOM, new TupleDocument<>(chatroom));
         return chatroom;
     }
