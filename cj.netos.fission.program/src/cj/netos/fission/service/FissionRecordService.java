@@ -33,8 +33,6 @@ public class FissionRecordService implements IFissionRecordService {
     AbsorbOutRecordMapper absorbOutRecordMapper;
     @CjServiceRef(refByName = "mybatis.cj.netos.fission.mapper.BusinessInRecordMapper")
     BusinessInRecordMapper businessInRecordMapper;
-    @CjServiceRef(refByName = "mybatis.cj.netos.fission.mapper.BusinessShuntRecordMapper")
-    BusinessShuntRecordMapper businessShuntRecordMapper;
     @CjServiceRef(refByName = "mybatis.cj.netos.fission.mapper.BusinessRefundRecordMapper")
     BusinessRefundRecordMapper businessRefundRecordMapper;
 

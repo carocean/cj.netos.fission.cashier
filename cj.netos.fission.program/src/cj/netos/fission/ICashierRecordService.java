@@ -1,5 +1,6 @@
 package cj.netos.fission;
 
+import cj.netos.fission.model.DepositCommission;
 import cj.netos.fission.model.PayRecord;
 import cj.netos.fission.model.RechargeRecord;
 import cj.netos.fission.model.WithdrawRecord;
@@ -33,4 +34,7 @@ public interface ICashierRecordService {
     long totalPayeeAmount(String payer);
 
     long totalCommissionAmount(String principal);
+
+    DepositCommission getDepositCommissionRecord(String sn);
+
 }

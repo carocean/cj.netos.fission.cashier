@@ -24,6 +24,11 @@ public class CashierRecordPorts implements ICashierRecordPorts {
     }
 
     @Override
+    public DepositCommission getDepositCommissionRecord(ISecuritySession session, String sn) throws CircuitException {
+        return cashierRecordService.getDepositCommissionRecord(sn);
+    }
+
+    @Override
     public WithdrawRecord getWithdrawRecord(ISecuritySession session, String sn) throws CircuitException {
         return cashierRecordService.getWithdrawRecord(sn);
     }

@@ -12,6 +12,12 @@ import java.util.List;
 
 @CjOpenports(usage = "出纳记录服务")
 public interface ICashierRecordPorts extends IOpenportService {
+    @CjOpenport(usage = "佣金记录单")
+    DepositCommission getDepositCommissionRecord(
+            ISecuritySession session,
+            @CjOpenportParameter(usage = "标识", name = "sn") String sn
+    ) throws CircuitException;
+
     @CjOpenport(usage = "充值记录单")
     RechargeRecord getRechargeRecord(
             ISecuritySession session,

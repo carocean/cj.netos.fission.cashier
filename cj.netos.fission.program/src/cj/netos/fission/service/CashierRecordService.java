@@ -1,9 +1,12 @@
 package cj.netos.fission.service;
 
 import cj.netos.fission.ICashierRecordService;
+import cj.netos.fission.IDepositCommissionRecordService;
+import cj.netos.fission.mapper.DepositCommissionMapper;
 import cj.netos.fission.mapper.PayRecordMapper;
 import cj.netos.fission.mapper.RechargeRecordMapper;
 import cj.netos.fission.mapper.WithdrawRecordMapper;
+import cj.netos.fission.model.DepositCommission;
 import cj.netos.fission.model.PayRecord;
 import cj.netos.fission.model.RechargeRecord;
 import cj.netos.fission.model.WithdrawRecord;
@@ -23,11 +26,19 @@ public class CashierRecordService implements ICashierRecordService {
     WithdrawRecordMapper withdrawRecordMapper;
     @CjServiceRef(refByName = "mybatis.cj.netos.fission.mapper.PayRecordMapper")
     PayRecordMapper payRecordMapper;
+    @CjServiceRef(refByName = "mybatis.cj.netos.fission.mapper.DepositCommissionMapper")
+    DepositCommissionMapper depositCommissionMapper;
 
     @CjTransaction
     @Override
     public RechargeRecord getRechargeRecord(String sn) {
         return rechargeRecordMapper.selectByPrimaryKey(sn);
+    }
+
+    @CjTransaction
+    @Override
+    public DepositCommission getDepositCommissionRecord(String sn) {
+        return depositCommissionMapper.selectByPrimaryKey(sn);
     }
 
     @CjTransaction
@@ -89,6 +100,7 @@ public class CashierRecordService implements ICashierRecordService {
     public Long totalPayeeOfDay(String principal, String dayTime) {
         return payRecordMapper.totalPayeeOfDay(principal, dayTime + "%");
     }
+
     @CjTransaction
     @Override
     public Long totalPayerAmount(String payee) {
@@ -101,6 +113,7 @@ public class CashierRecordService implements ICashierRecordService {
     public long totalPayeeAmount(String payer) {
         return payRecordMapper.totalPayeeAmount(payer);
     }
+
     @CjTransaction
     @Override
     public long totalCommissionAmount(String principal) {

@@ -7,7 +7,6 @@ import cj.netos.fission.model.PayRecord;
 import cj.netos.fission.util.CashierUtils;
 import cj.netos.fission.util.IdWorker;
 import cj.netos.rabbitmq.IRabbitMQProducer;
-import cj.studio.ecm.CJSystem;
 import cj.studio.ecm.annotation.CjBridge;
 import cj.studio.ecm.annotation.CjService;
 import cj.studio.ecm.annotation.CjServiceInvertInjection;
@@ -35,11 +34,15 @@ public class CashierService implements ICashierService {
     @CjServiceRef
     IWithdrawRecordService withdrawRecordService;
     @CjServiceRef
+    IDepositCommissionRecordService depositCommissionRecordService;
+    @CjServiceRef
     IPayRecordService payRecordService;
     @CjServiceRef(refByName = "mybatis.cj.netos.fission.mapper.CashierMapper")
     CashierMapper cashierMapper;
     @CjServiceRef(refByName = "@.rabbitmq.producer.withdraw-to-wallet")
     IRabbitMQProducer rabbitMQProducer;
+    @CjServiceRef(refByName = "@.rabbitmq.producer.deposit-commission")
+    IRabbitMQProducer rabbitMQProducerDepositCommission;
     @CjServiceRef
     ISnatchEnvelopeAlgorithm snatchEnvelopeAlgorithm;
     @CjServiceRef
@@ -148,7 +151,7 @@ public class CashierService implements ICashierService {
 
         cashierBalanceService.updateBalance(payeeCode, balanceAmount);
 
-        fissionRecordService.inBusiness(payeeCode, details.getPayeeName(), shuntAmount, record.getSn(),record.getSalesman(),record.getShuntRatio());//业务分账入账
+        fissionRecordService.inBusiness(payeeCode, details.getPayeeName(), shuntAmount, record.getSn(), record.getSalesman(), record.getShuntRatio());//业务分账入账
     }
 
     @CjTransaction
@@ -173,6 +176,62 @@ public class CashierService implements ICashierService {
         record.setMessage(message);
         record.setNote(details.getNote());
         rechargeRecordService.add(record);
+    }
+    @CjTransaction
+    @Override
+    public void depositCommission(String person, String nickName, long amount, String refsn) {
+        CashierBalance balance = cashierBalanceService.getAndInitBalance(person);
+        DepositCommission record = new DepositCommission();
+        record.setSn(new IdWorker().nextId());
+        record.setPerson(person);
+        record.setNickName(nickName);
+        record.setCurrency("CNY");
+        record.setState(1);
+        record.setCtime(CashierUtils.dateTimeToMicroSecond(System.currentTimeMillis()));
+        record.setAmount(amount);
+        record.setRefsn(refsn);
+        record.setStatus(200);
+        record.setMessage("ok");
+        depositCommissionRecordService.add(record);
+
+
+        CashierBill bill = new CashierBill();
+        bill.setSn(new IdWorker().nextId());
+        bill.setTitle("推广佣金");
+        bill.setPerson(person);
+        bill.setNickName(nickName);
+        bill.setAmount(amount);
+        long balanceAmount = balance.getBalance() + bill.getAmount();
+        bill.setBalance(balanceAmount);
+        bill.setOrder(5);
+        bill.setRefsn(record.getSn());
+        bill.setCtime(CashierUtils.dateTimeToMicroSecond(System.currentTimeMillis()));
+        bill.setWorkday(CashierUtils.dateTimeToDay(System.currentTimeMillis()));
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        bill.setDay(calendar.get(Calendar.DAY_OF_MONTH));
+        bill.setMonth(calendar.get(Calendar.MONTH));
+        bill.setSeason(calendar.get(Calendar.MONTH) % 4);
+        bill.setYear(calendar.get(Calendar.YEAR));
+        cashierBillService.add(bill);
+
+        cashierBalanceService.updateBalance(person, balanceAmount);
+    }
+    @CjTransaction
+    @Override
+    public void depositCommissionError(String person, String nickName, long amount, String refsn, int status, String message) {
+        DepositCommission record = new DepositCommission();
+        record.setSn(new IdWorker().nextId());
+        record.setPerson(person);
+        record.setNickName(nickName);
+        record.setCurrency("CNY");
+        record.setState(1);
+        record.setCtime(CashierUtils.dateTimeToMicroSecond(System.currentTimeMillis()));
+        record.setAmount(amount);
+        record.setRefsn(refsn);
+        record.setStatus(status);
+        record.setMessage(message);
+        depositCommissionRecordService.add(record);
     }
 
     @CjTransaction
@@ -248,28 +307,25 @@ public class CashierService implements ICashierService {
         fissionRecordService.income(person, nickName, incomeAmount, record.getSn());//平台收入
         fissionRecordService.inAbsorb(person, nickName, absorbAmount, record.getSn());//洇金收入
 
-
-        if (!StringUtil.isEmpty(cashier.getReferrer())) {//推广提成转引荐人钱包
-            depositCommission(cashier.getReferrer(), cashier.getReferrerName(), commissionAmount);
+        if (!StringUtil.isEmpty(cashier.getReferrer())) {//推广提成转引荐人裂变游戏余额
+            depositCommissionNotify(cashier.getReferrer(), cashier.getReferrerName(), commissionAmount, record.getSn());
         }
 
     }
 
 
-    private void depositCommission(String person, String nickName, long commissionAmount) throws CircuitException {
+    private void depositCommissionNotify(String person, String nickName, long commissionAmount, String refsn) throws CircuitException {
         AMQP.BasicProperties properties = new AMQP.BasicProperties().builder()
-                .type("/wallet/receipt.mhub")
+                .type("/cashier/receipt.mhub")
                 .headers(new HashMap<String, Object>() {{
-                    put("command", "transIn");
-                    put("module-id", "fission/mf");
-                    put("module-title", "裂变游戏·交个朋友");
-                    put("person", String.format("%s@gbera.netos", person));
+                    put("command", "depositCommission");
+                    put("person", person);
                     put("nick-name", nickName);
                     put("amount", commissionAmount);
-                    put("note", "转入推广提成");
+                    put("refsn", refsn);
                 }})
                 .build();
-        rabbitMQProducer.publish("fission.mf", properties, new byte[0]);
+        rabbitMQProducerDepositCommission.publish("fission.mf", properties, new byte[0]);
     }
 
     private void depositRedbag(String person, String nickName, long gainAmount) throws CircuitException {
@@ -451,11 +507,13 @@ public class CashierService implements ICashierService {
     public void setSalesman(String principal, String person) {
         cashierMapper.setSalesman(principal, person);
     }
+
     @CjTransaction
     @Override
     public void setRequirement(String principal, int becomeAgent, String phone) {
-        cashierMapper.setRequirement(principal, becomeAgent,phone);
+        cashierMapper.setRequirement(principal, becomeAgent, phone);
     }
+
     @CjTransaction
     @Override
     public long totalEmployeeCount(String principal) {

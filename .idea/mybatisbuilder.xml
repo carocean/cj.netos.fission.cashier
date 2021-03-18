@@ -160,6 +160,16 @@
             </TableInfo>
           </value>
         </entry>
+        <entry key="fission.mf#business_out_record">
+          <value>
+            <TableInfo>
+              <option name="database" value="fission.mf" />
+              <option name="domainName" value="BusinessOutRecord" />
+              <option name="tableComment" value="平台提现" />
+              <option name="tableName" value="business_out_record" />
+            </TableInfo>
+          </value>
+        </entry>
         <entry key="fission.mf#business_refund_record">
           <value>
             <TableInfo>
@@ -257,6 +267,16 @@
               <option name="domainName" value="CashierBill" />
               <option name="tableComment" value="出纳柜台变动账单" />
               <option name="tableName" value="cashier_bill" />
+            </TableInfo>
+          </value>
+        </entry>
+        <entry key="fission.mf#deposit_commission">
+          <value>
+            <TableInfo>
+              <option name="database" value="fission.mf" />
+              <option name="domainName" value="DepositCommission" />
+              <option name="tableComment" value="提现引荐人分账" />
+              <option name="tableName" value="deposit_commission" />
             </TableInfo>
           </value>
         </entry>

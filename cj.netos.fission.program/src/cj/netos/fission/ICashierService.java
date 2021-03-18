@@ -37,4 +37,9 @@ public interface ICashierService {
     void setRequirement(String principal, int becomeAgent, String phone);
 
     long totalEmployeeCount(String principal);
+
+    void depositCommission(String person, String nickName, long amount, String refsn);
+
+    void depositCommissionError(String person, String nickName, long amount, String refsn, int status, String message);
+
 }

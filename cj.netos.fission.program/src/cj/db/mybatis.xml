@@ -41,7 +41,7 @@
         <mapper resource="cj/db/mappings/AbsorbOutRecordMapper.xml"/>
         <mapper resource="cj/db/mappings/BusinessInRecordMapper.xml"/>
         <mapper resource="cj/db/mappings/BusinessRefundRecordMapper.xml"/>
-        <mapper resource="cj/db/mappings/BusinessShuntRecordMapper.xml"/>
+        <mapper resource="cj/db/mappings/DepositCommissionMapper.xml"/>
         <mapper resource="cj/db/mappings/IncomeRecordMapper.xml"/>
         <mapper resource="cj/db/mappings/OutcomeRecordMapper.xml"/>
         <mapper resource="cj/db/mappings/BusinessIncomeRatioMapper.xml"/>
