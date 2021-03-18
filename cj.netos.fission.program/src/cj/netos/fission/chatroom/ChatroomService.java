@@ -4,14 +4,9 @@ import cj.lns.chip.sos.cube.framework.ICube;
 import cj.lns.chip.sos.cube.framework.IDocument;
 import cj.lns.chip.sos.cube.framework.IQuery;
 import cj.lns.chip.sos.cube.framework.TupleDocument;
-import cj.netos.fission.AbstractService;
-import cj.netos.fission.IChatroomService;
-import cj.netos.fission.IPayRecordService;
-import cj.netos.fission.IPersonService;
-import cj.netos.fission.model.Chatroom;
+import cj.netos.fission.*;
+import cj.netos.fission.model.*;
 import cj.netos.fission.model.PayRecord;
-import cj.netos.fission.model.Person;
-import cj.netos.fission.model.RoomMember;
 import cj.netos.rabbitmq.IRabbitMQProducer;
 import cj.studio.ecm.CJSystem;
 import cj.studio.ecm.annotation.CjService;
@@ -36,10 +31,24 @@ public class ChatroomService extends AbstractService implements IChatroomService
     IPayRecordService payRecordService;
     @CjServiceRef(refByName = "@.rabbitmq.producer.chatroom")
     IRabbitMQProducer rabbitMQProducer;
-
+    @CjServiceRef
+    ICashierService cashierService;
     @Override
     public void enter(String recordSn, String payer, String payerName, String payee, String payeeName) throws CircuitException {
         //为支付者方建群；将被支付人加为成员；发出通知
+        //支付方必须是充值者且必须是营业状态，没充过值不建群
+        Cashier cashier=cashierService.getAndInitCashier(payer);
+        Integer cashState=cashier.getState();
+        if (cashState == null) {
+            cashState=0;
+        }
+        Integer supportsChatroom=cashier.getSupportsChatroom();
+        if (supportsChatroom == null) {
+            supportsChatroom=0;
+        }
+        if (cashState== 1 || supportsChatroom==0) {
+            return;
+        }
         String payerFull = String.format("%s@gbera.netos", payer);
         String payeeFull = String.format("%s@gbera.netos", payee);
         String roomId = Encript.md5(payerFull);

@@ -67,6 +67,7 @@ public class CashierService implements ICashierService {
         cashier.setAmplitudeFactor(new BigDecimal("2.0"));
         cashier.setCacAverage(30L);
         cashier.setDayAmount(0L);
+        cashier.setSupportsChatroom(0);
         cashierMapper.insert(cashier);
         return cashier;
     }

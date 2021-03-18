@@ -6,7 +6,7 @@
 				class:"cj.studio.orm.mongodb.MongoDBPlugin",
 				parameters:{
 					remotes:"[
-					'120.27.15.205:27017'
+					'172.31.210.92:27017'
 				]",
 					isTrustConnect: "false",
 					database: "admin",
@@ -28,7 +28,7 @@
 				class:"cj.studio.orm.curator.CuratorPlugin",
 				parameters:{
 					desc: "切换说明：生产环境：172.31.210.92:2181,172.31.210.92:2182,172.31.210.92:2183 开发环境：120.27.15.205:2181,120.27.15.205:2182,120.27.15.205:2183",
-					connectString: "120.27.15.205:2181,120.27.15.205:2182,120.27.15.205:2183",
+					connectString: "172.31.210.92:2181,172.31.210.92:2182,172.31.210.92:2183",
 					sessionTimeoutMs: "500000",
 					connectionTimeoutMs: "500000",
 					retryIntervalMs: "5000"
