@@ -6,8 +6,17 @@ public class Chatroom {
     String creator;
     String leading;
     String microsite;
+    String type;//fission.mf|normal|person，分别为裂变游戏｜一般｜公众群,如果为空表示normal类型
     int flag;//0为正常；1为已删除
     long ctime;
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 
     public int getFlag() {
         return flag;

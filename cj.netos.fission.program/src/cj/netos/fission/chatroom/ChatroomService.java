@@ -13,7 +13,6 @@ import cj.studio.ecm.annotation.CjService;
 import cj.studio.ecm.annotation.CjServiceRef;
 import cj.studio.ecm.net.CircuitException;
 import cj.studio.openport.util.Encript;
-import cj.ultimate.util.StringUtil;
 import com.rabbitmq.client.AMQP;
 
 import java.math.BigDecimal;
@@ -49,6 +48,15 @@ public class ChatroomService extends AbstractService implements IChatroomService
         }
         if (cashState == 1 || supportsChatroom == 0) {
             CJSystem.logging().info(getClass(), String.format("%s 的裂变游戏已停止营业或不具备拉群条件。state=%s supportsChatroom=%s", payerName,cashState,supportsChatroom));
+            //不具备拉群条件，但双方互加公众，即发往公众通知群
+            String payerFull = String.format("%s@gbera.netos", payer);
+            String payeeFull = String.format("%s@gbera.netos", payee);
+            PayRecord record = payRecordService.getRecord(recordSn);
+            BigDecimal decimal = new BigDecimal(record.getAmount()).divide(new BigDecimal("100.00"), 2, RoundingMode.DOWN);
+            String content = String.format("公众关注激励，领取你：¥%s元！请到\"桌面->点头像->公众\"查看", decimal.toString());
+            pushSystemEvent(payerFull,payeeFull,content);
+            content = String.format("公众关注激励，支付你：¥%s元！请到\"桌面->点头像->公众\"查看", decimal.toString());
+            pushSystemEvent(payeeFull,payerFull, content);
             return;
         }
         String payerFull = String.format("%s@gbera.netos", payer);
@@ -78,6 +86,8 @@ public class ChatroomService extends AbstractService implements IChatroomService
         PayRecord record = payRecordService.getRecord(recordSn);
         pushAddMemberEvent(chatroom, payeeFull, payeePerson, record);
     }
+
+
 
     @Override
     public void commission(WithdrawRecord record, String boss, String bossNickName, long amount) throws CircuitException {
@@ -121,7 +131,7 @@ public class ChatroomService extends AbstractService implements IChatroomService
                     }
                 }).build();
         BigDecimal decimal = new BigDecimal(record.getAmount()).divide(new BigDecimal("100.00"), 2, RoundingMode.DOWN);
-        String content = String.format("进群奖励：¥%s元", decimal.toString());
+        String content = String.format("进群激励：¥%s元", decimal.toString());
         byte[] body = content.getBytes();
         rabbitMQProducer.publish("jobCenter", properties, body);
     }
@@ -144,7 +154,32 @@ public class ChatroomService extends AbstractService implements IChatroomService
         byte[] body = content.getBytes();
         rabbitMQProducer.publish("jobCenter", properties, body);
     }
-
+    private void pushSystemEvent(String mainPerson, String senderPerson, String content) throws CircuitException {
+        String roomId=Encript.md5(String.format("%s/DE103D45-4BF4-46A8-8B1B-3D3586665AAF",mainPerson));
+        Chatroom chatroom = getChatroom(mainPerson, roomId);
+        if (chatroom == null) {
+            chatroom = createChatroom3(mainPerson, roomId);
+            Person person = personService.get(mainPerson);
+            if (person != null) {
+                addMember(chatroom,mainPerson,person,"creator");
+            }
+        }
+        final  Chatroom room=chatroom;
+        AMQP.BasicProperties properties = new AMQP.BasicProperties().builder()
+                .type("/chat/message.mq")
+                .headers(new HashMap() {
+                    {
+                        put("command", "pushSystemMessage");
+                        put("creator", room.getCreator());
+                        put("sender", senderPerson);
+                        put("room", room.getRoom());
+                        put("msgid", Encript.md5(UUID.randomUUID().toString()));
+                        put("contentType", "joinPerson");
+                    }
+                }).build();
+        byte[] body = content.getBytes();
+        rabbitMQProducer.publish("jobCenter", properties, body);
+    }
     private void addMember(Chatroom chatroom, String personFull, Person personInfo, String actor) {
         RoomMember member = new RoomMember();
         member.setActor(actor);
@@ -159,7 +194,18 @@ public class ChatroomService extends AbstractService implements IChatroomService
     private boolean existsMember(Chatroom chatroom, String payeeFull) {
         return cube(chatroom.getCreator()).tupleCount(_COL_MEMBER, String.format("{'tuple.room':'%s','tuple.person':'%s'}", chatroom.getRoom(), payeeFull)) > 0;
     }
-
+    private Chatroom createChatroom3(String owner, String roomId) {
+        Chatroom chatroom = new Chatroom();
+        chatroom.setCreator(owner);
+        chatroom.setCtime(System.currentTimeMillis());
+        chatroom.setFlag(0);
+        chatroom.setLeading("http://47.105.165.186:7100/app/system/xitongxiaoxi.png");
+        chatroom.setRoom(roomId);
+        chatroom.setTitle("系统通知");
+        chatroom.setType("system");
+        cube(owner).saveDoc(_COL_ROOM, new TupleDocument<>(chatroom));
+        return chatroom;
+    }
     private Chatroom createChatroom2(String payerFull, String roomId, Person payerPerson) {
         Chatroom chatroom = new Chatroom();
         chatroom.setCreator(payerFull);
@@ -168,6 +214,7 @@ public class ChatroomService extends AbstractService implements IChatroomService
         chatroom.setLeading("http://47.105.165.186:7100/app/fission/img/tichengguanli.png");
         chatroom.setRoom(roomId);
         chatroom.setTitle("裂变游戏·佣金");
+        chatroom.setType("fission.mf.commission");
         cube(payerFull).saveDoc(_COL_ROOM, new TupleDocument<>(chatroom));
         return chatroom;
     }
@@ -179,6 +226,7 @@ public class ChatroomService extends AbstractService implements IChatroomService
         chatroom.setFlag(0);
         chatroom.setLeading(payerPerson.getAvatarUrl());
         chatroom.setRoom(roomId);
+        chatroom.setType("fission.mf");
         chatroom.setTitle(String.format("裂变游戏·交个朋友-%s", payerPerson.getNickName()));
         cube(payerFull).saveDoc(_COL_ROOM, new TupleDocument<>(chatroom));
         return chatroom;
