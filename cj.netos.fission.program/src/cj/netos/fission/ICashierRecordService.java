@@ -37,4 +37,34 @@ public interface ICashierRecordService {
 
     DepositCommission getDepositCommissionRecord(String sn);
 
+    Long totalCommissionOnDay(String principal, String dayTime);
+
+    List<PayRecord> pagePayerRecord2(String principal, int limit, long offset);
+
+    List<String> pagePayerId2(String principal, int limit, long offset);
+
+    List<PayRecord> pagePayeeRecord2(String principal, int limit, long offset);
+
+    List<String> pagePayeeId2(String principal, int limit, long offset);
+
+    Long totalPayer2(String principal);
+
+    Long totalPayerOnDay2(String principal, String dayTime);
+
+    Long totalPayee2(String principal);
+
+    Long totalPayeeOfDay2(String principal, String dayTime);
+
+    Long totalPerson(String principal);
+
+    Long totalPersonOfDay(String principal, String dayTime);
+
+    List<String> pagePersonId(String principal, int limit, long offset);
+
+    List<PayRecord> pagePersonRecord(String principal, int limit, long offset);
+
+    Long totalPersonAmount(String principal);
+
+    Long totalPayeeAmount2(String principal);
+
 }

@@ -7,4 +7,6 @@ public interface IPayRecordService {
 
     PayRecord getRecord(String recordSn);
 
+    void setRelationship(String recordSn, String relationship);
+
 }

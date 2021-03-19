@@ -52,6 +52,7 @@ public class ChatroomService extends AbstractService implements IChatroomService
             String payerFull = String.format("%s@gbera.netos", payer);
             String payeeFull = String.format("%s@gbera.netos", payee);
             PayRecord record = payRecordService.getRecord(recordSn);
+            payRecordService.setRelationship(record.getSn(),"person");
             BigDecimal decimal = new BigDecimal(record.getAmount()).divide(new BigDecimal("100.00"), 2, RoundingMode.DOWN);
             String content = String.format("公众关注激励，领取你：¥%s元！请到\"桌面->点头像->公众\"查看", decimal.toString());
             pushSystemEvent(payerFull,payeeFull,content);
@@ -59,6 +60,7 @@ public class ChatroomService extends AbstractService implements IChatroomService
             pushSystemEvent(payeeFull,payerFull, content);
             return;
         }
+
         String payerFull = String.format("%s@gbera.netos", payer);
         String payeeFull = String.format("%s@gbera.netos", payee);
         String roomId = Encript.md5(payerFull);
@@ -68,6 +70,7 @@ public class ChatroomService extends AbstractService implements IChatroomService
             chatroom = createChatroom(payerFull, roomId, payerPerson);
             addMember(chatroom, payerFull, payerPerson, "creator");
             PayRecord record = payRecordService.getRecord(recordSn);
+            payRecordService.setRelationship(record.getSn(),"chatroom");
             pushAddMemberEvent(chatroom, payerFull, payerPerson, record);
             return;
         }
@@ -77,6 +80,8 @@ public class ChatroomService extends AbstractService implements IChatroomService
 //            Person payeePerson = personService.get(payee);
 //            PayRecord record = payRecordService.getRecord(recordSn);
 //            pushAddMemberEvent(chatroom, payeeFull, payeePerson, record);
+            PayRecord record = payRecordService.getRecord(recordSn);
+            payRecordService.setRelationship(record.getSn(),"chatroom");
             return;
         }
         //添加成员
@@ -84,6 +89,7 @@ public class ChatroomService extends AbstractService implements IChatroomService
         Person payeePerson = personService.get(payee);
         addMember(chatroom, payeeFull, payeePerson, "user");
         PayRecord record = payRecordService.getRecord(recordSn);
+        payRecordService.setRelationship(record.getSn(),"chatroom");
         pushAddMemberEvent(chatroom, payeeFull, payeePerson, record);
     }
 

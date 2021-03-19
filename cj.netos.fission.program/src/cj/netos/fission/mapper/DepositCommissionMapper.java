@@ -60,4 +60,7 @@ public interface DepositCommissionMapper {
      * @mbg.generated generated automatically, do not modify!
      */
     int updateByPrimaryKey(DepositCommission record);
+
+    Long totalCommissionOnDay(@Param(value = "person") String person, @Param(value = "ctime")String ctime);
+
 }

@@ -49,6 +49,12 @@ public class PayRecord {
     private Integer state;
 
     /**
+     * Column: relationship
+     * Remark: 支付与被支付者关系 - person公众关系 - chatroom群关系
+     */
+    private String relationship;
+
+    /**
      * Column: ctime
      */
     private String ctime;
@@ -132,6 +138,14 @@ public class PayRecord {
 
     public void setState(Integer state) {
         this.state = state;
+    }
+
+    public String getRelationship() {
+        return relationship;
+    }
+
+    public void setRelationship(String relationship) {
+        this.relationship = relationship == null ? null : relationship.trim();
     }
 
     public String getCtime() {

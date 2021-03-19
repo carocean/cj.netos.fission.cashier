@@ -25,4 +25,9 @@ public class PayRecordService implements IPayRecordService {
     public PayRecord getRecord(String recordSn) {
         return payRecordMapper.selectByPrimaryKey(recordSn);
     }
+    @CjTransaction
+    @Override
+    public void setRelationship(String recordSn, String relationship) {
+        payRecordMapper.setRelationship(recordSn,relationship);
+    }
 }

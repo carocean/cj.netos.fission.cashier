@@ -11,6 +11,7 @@
     <result column="currency" jdbcType="VARCHAR" property="currency" />
     <result column="amount" jdbcType="BIGINT" property="amount" />
     <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="relationship" jdbcType="VARCHAR" property="relationship" />
     <result column="ctime" jdbcType="VARCHAR" property="ctime" />
     <result column="status" jdbcType="INTEGER" property="status" />
     <result column="message" jdbcType="VARCHAR" property="message" />
@@ -78,8 +79,8 @@
   </sql>
   <sql id="Base_Column_List">
     <!-- @mbg.generated: generated automatically, do not modify! -->
-    sn, payer, payer_name, payee, payee_name, currency, amount, `state`, ctime, `status`, 
-    message, note
+    sn, payer, payer_name, payee, payee_name, currency, amount, `state`, relationship, 
+    ctime, `status`, message, note
   </sql>
   <select id="selectByExample" parameterType="cj.netos.fission.model.PayRecordExample" resultMap="BaseResultMap">
     <!-- @mbg.generated: generated automatically, do not modify! -->
@@ -119,14 +120,14 @@
     <!-- @mbg.generated: generated automatically, do not modify! -->
     insert into pay_record (sn, payer, payer_name, 
       payee, payee_name, currency, 
-      amount, `state`, ctime, 
-      `status`, message, note
-      )
+      amount, `state`, relationship, 
+      ctime, `status`, message, 
+      note)
     values (#{sn,jdbcType=VARCHAR}, #{payer,jdbcType=VARCHAR}, #{payerName,jdbcType=VARCHAR}, 
       #{payee,jdbcType=VARCHAR}, #{payeeName,jdbcType=VARCHAR}, #{currency,jdbcType=VARCHAR}, 
-      #{amount,jdbcType=BIGINT}, #{state,jdbcType=INTEGER}, #{ctime,jdbcType=VARCHAR}, 
-      #{status,jdbcType=INTEGER}, #{message,jdbcType=VARCHAR}, #{note,jdbcType=VARCHAR}
-      )
+      #{amount,jdbcType=BIGINT}, #{state,jdbcType=INTEGER}, #{relationship,jdbcType=VARCHAR}, 
+      #{ctime,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{message,jdbcType=VARCHAR}, 
+      #{note,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="cj.netos.fission.model.PayRecord">
     <!-- @mbg.generated: generated automatically, do not modify! -->
@@ -155,6 +156,9 @@
       </if>
       <if test="state != null">
         `state`,
+      </if>
+      <if test="relationship != null">
+        relationship,
       </if>
       <if test="ctime != null">
         ctime,
@@ -193,6 +197,9 @@
       </if>
       <if test="state != null">
         #{state,jdbcType=INTEGER},
+      </if>
+      <if test="relationship != null">
+        #{relationship,jdbcType=VARCHAR},
       </if>
       <if test="ctime != null">
         #{ctime,jdbcType=VARCHAR},
@@ -243,6 +250,9 @@
       <if test="record.state != null">
         `state` = #{record.state,jdbcType=INTEGER},
       </if>
+      <if test="record.relationship != null">
+        relationship = #{record.relationship,jdbcType=VARCHAR},
+      </if>
       <if test="record.ctime != null">
         ctime = #{record.ctime,jdbcType=VARCHAR},
       </if>
@@ -271,6 +281,7 @@
       currency = #{record.currency,jdbcType=VARCHAR},
       amount = #{record.amount,jdbcType=BIGINT},
       `state` = #{record.state,jdbcType=INTEGER},
+      relationship = #{record.relationship,jdbcType=VARCHAR},
       ctime = #{record.ctime,jdbcType=VARCHAR},
       `status` = #{record.status,jdbcType=INTEGER},
       message = #{record.message,jdbcType=VARCHAR},
@@ -304,6 +315,9 @@
       <if test="state != null">
         `state` = #{state,jdbcType=INTEGER},
       </if>
+      <if test="relationship != null">
+        relationship = #{relationship,jdbcType=VARCHAR},
+      </if>
       <if test="ctime != null">
         ctime = #{ctime,jdbcType=VARCHAR},
       </if>
@@ -329,6 +343,7 @@
       currency = #{currency,jdbcType=VARCHAR},
       amount = #{amount,jdbcType=BIGINT},
       `state` = #{state,jdbcType=INTEGER},
+      relationship = #{relationship,jdbcType=VARCHAR},
       ctime = #{ctime,jdbcType=VARCHAR},
       `status` = #{status,jdbcType=INTEGER},
       message = #{message,jdbcType=VARCHAR},
@@ -344,6 +359,26 @@
         and `status` = 200
       group by payee) as a
   </select>
+  <select id="totalPayee2" parameterType="cj.netos.fission.model.PayRecord" resultType="java.lang.Long">
+    select  IFNULL(count(*),0)
+    from (select payee
+      from pay_record
+      where payer = #{payer,jdbcType=VARCHAR}
+        and `state` = 1
+        and `status` = 200
+        and (relationship='chatroom' or relationship is null)
+      group by payee) as a
+  </select>
+  <select id="totalPerson" parameterType="cj.netos.fission.model.PayRecord" resultType="java.lang.Long">
+    select  IFNULL(count(*),0)
+    from (select payee
+      from pay_record
+      where payer = #{payer,jdbcType=VARCHAR}
+        and `state` = 1
+        and `status` = 200
+        and relationship='person'
+      group by payee) as a
+  </select>
   <select id="totalPayeeAmount" parameterType="cj.netos.fission.model.PayRecord" resultType="java.lang.Long">
     select
     IFNULL(sum(amount),0)
@@ -351,6 +386,24 @@
     where payer = #{payer,jdbcType=VARCHAR}
     and `state` = 1
     and `status` = 200
+  </select>
+  <select id="totalPayeeAmount2" parameterType="cj.netos.fission.model.PayRecord" resultType="java.lang.Long">
+    select
+    IFNULL(sum(amount),0)
+    from pay_record
+    where payer = #{payer,jdbcType=VARCHAR}
+    and `state` = 1
+    and `status` = 200
+    and (relationship='chatroom' or relationship is null)
+  </select>
+  <select id="totalPersonAmount" parameterType="cj.netos.fission.model.PayRecord" resultType="java.lang.Long">
+    select
+    IFNULL(sum(amount),0)
+    from pay_record
+    where payer = #{payer,jdbcType=VARCHAR}
+    and `state` = 1
+    and `status` = 200
+    and relationship='person'
   </select>
   <select id="totalPayeeOfDay" parameterType="cj.netos.fission.model.PayRecord" resultType="java.lang.Long">
     select  IFNULL(count(*),0)
@@ -362,12 +415,54 @@
         and ctime like #{dayTime,jdbcType=VARCHAR}
       group by payee) as a
   </select>
+  <select id="totalPayeeOfDay2" parameterType="cj.netos.fission.model.PayRecord" resultType="java.lang.Long">
+    select  IFNULL(count(*),0)
+    from (select payee
+      from pay_record
+      where payer = #{payer,jdbcType=VARCHAR}
+        and `state` = 1
+        and `status` = 200
+        and (relationship='chatroom' or relationship is null)
+        and ctime like #{dayTime,jdbcType=VARCHAR}
+      group by payee) as a
+  </select>
+  <select id="totalPersonOfDay" parameterType="cj.netos.fission.model.PayRecord" resultType="java.lang.Long">
+    select  IFNULL(count(*),0)
+    from (select payee
+      from pay_record
+      where payer = #{payer,jdbcType=VARCHAR}
+        and `state` = 1
+        and `status` = 200
+        and relationship='person'
+        and ctime like #{dayTime,jdbcType=VARCHAR}
+      group by payee) as a
+  </select>
   <select id="pagePayeeRecord" parameterType="cj.netos.fission.model.PayRecord" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from pay_record
     where payer = #{payer,jdbcType=VARCHAR}
     and `status` = 200
+    order by ctime desc
+    limit #{offset},#{limit}
+  </select>
+  <select id="pagePayeeRecord2" parameterType="cj.netos.fission.model.PayRecord" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from pay_record
+    where payer = #{payer,jdbcType=VARCHAR}
+    and `status` = 200
+    and (relationship='chatroom' or relationship is null)
+    order by ctime desc
+    limit #{offset},#{limit}
+  </select>
+  <select id="pagePersonRecord" parameterType="cj.netos.fission.model.PayRecord" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from pay_record
+    where payer = #{payer,jdbcType=VARCHAR}
+    and `status` = 200
+    and relationship='person'
     order by ctime desc
     limit #{offset},#{limit}
   </select>
@@ -387,6 +482,40 @@
      ) as g
     limit #{offset},#{limit}
   </select>
+  <select id="pagePayeeId2" parameterType="cj.netos.fission.model.PayRecord" resultType="java.lang.String">
+    select
+    payee
+    from (select payee
+      from (
+          select payee
+          from pay_record
+          where payer = #{payer,jdbcType=VARCHAR}
+            and `state` = 1
+            and `status` = 200
+            and (relationship='chatroom' or relationship is null)
+          order by ctime desc
+               ) as s
+      group by payee
+     ) as g
+    limit #{offset},#{limit}
+  </select>
+  <select id="pagePersonId" parameterType="cj.netos.fission.model.PayRecord" resultType="java.lang.String">
+    select
+    payee
+    from (select payee
+      from (
+          select payee
+          from pay_record
+          where payer = #{payer,jdbcType=VARCHAR}
+            and `state` = 1
+            and `status` = 200
+            and relationship='person'
+          order by ctime desc
+               ) as s
+      group by payee
+     ) as g
+    limit #{offset},#{limit}
+  </select>
   <select id="totalPayer" parameterType="cj.netos.fission.model.PayRecord" resultType="java.lang.Long">
      select  IFNULL(count(*),0)
     from (select payer
@@ -394,6 +523,16 @@
       where payee = #{payee,jdbcType=VARCHAR}
         and `state` = 1
         and `status` = 200
+      group by payer) as a
+  </select>
+  <select id="totalPayer2" parameterType="cj.netos.fission.model.PayRecord" resultType="java.lang.Long">
+     select  IFNULL(count(*),0)
+    from (select payer
+      from pay_record
+      where payee = #{payee,jdbcType=VARCHAR}
+        and `state` = 1
+        and `status` = 200
+        and (relationship='chatroom' or relationship is null)
       group by payer) as a
   </select>
   <select id="totalPayerAmount" parameterType="cj.netos.fission.model.PayRecord" resultType="java.lang.Long">
@@ -413,12 +552,33 @@
         and ctime like #{dayTime,jdbcType=VARCHAR}
       group by payer) as a
   </select>
+  <select id="totalPayerOnDay2" parameterType="cj.netos.fission.model.PayRecord" resultType="java.lang.Long">
+    select  IFNULL(count(*),0)
+    from (select payer
+      from pay_record
+      where payee = #{payee,jdbcType=VARCHAR}
+        and `state` = 1
+        and `status` = 200
+        and (relationship='chatroom' or relationship is null)
+        and ctime like #{dayTime,jdbcType=VARCHAR}
+      group by payer) as a
+  </select>
   <select id="pagePayerRecord" parameterType="cj.netos.fission.model.PayRecord" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from pay_record
     where payee = #{payee,jdbcType=VARCHAR}
     and `status` = 200
+    order by ctime desc
+    limit #{offset},#{limit}
+  </select>
+  <select id="pagePayerRecord2" parameterType="cj.netos.fission.model.PayRecord" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from pay_record
+    where payee = #{payee,jdbcType=VARCHAR}
+    and `status` = 200
+    and (relationship='chatroom' or relationship is null)
     order by ctime desc
     limit #{offset},#{limit}
   </select>
@@ -438,4 +598,27 @@
      ) as g
    limit #{offset},#{limit}
   </select>
+  <select id="pagePayerId2" parameterType="cj.netos.fission.model.PayRecord" resultType="java.lang.String">
+    select
+    payer
+    from (select payer
+      from (
+           select payer
+           from pay_record
+           where payee = #{payee,jdbcType=VARCHAR}
+             and `state` = 1
+             and `status` = 200
+             and (relationship='chatroom' or relationship is null)
+          order by ctime desc
+               ) as s
+      group by payer
+     ) as g
+   limit #{offset},#{limit}
+  </select>
+  <update id="setRelationship" parameterType="cj.netos.fission.model.PayRecord">
+    update pay_record
+    set
+    relationship = #{relationship,jdbcType=VARCHAR}
+    where sn = #{sn,jdbcType=VARCHAR}
+  </update>
 </mapper>

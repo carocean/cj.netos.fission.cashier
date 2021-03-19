@@ -91,6 +91,12 @@ public class CashierRecordService implements ICashierRecordService {
 
     @CjTransaction
     @Override
+    public Long totalCommissionOnDay(String principal, String dayTime) {
+        return depositCommissionMapper.totalCommissionOnDay(principal, dayTime + "%");
+    }
+
+    @CjTransaction
+    @Override
     public Long totalPayee(String principal) {
         return payRecordMapper.totalPayee(principal);
     }
@@ -116,7 +122,91 @@ public class CashierRecordService implements ICashierRecordService {
 
     @CjTransaction
     @Override
+    public Long totalPersonAmount(String payer) {
+        return payRecordMapper.totalPersonAmount(payer);
+    }
+
+    @CjTransaction
+    @Override
+    public Long totalPayeeAmount2(String payer) {
+        return payRecordMapper.totalPayeeAmount2(payer);
+    }
+
+    @CjTransaction
+    @Override
     public long totalCommissionAmount(String principal) {
         return withdrawRecordMapper.totalCommissionAmount(principal);
+    }
+
+    @CjTransaction
+    @Override
+    public List<PayRecord> pagePayerRecord2(String principal, int limit, long offset) {
+        return payRecordMapper.pagePayerRecord2(principal, limit, offset);
+    }
+
+    @CjTransaction
+    @Override
+    public List<String> pagePayerId2(String principal, int limit, long offset) {
+        return payRecordMapper.pagePayerId2(principal, limit, offset);
+    }
+
+    @CjTransaction
+    @Override
+    public List<PayRecord> pagePayeeRecord2(String principal, int limit, long offset) {
+        return payRecordMapper.pagePayeeRecord2(principal, limit, offset);
+    }
+
+    @CjTransaction
+    @Override
+    public List<String> pagePayeeId2(String principal, int limit, long offset) {
+        return payRecordMapper.pagePayeeId2(principal, limit, offset);
+    }
+
+    @CjTransaction
+    @Override
+    public Long totalPayer2(String principal) {
+        return payRecordMapper.totalPayer2(principal);
+    }
+
+    @CjTransaction
+    @Override
+    public Long totalPayerOnDay2(String principal, String dayTime) {
+        return payRecordMapper.totalPayerOnDay2(principal, dayTime + "%");
+    }
+
+    @CjTransaction
+    @Override
+    public Long totalPayee2(String principal) {
+        return payRecordMapper.totalPayee2(principal);
+    }
+
+    @CjTransaction
+    @Override
+    public Long totalPayeeOfDay2(String principal, String dayTime) {
+        return payRecordMapper.totalPayeeOfDay2(principal, dayTime + "%");
+    }
+
+    @CjTransaction
+    @Override
+    public Long totalPerson(String principal) {
+        return payRecordMapper.totalPerson(principal);
+    }
+
+    @CjTransaction
+    @Override
+    public Long totalPersonOfDay(String principal, String dayTime) {
+        return payRecordMapper.totalPersonOfDay(principal, dayTime + "%");
+    }
+
+    @CjTransaction
+    @Override
+    public List<String> pagePersonId(String principal, int limit, long offset) {
+        return payRecordMapper.pagePersonId(principal, limit, offset);
+    }
+
+    @CjTransaction
+    @Override
+    public List<PayRecord> pagePersonRecord(String principal, int limit, long offset) {
+        return payRecordMapper.pagePersonRecord(principal, limit, offset);
     }
 }

@@ -318,4 +318,13 @@
       note = #{note,jdbcType=VARCHAR}
     where sn = #{sn,jdbcType=VARCHAR}
   </update>
+  <select id="totalCommissionOnDay" parameterType="cj.netos.fission.model.DepositCommission" resultType="java.lang.Long">
+    select
+    IFNULL(sum(amount),0)
+    from deposit_commission
+    where person = #{person,jdbcType=VARCHAR}
+    and `state` = 1
+    and `status` = 200
+    and ctime like #{ctime,jdbcType=VARCHAR}
+  </select>
 </mapper>

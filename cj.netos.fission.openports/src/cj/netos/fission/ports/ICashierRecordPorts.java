@@ -44,14 +44,14 @@ public interface ICashierRecordPorts extends IOpenportService {
 
     @CjOpenport(usage = "支付者获取他所支付的人列表", elementType = Person.class)
     List<Person> pagePayeeInfo(ISecuritySession securitySession,
-                                     @CjOpenportParameter(usage = "页大小", name = "limit") int limit,
-                                     @CjOpenportParameter(usage = "当前记录位置", name = "offset") long offset
+                               @CjOpenportParameter(usage = "页大小", name = "limit") int limit,
+                               @CjOpenportParameter(usage = "当前记录位置", name = "offset") long offset
     ) throws CircuitException;
 
     @CjOpenport(usage = "点击者获取向他支付的支付人列表", elementType = Person.class)
     List<Person> pagePayerInfo(ISecuritySession securitySession,
-                                     @CjOpenportParameter(usage = "页大小", name = "limit") int limit,
-                                     @CjOpenportParameter(usage = "当前记录位置", name = "offset") long offset
+                               @CjOpenportParameter(usage = "页大小", name = "limit") int limit,
+                               @CjOpenportParameter(usage = "当前记录位置", name = "offset") long offset
     ) throws CircuitException;
 
     @CjOpenport(usage = "支付者获取他所支付的人列表", elementType = PayPerson.class)
@@ -69,6 +69,19 @@ public interface ICashierRecordPorts extends IOpenportService {
                          @CjOpenportParameter(usage = "日时间串。yyyyMMddHHmmss", name = "dayTime") String dayTime
     ) throws CircuitException;
 
+    @CjOpenport(usage = "获取指定日拥金")
+    Long totalCommissionOnDay(ISecuritySession securitySession,
+                              @CjOpenportParameter(usage = "日时间串。yyyyMMddHHmmss", name = "dayTime") String dayTime
+    ) throws CircuitException;
+
+    @CjOpenport(usage = "获取拉公众的花费")
+    Long totalPersonAmount(ISecuritySession securitySession
+    ) throws CircuitException;
+
+    @CjOpenport(usage = "获取拉成员的花费")
+    Long totalPayeeAmount(ISecuritySession securitySession
+    ) throws CircuitException;
+
     @CjOpenport(usage = "支付者获取他发展的人数")
     Long totalPayee(ISecuritySession securitySession
     ) throws CircuitException;
@@ -76,5 +89,70 @@ public interface ICashierRecordPorts extends IOpenportService {
     @CjOpenport(usage = "支付者获取他发展的人数")
     Long totalPayeeOfDay(ISecuritySession securitySession,
                          @CjOpenportParameter(usage = "日时间串。yyyyMMddHHmmss", name = "dayTime") String dayTime
+    ) throws CircuitException;
+
+    //
+    @CjOpenport(usage = "点击者获取向他支付的支付人列表", elementType = PayPerson.class)
+    List<PayPerson> pagePayerDetails2(ISecuritySession securitySession,
+                                      @CjOpenportParameter(usage = "页大小", name = "limit") int limit,
+                                      @CjOpenportParameter(usage = "当前记录位置", name = "offset") long offset
+    ) throws CircuitException;
+
+    @CjOpenport(usage = "支付者获取他所支付的人列表", elementType = Person.class)
+    List<Person> pagePayeeInfo2(ISecuritySession securitySession,
+                                @CjOpenportParameter(usage = "页大小", name = "limit") int limit,
+                                @CjOpenportParameter(usage = "当前记录位置", name = "offset") long offset
+    ) throws CircuitException;
+
+    @CjOpenport(usage = "点击者获取向他支付的支付人列表", elementType = Person.class)
+    List<Person> pagePayerInfo2(ISecuritySession securitySession,
+                                @CjOpenportParameter(usage = "页大小", name = "limit") int limit,
+                                @CjOpenportParameter(usage = "当前记录位置", name = "offset") long offset
+    ) throws CircuitException;
+
+    @CjOpenport(usage = "支付者获取他所支付的人列表", elementType = PayPerson.class)
+    List<PayPerson> pagePayeeDetails2(ISecuritySession securitySession,
+                                      @CjOpenportParameter(usage = "页大小", name = "limit") int limit,
+                                      @CjOpenportParameter(usage = "当前记录位置", name = "offset") long offset
+    ) throws CircuitException;
+
+    @CjOpenport(usage = "点击者获取多少人向他支付")
+    Long totalPayer2(ISecuritySession securitySession
+    ) throws CircuitException;
+
+    @CjOpenport(usage = "点击者获取多少人向他支付")
+    Long totalPayerOnDay2(ISecuritySession securitySession,
+                          @CjOpenportParameter(usage = "日时间串。yyyyMMddHHmmss", name = "dayTime") String dayTime
+    ) throws CircuitException;
+
+
+    @CjOpenport(usage = "支付者获取他发展的人数")
+    Long totalPayee2(ISecuritySession securitySession
+    ) throws CircuitException;
+
+    @CjOpenport(usage = "支付者获取他发展的人数")
+    Long totalPayeeOfDay2(ISecuritySession securitySession,
+                          @CjOpenportParameter(usage = "日时间串。yyyyMMddHHmmss", name = "dayTime") String dayTime
+    ) throws CircuitException;
+
+    @CjOpenport(usage = "支付者获取他发展的人数")
+    Long totalPerson(ISecuritySession securitySession
+    ) throws CircuitException;
+
+    @CjOpenport(usage = "支付者获取他发展的人数")
+    Long totalPersonOfDay(ISecuritySession securitySession,
+                          @CjOpenportParameter(usage = "日时间串。yyyyMMddHHmmss", name = "dayTime") String dayTime
+    ) throws CircuitException;
+
+    @CjOpenport(usage = "分页关联的公众", elementType = Person.class)
+    List<Person> pagePersonInfo(ISecuritySession securitySession,
+                                @CjOpenportParameter(usage = "页大小", name = "limit") int limit,
+                                @CjOpenportParameter(usage = "当前记录位置", name = "offset") long offset
+    ) throws CircuitException;
+
+    @CjOpenport(usage = "分页关联的公众", elementType = PayPerson.class)
+    List<PayPerson> pagePersonDetails(ISecuritySession securitySession,
+                                      @CjOpenportParameter(usage = "页大小", name = "limit") int limit,
+                                      @CjOpenportParameter(usage = "当前记录位置", name = "offset") long offset
     ) throws CircuitException;
 }

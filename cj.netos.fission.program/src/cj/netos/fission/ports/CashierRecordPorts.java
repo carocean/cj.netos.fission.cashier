@@ -58,8 +58,33 @@ public class CashierRecordPorts implements ICashierRecordPorts {
     }
 
     @Override
+    public List<PayPerson> pagePayerDetails2(ISecuritySession securitySession, int limit, long offset) throws CircuitException {
+        List<PayRecord> records = cashierRecordService.pagePayerRecord2(securitySession.principal(), limit, offset);
+        List<String> ids = new ArrayList<>();
+        for (PayRecord record : records) {
+            ids.add(record.getPayer());
+        }
+        Map<String, Person> personMap = personService.mapPersonIn(ids);
+        List<PayPerson> list = new ArrayList<>();
+        for (PayRecord record : records) {
+            PayPerson payPerson = new PayPerson();
+            payPerson.load(record);
+            Person person = personMap.get(record.getPayer());
+            payPerson.setPerson(person);
+            list.add(payPerson);
+        }
+        return list;
+    }
+    @Override
     public List<Person> pagePayerInfo(ISecuritySession securitySession, int limit, long offset) throws CircuitException {
         List<String> ids = cashierRecordService.pagePayerId(securitySession.principal(), limit, offset);
+        List<Person> personList = personService.listPersonIn(ids);
+        return personList;
+    }
+
+    @Override
+    public List<Person> pagePayerInfo2(ISecuritySession securitySession, int limit, long offset) throws CircuitException {
+        List<String> ids = cashierRecordService.pagePayerId2(securitySession.principal(), limit, offset);
         List<Person> personList = personService.listPersonIn(ids);
         return personList;
     }
@@ -81,7 +106,24 @@ public class CashierRecordPorts implements ICashierRecordPorts {
         }
         return list;
     }
-
+    @Override
+    public List<PayPerson> pagePayeeDetails2(ISecuritySession securitySession, int limit, long offset) throws CircuitException {
+        List<PayRecord> records= cashierRecordService.pagePayeeRecord2(securitySession.principal(),limit,offset);
+        List<String> ids = new ArrayList<>();
+        for (PayRecord record : records) {
+            ids.add(record.getPayee());
+        }
+        Map<String, Person> personMap = personService.mapPersonIn(ids);
+        List<PayPerson> list = new ArrayList<>();
+        for (PayRecord record : records) {
+            PayPerson payPerson = new PayPerson();
+            payPerson.load(record);
+            Person person = personMap.get(record.getPayee());
+            payPerson.setPerson(person);
+            list.add(payPerson);
+        }
+        return list;
+    }
     @Override
     public List<Person> pagePayeeInfo(ISecuritySession securitySession, int limit, long offset) throws CircuitException {
         List<String> ids = cashierRecordService.pagePayeeId(securitySession.principal(), limit, offset);
@@ -89,15 +131,43 @@ public class CashierRecordPorts implements ICashierRecordPorts {
         return personList;
     }
 
+    @Override
+    public List<Person> pagePayeeInfo2(ISecuritySession securitySession, int limit, long offset) throws CircuitException {
+        List<String> ids = cashierRecordService.pagePayeeId2(securitySession.principal(), limit, offset);
+        List<Person> personList = personService.listPersonIn(ids);
+        return personList;
+    }
 
     @Override
     public Long totalPayer(ISecuritySession securitySession) throws CircuitException {
         return cashierRecordService.totalPayer(securitySession.principal());
     }
-
+    @Override
+    public Long totalPayer2(ISecuritySession securitySession) throws CircuitException {
+        return cashierRecordService.totalPayer2(securitySession.principal());
+    }
     @Override
     public Long totalPayerOnDay(ISecuritySession securitySession, String dayTime) throws CircuitException {
         return cashierRecordService.totalPayerOnDay(securitySession.principal(),dayTime);
+    }
+
+    @Override
+    public Long totalPayerOnDay2(ISecuritySession securitySession, String dayTime) throws CircuitException {
+        return cashierRecordService.totalPayerOnDay2(securitySession.principal(),dayTime);
+    }
+    @Override
+    public Long totalCommissionOnDay(ISecuritySession securitySession, String dayTime) throws CircuitException {
+        return cashierRecordService.totalCommissionOnDay(securitySession.principal(),dayTime);
+    }
+
+    @Override
+    public Long totalPersonAmount(ISecuritySession securitySession) throws CircuitException {
+        return cashierRecordService.totalPersonAmount(securitySession.principal());
+    }
+
+    @Override
+    public Long totalPayeeAmount(ISecuritySession securitySession) throws CircuitException {
+        return cashierRecordService.totalPayeeAmount2(securitySession.principal());
     }
 
     @Override
@@ -106,7 +176,52 @@ public class CashierRecordPorts implements ICashierRecordPorts {
     }
 
     @Override
+    public Long totalPayee2(ISecuritySession securitySession) throws CircuitException {
+        return cashierRecordService.totalPayee2(securitySession.principal());
+    }
+    @Override
     public Long totalPayeeOfDay(ISecuritySession securitySession, String dayTime) throws CircuitException {
         return cashierRecordService.totalPayeeOfDay(securitySession.principal(),dayTime);
+    }
+
+    @Override
+    public Long totalPayeeOfDay2(ISecuritySession securitySession, String dayTime) throws CircuitException {
+        return cashierRecordService.totalPayeeOfDay2(securitySession.principal(),dayTime);
+    }
+
+    @Override
+    public Long totalPerson(ISecuritySession securitySession) throws CircuitException {
+        return cashierRecordService.totalPerson(securitySession.principal());
+    }
+
+    @Override
+    public Long totalPersonOfDay(ISecuritySession securitySession, String dayTime) throws CircuitException {
+        return cashierRecordService.totalPersonOfDay(securitySession.principal(),dayTime);
+    }
+
+    @Override
+    public List<Person> pagePersonInfo(ISecuritySession securitySession, int limit, long offset) throws CircuitException {
+        List<String> ids = cashierRecordService.pagePersonId(securitySession.principal(), limit, offset);
+        List<Person> personList = personService.listPersonIn(ids);
+        return personList;
+    }
+
+    @Override
+    public List<PayPerson> pagePersonDetails(ISecuritySession securitySession, int limit, long offset) throws CircuitException {
+        List<PayRecord> records= cashierRecordService.pagePersonRecord(securitySession.principal(),limit,offset);
+        List<String> ids = new ArrayList<>();
+        for (PayRecord record : records) {
+            ids.add(record.getPayee());
+        }
+        Map<String, Person> personMap = personService.mapPersonIn(ids);
+        List<PayPerson> list = new ArrayList<>();
+        for (PayRecord record : records) {
+            PayPerson payPerson = new PayPerson();
+            payPerson.load(record);
+            Person person = personMap.get(record.getPayee());
+            payPerson.setPerson(person);
+            list.add(payPerson);
+        }
+        return list;
     }
 }
