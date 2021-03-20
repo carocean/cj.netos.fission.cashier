@@ -327,4 +327,48 @@
     and `status` = 200
     and ctime like #{ctime,jdbcType=VARCHAR}
   </select>
+  <select id="totalStaffAmount" parameterType="cj.netos.fission.model.DepositCommission" resultType="java.lang.Long">
+    select IFNULL(sum(commission.amount),0)
+    from deposit_commission commission , withdraw_record record
+    where commission.refsn=record.sn
+    and record.withdrawer in (
+      select cashier.person
+      from cashier cashier
+      where cashier.referrer= #{referrer}
+    )
+  </select>
+  <select id="pageStaffRecord" parameterType="cj.netos.fission.model.DepositCommission" resultType="java.util.Map">
+    select record.withdrawer person,count(*) `count`,sum(commission.amount) amount,min(commission.ctime) ctime
+    from deposit_commission commission , withdraw_record record
+    where commission.refsn=record.sn
+    and record.withdrawer in (
+        select cashier.person
+        from cashier cashier
+        where cashier.referrer=#{referrer}
+    )
+    group by record.withdrawer
+    limit #{offset},#{limit};
+  </select>
+  <select id="totalAllStaff" parameterType="cj.netos.fission.model.DepositCommission" resultType="java.lang.Long">
+    select IFNULL( count(*),0)
+    from (
+        select withdrawer
+        from withdraw_record
+        where referrer=#{referrer}
+        group by withdrawer
+         ) a
+  </select>
+  <select id="totalAllStaffAmount" parameterType="cj.netos.fission.model.DepositCommission" resultType="java.lang.Long">
+    select IFNULL(sum(amount),0)
+    from deposit_commission
+    where person=#{person}
+  </select>
+  <select id="pageAllStaffRecord" parameterType="cj.netos.fission.model.DepositCommission" resultType="java.util.Map">
+    select record.withdrawer person,count(*) 'count',sum(commission.amount) amount,min(commission.ctime) ctime
+    from deposit_commission commission , withdraw_record record
+    where commission.refsn=record.sn
+    and commission.person=#{person}
+    group by record.withdrawer
+    limit #{offset},#{limit}
+  </select>
 </mapper>

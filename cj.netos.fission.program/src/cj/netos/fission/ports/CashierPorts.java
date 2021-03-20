@@ -282,4 +282,16 @@ public class CashierPorts implements ICashierPorts {
     public void updateLocation(ISecuritySession securitySession, LatLng location, String province, String city, String district, String town, String provinceCode, String cityCode, String districtCode, String townCode) throws CircuitException {
         personService.updateLocation(securitySession.principal(), location, province, city, district, town, provinceCode, cityCode, districtCode, townCode);
     }
+
+    @Override
+    public List<Person> pageStaffInfo(ISecuritySession securitySession, int limit, long offset) throws CircuitException {
+        List<String> ids = cashierService.pageStaffId(securitySession.principal(), limit, offset);
+        List<Person> personList = personService.listPersonIn(ids);
+        return personList;
+    }
+
+    @Override
+    public Long totalStaff(ISecuritySession securitySession) throws CircuitException {
+        return cashierService.totalStaff(securitySession.principal());
+    }
 }

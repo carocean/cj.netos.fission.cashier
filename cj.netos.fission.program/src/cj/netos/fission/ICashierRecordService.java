@@ -7,6 +7,7 @@ import cj.netos.fission.model.WithdrawRecord;
 import cj.studio.orm.mybatis.annotation.CjTransaction;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ICashierRecordService {
     RechargeRecord getRechargeRecord(String sn);
@@ -66,5 +67,15 @@ public interface ICashierRecordService {
     Long totalPersonAmount(String principal);
 
     Long totalPayeeAmount2(String principal);
+
+    Long totalStaffAmount(String principal);
+
+    List<Map<String, Object>> pageStaffRecord(String principal, int limit, long offset);
+
+    Long totalAllStaff(String principal);
+
+    Long totalAllStaffAmount(String principal);
+
+    List<Map<String, Object>> pageAllStaffRecord(String principal, int limit, long offset);
 
 }

@@ -3,6 +3,8 @@ package cj.netos.fission.mapper;
 import cj.netos.fission.model.DepositCommission;
 import cj.netos.fission.model.DepositCommissionExample;
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface DepositCommissionMapper {
@@ -62,5 +64,15 @@ public interface DepositCommissionMapper {
     int updateByPrimaryKey(DepositCommission record);
 
     Long totalCommissionOnDay(@Param(value = "person") String person, @Param(value = "ctime")String ctime);
+
+    Long totalStaffAmount(@Param(value = "referrer")String referrer);
+
+    List<Map<String, Object>> pageStaffRecord(@Param(value = "referrer")String referrer,@Param(value = "limit")int limit,@Param(value = "offset")long offset);
+
+    Long totalAllStaff(@Param(value = "referrer")String referrer);
+
+    Long totalAllStaffAmount(@Param(value = "person")String person);
+
+    List<Map<String, Object>> pageAllStaffRecord(@Param(value = "person")String person,@Param(value = "limit")int limit,@Param(value = "offset")long offset);
 
 }

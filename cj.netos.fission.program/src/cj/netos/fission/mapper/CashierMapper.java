@@ -75,4 +75,8 @@ public interface CashierMapper {
 
     void setRequirement(@Param(value = "person")String person,@Param(value = "becomeAgent") int becomeAgent, @Param(value = "phone")String phone);
 
+    List<String> pageStaffId(@Param(value = "referrer") String referrer,@Param(value = "limit") int limit,@Param(value = "offset") long offset);
+
+    Long totalStaff(@Param(value = "referrer")String referrer);
+
 }

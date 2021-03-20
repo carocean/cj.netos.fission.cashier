@@ -1,7 +1,6 @@
 package cj.netos.fission.service;
 
 import cj.netos.fission.ICashierRecordService;
-import cj.netos.fission.IDepositCommissionRecordService;
 import cj.netos.fission.mapper.DepositCommissionMapper;
 import cj.netos.fission.mapper.PayRecordMapper;
 import cj.netos.fission.mapper.RechargeRecordMapper;
@@ -16,6 +15,7 @@ import cj.studio.ecm.annotation.CjServiceRef;
 import cj.studio.orm.mybatis.annotation.CjTransaction;
 
 import java.util.List;
+import java.util.Map;
 
 @CjBridge(aspects = "@transaction")
 @CjService(name = "cashierRecordService")
@@ -192,6 +192,7 @@ public class CashierRecordService implements ICashierRecordService {
         return payRecordMapper.totalPerson(principal);
     }
 
+
     @CjTransaction
     @Override
     public Long totalPersonOfDay(String principal, String dayTime) {
@@ -204,9 +205,40 @@ public class CashierRecordService implements ICashierRecordService {
         return payRecordMapper.pagePersonId(principal, limit, offset);
     }
 
+
     @CjTransaction
     @Override
     public List<PayRecord> pagePersonRecord(String principal, int limit, long offset) {
         return payRecordMapper.pagePersonRecord(principal, limit, offset);
+    }
+
+    @CjTransaction
+    @Override
+    public Long totalStaffAmount(String principal) {
+        return depositCommissionMapper.totalStaffAmount(principal);
+    }
+
+    @CjTransaction
+    @Override
+    public List<Map<String, Object>> pageStaffRecord(String principal, int limit, long offset) {
+        return depositCommissionMapper.pageStaffRecord(principal, limit, offset);
+    }
+
+    @CjTransaction
+    @Override
+    public Long totalAllStaff(String principal) {
+        return depositCommissionMapper.totalAllStaff(principal);
+    }
+
+    @CjTransaction
+    @Override
+    public Long totalAllStaffAmount(String principal) {
+        return depositCommissionMapper.totalAllStaffAmount(principal);
+    }
+
+    @CjTransaction
+    @Override
+    public List<Map<String, Object>> pageAllStaffRecord(String principal, int limit, long offset) {
+        return depositCommissionMapper.pageAllStaffRecord(principal, limit, offset);
     }
 }

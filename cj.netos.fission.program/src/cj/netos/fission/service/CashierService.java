@@ -20,6 +20,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @CjBridge(aspects = "@transaction")
@@ -178,6 +179,7 @@ public class CashierService implements ICashierService {
         record.setNote(details.getNote());
         rechargeRecordService.add(record);
     }
+
     @CjTransaction
     @Override
     public void depositCommission(String person, String nickName, long amount, String refsn) {
@@ -218,6 +220,7 @@ public class CashierService implements ICashierService {
 
         cashierBalanceService.updateBalance(person, balanceAmount);
     }
+
     @CjTransaction
     @Override
     public void depositCommissionError(String person, String nickName, long amount, String refsn, int status, String message) {
@@ -521,5 +524,17 @@ public class CashierService implements ICashierService {
         CashierExample example = new CashierExample();
         example.createCriteria().andReferrerEqualTo(principal);
         return cashierMapper.countByExample(example);
+    }
+
+    @CjTransaction
+    @Override
+    public List<String> pageStaffId(String principal, int limit, long offset) {
+        return cashierMapper.pageStaffId(principal, limit, offset);
+    }
+
+    @CjTransaction
+    @Override
+    public Long totalStaff(String principal) {
+        return cashierMapper.totalStaff(principal);
     }
 }

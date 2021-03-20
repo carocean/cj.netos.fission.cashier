@@ -155,4 +155,28 @@ public interface ICashierRecordPorts extends IOpenportService {
                                       @CjOpenportParameter(usage = "页大小", name = "limit") int limit,
                                       @CjOpenportParameter(usage = "当前记录位置", name = "offset") long offset
     ) throws CircuitException;
+
+    @CjOpenport(usage = "统计现有员工为我赚取的佣金总额")
+    Long totalStaffAmount(ISecuritySession securitySession
+    ) throws CircuitException;
+
+    @CjOpenport(usage = "获取员工明细", elementType = PayPerson.class)
+    List<Staff> pageStaffDetails(ISecuritySession securitySession,
+                                 @CjOpenportParameter(usage = "页大小", name = "limit") int limit,
+                                 @CjOpenportParameter(usage = "当前记录位置", name = "offset") long offset
+    ) throws CircuitException;
+
+    @CjOpenport(usage = "统计所有员工为我赚取的佣金总额")
+    Long totalAllStaff(ISecuritySession securitySession
+    ) throws CircuitException;
+
+    @CjOpenport(usage = "统计所有员工为我赚取的佣金总额")
+    Long totalAllStaffAmount(ISecuritySession securitySession
+    ) throws CircuitException;
+
+    @CjOpenport(usage = "获取员工明细", elementType = PayPerson.class)
+    List<Staff> pageAllStaffDetails(ISecuritySession securitySession,
+                                 @CjOpenportParameter(usage = "页大小", name = "limit") int limit,
+                                 @CjOpenportParameter(usage = "当前记录位置", name = "offset") long offset
+    ) throws CircuitException;
 }

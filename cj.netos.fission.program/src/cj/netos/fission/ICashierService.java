@@ -5,6 +5,7 @@ import cj.netos.fission.model.CashierBalance;
 import cj.studio.ecm.net.CircuitException;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public interface ICashierService {
     Cashier getAndInitCashier(String person);
@@ -41,5 +42,9 @@ public interface ICashierService {
     void depositCommission(String person, String nickName, long amount, String refsn);
 
     void depositCommissionError(String person, String nickName, long amount, String refsn, int status, String message);
+
+    List<String> pageStaffId(String principal, int limit, long offset);
+
+    Long totalStaff(String principal);
 
 }

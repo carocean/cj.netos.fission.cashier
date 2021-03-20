@@ -230,4 +230,15 @@ public interface ICashierPorts extends IOpenportService {
             @CjOpenportParameter(usage = "区县编码，国测码", name = "districtCode") String districtCode,
             @CjOpenportParameter(usage = "乡镇编码，国测码", name = "townCode") String townCode
     ) throws CircuitException;
+
+    @CjOpenport(usage = "获取员工", elementType = Person.class)
+    List<Person> pageStaffInfo(ISecuritySession securitySession,
+                               @CjOpenportParameter(usage = "页大小", name = "limit") int limit,
+                               @CjOpenportParameter(usage = "当前记录位置", name = "offset") long offset
+    ) throws CircuitException;
+
+
+    @CjOpenport(usage = "获取员工个数")
+    Long totalStaff(ISecuritySession securitySession
+    ) throws CircuitException;
 }

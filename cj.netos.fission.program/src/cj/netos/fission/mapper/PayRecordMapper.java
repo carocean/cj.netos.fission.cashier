@@ -4,6 +4,7 @@ import cj.netos.fission.model.PayRecord;
 import cj.netos.fission.model.PayRecordExample;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -110,7 +111,5 @@ public interface PayRecordMapper {
     List<PayRecord> pagePersonRecord(@Param(value = "payer") String payer, @Param(value = "limit") int limit, @Param(value = "offset") long offset);
 
     void setRelationship(@Param(value = "sn") String sn, @Param(value = "relationship") String relationship);
-
-
 
 }

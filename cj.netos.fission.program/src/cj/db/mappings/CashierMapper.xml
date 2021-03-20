@@ -483,4 +483,17 @@
     phone = #{phone,jdbcType=VARCHAR}
     where person = #{person,jdbcType=VARCHAR}
   </update>
+  <select id="totalStaff" parameterType="cj.netos.fission.model.Cashier" resultType="java.lang.Long">
+    select
+    IFNULL(count(*),0)
+    from cashier
+    where referrer = #{referrer,jdbcType=VARCHAR}
+  </select>
+  <select id="pageStaffId" parameterType="cj.netos.fission.model.Cashier" resultType="java.lang.String">
+    select
+    person
+    from cashier
+    where referrer = #{referrer,jdbcType=VARCHAR}
+    limit #{offset},#{limit}
+  </select>
 </mapper>
