@@ -31,6 +31,8 @@ public class CashierPorts implements ICashierPorts {
     IMFSettingsService mfSettingsService;
     @CjServiceRef
     IRecommendedService recommendedService;
+    @CjServiceRef
+    ITaskService taskService;
     @Override
     public CashierBalance getCashierBalance(ISecuritySession securitySession) throws CircuitException {
         return cashierService.getCashierBalance(securitySession.principal());
@@ -293,5 +295,15 @@ public class CashierPorts implements ICashierPorts {
     @Override
     public Long totalStaff(ISecuritySession securitySession) throws CircuitException {
         return cashierService.totalStaff(securitySession.principal());
+    }
+
+    @Override
+    public boolean isTask(ISecuritySession securitySession,String task) throws CircuitException {
+        return taskService.isTask(securitySession.principal(),task);
+    }
+
+    @Override
+    public void doneTask(ISecuritySession securitySession) throws CircuitException {
+        taskService.doneTask(securitySession.principal(),(String)securitySession.property("nickName"));
     }
 }
