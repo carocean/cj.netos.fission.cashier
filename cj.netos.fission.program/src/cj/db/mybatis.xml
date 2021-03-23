@@ -45,5 +45,6 @@
         <mapper resource="cj/db/mappings/IncomeRecordMapper.xml"/>
         <mapper resource="cj/db/mappings/OutcomeRecordMapper.xml"/>
         <mapper resource="cj/db/mappings/BusinessIncomeRatioMapper.xml"/>
+        <mapper resource="cj/db/mappings/ServicePriceMapper.xml"/>
     </mappers>
 </configuration>

@@ -2,6 +2,7 @@ package cj.netos.fission;
 
 import cj.netos.fission.model.Cashier;
 import cj.netos.fission.model.CashierBalance;
+import cj.netos.fission.model.ServicePrice;
 import cj.studio.ecm.net.CircuitException;
 
 import java.math.BigDecimal;
@@ -46,5 +47,7 @@ public interface ICashierService {
     List<String> pageStaffId(String principal, int limit, long offset);
 
     Long totalStaff(String principal);
+
+    List<ServicePrice> listPrice();
 
 }

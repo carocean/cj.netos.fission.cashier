@@ -53,7 +53,8 @@ public class CashierService implements ICashierService {
     @CjServiceInvertInjection
     @CjServiceRef
     IMFSettingsService mfSettingsService;
-
+    @CjServiceRef
+    IServicePriceService servicePriceService;
     @CjTransaction
     @Override
     public Cashier getAndInitCashier(String person) {
@@ -536,5 +537,11 @@ public class CashierService implements ICashierService {
     @Override
     public Long totalStaff(String principal) {
         return cashierMapper.totalStaff(principal);
+    }
+
+    @CjTransaction
+    @Override
+    public List<ServicePrice> listPrice() {
+        return servicePriceService.getAll();
     }
 }

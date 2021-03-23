@@ -244,10 +244,14 @@ public interface ICashierPorts extends IOpenportService {
 
     @CjOpenport(usage = "判断我当前的任务是否是指定的任务")
     boolean isTask(ISecuritySession securitySession,
-                   @CjOpenportParameter(usage = "任务代码", name = "task")String task
+                   @CjOpenportParameter(usage = "任务代码", name = "task") String task
     ) throws CircuitException;
 
     @CjOpenport(usage = "完成我的当前任务")
     void doneTask(ISecuritySession securitySession
+    ) throws CircuitException;
+
+    @CjOpenport(usage = "获取服务定价", elementType = ServicePrice.class)
+    List<ServicePrice> listPrice(ISecuritySession securitySession
     ) throws CircuitException;
 }

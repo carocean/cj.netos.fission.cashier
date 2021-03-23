@@ -306,4 +306,9 @@ public class CashierPorts implements ICashierPorts {
     public void doneTask(ISecuritySession securitySession) throws CircuitException {
         taskService.doneTask(securitySession.principal(),(String)securitySession.property("nickName"));
     }
+
+    @Override
+    public List<ServicePrice> listPrice(ISecuritySession securitySession) throws CircuitException {
+        return cashierService.listPrice();
+    }
 }
