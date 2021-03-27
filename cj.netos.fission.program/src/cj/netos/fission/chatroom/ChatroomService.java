@@ -105,22 +105,22 @@ public class ChatroomService extends AbstractService implements IChatroomService
             Person payerPerson = personService.get(boss);
             chatroom = createChatroom2(bossFull, roomId, payerPerson);
             addMember(chatroom, bossFull, payerPerson, "creator");
-            Person withdrawerPerson = personService.get(record.getWithdrawer());
-            addMember(chatroom, withdrawerFull, withdrawerPerson, "user");
-            pushAddMemberEvent2(chatroom, withdrawerFull, record.getNickName(), amount);
+//            Person withdrawerPerson = personService.get(record.getWithdrawer());
+//            addMember(chatroom, withdrawerFull, withdrawerPerson, "user");
+            pushEvent2(chatroom, withdrawerFull,  amount);
             return;
         }
 
-        if (existsMember(chatroom, withdrawerFull)) {
-            pushAddMemberEvent2(chatroom, withdrawerFull, record.getNickName(), amount);
+//        if (existsMember(chatroom, withdrawerFull)) {
+//            pushEvent2(chatroom, withdrawerFull,  amount);
 //            CJSystem.logging().info(getClass(), String.format("抢群主:%s[%s]的群成员：%s[%s] 已在其聊天室：%s ，并且又领取了钱", bossNickName, boss, record.getNickName(), record.getNickName(), chatroom.getRoom()));
-            return;
-        }
+//            return;
+//        }
         //添加成员
 
-        Person withdrawerPerson = personService.get(record.getWithdrawer());
-        addMember(chatroom, withdrawerFull, withdrawerPerson, "user");
-        pushAddMemberEvent2(chatroom, withdrawerFull, withdrawerPerson.getNickName(), amount);
+//        Person withdrawerPerson = personService.get(record.getWithdrawer());
+//        addMember(chatroom, withdrawerFull, withdrawerPerson, "user");
+        pushEvent2(chatroom, withdrawerFull,  amount);
     }
 
     private void pushAddMemberEvent(Chatroom chatroom, String payeeFull, Person payeePerson, PayRecord record) throws CircuitException {
@@ -142,7 +142,7 @@ public class ChatroomService extends AbstractService implements IChatroomService
         rabbitMQProducer.publish("jobCenter", properties, body);
     }
 
-    private void pushAddMemberEvent2(Chatroom chatroom, String withdrawerFull, String nickName, long amount) throws CircuitException {
+    private void pushEvent2(Chatroom chatroom, String withdrawerFull, long amount) throws CircuitException {
         AMQP.BasicProperties properties = new AMQP.BasicProperties().builder()
                 .type("/chat/message.mq")
                 .headers(new HashMap() {
